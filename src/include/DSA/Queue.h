@@ -18,7 +18,7 @@ public:
     // METHODS
     void Enqueue(const Value &new_tail_value);
     void Enqueue(Node<Value> *new_tail);
-    Value &Dequeue();
+    Value Dequeue();
     Value Peek() const;
 };
 
@@ -75,6 +75,14 @@ template <typename Value>
 void Queue<Value>::Enqueue(const Value &new_tail_value)
 {
     Node<Value> *new_tail = new Node<Value>(new_tail_value);
+    if (this->size == 0)    // If the Queue Is Empty
+    {
+        this->head = new_tail;
+        this->tail = new_tail;
+        this->size++;
+        return;        
+    }
+    
     this->tail->setNextNode(new_tail);
     this->tail = new_tail;
     this->size++;
@@ -83,12 +91,21 @@ void Queue<Value>::Enqueue(const Value &new_tail_value)
 template <typename Value>
 void Queue<Value>::Enqueue(Node<Value> *new_tail)
 {
+    if (this->size == 0)    // If the Queue Is Empty
+    {
+        this->head = new_tail;
+        this->tail = new_tail;
+        this->size++;
+        return;        
+    }
+
+    this->tail->setNextNode(new_tail);
     this->tail = new_tail;
     this->size++;
 }
 
 template <typename Value>
-Value &Queue<Value>::Dequeue()
+Value Queue<Value>::Dequeue()
 {
     // The Size cannot be Negative
     if (this->size <= 0)
@@ -96,22 +113,25 @@ Value &Queue<Value>::Dequeue()
         throw std::out_of_range("Queue Is Empty!!!");
     }
     
-    Value head_value = this->head->getValue();
+    Node<Value>* node_to_remove = this->head;
+    Value node_to_remove_value = node_to_remove->getValue();
     Node<Value>* new_head =  this->head->getNextNode();
     switch (this->size)
     {
     case 1:
         this->head = nullptr;
         this->tail = nullptr;
-        this.size = 0;
+        this->size = 0;
+        delete node_to_remove;
         break;
     
     default:
         this->head = new_head;
         this->size--;
+        delete node_to_remove;
         break;
     }
-    return head_value;
+    return node_to_remove_value;
 }
 
 template <typename Value>

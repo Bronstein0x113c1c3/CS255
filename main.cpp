@@ -58,6 +58,8 @@ int main(int argc, char *argv[])
 
     Queue<int> nums1 = Queue<int>();
     nums1.Enqueue(20);
-    std::cout << nums1.Peek() << std::endl;
+    nums1.Enqueue(40);
+    std::cout << nums1.Dequeue() << std::endl;
+    std::cout << nums1.Dequeue() << std::endl;
     return 0;
 }

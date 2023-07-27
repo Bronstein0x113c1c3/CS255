@@ -64,7 +64,6 @@ Node<Value> *Node<Value>::getNextNode() const
 template <typename Value>
 void Node<Value>::setNextNode(const Value &new_value)
 {
-    delete this->next_node; // To Prevent Memory Leak
     Node<Value> *new_next_node = new Node(new_value);
     this->next_node = new_next_node;
 }
@@ -72,7 +71,6 @@ void Node<Value>::setNextNode(const Value &new_value)
 template <typename Value>
 void Node<Value>::setNextNode(Node *new_next_node)
 {
-    delete this->next_node; // To Prevent Memory Leak
     this->next_node = new_next_node;
 }
 
