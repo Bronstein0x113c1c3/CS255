@@ -6,6 +6,7 @@
 #include <iostream>
 #include <bits/stdc++.h>
 #include <chrono>
+#include <DSA/Queue.h>
 
 using namespace std;
 int main(int argc, char *argv[])
@@ -46,6 +47,17 @@ int main(int argc, char *argv[])
     ss >> day_worked >> time_start_work >> time_go_home;
     cout << day_worked << endl
          << time_start_work << endl
-         << time_go_home;
+         << time_go_home << endl;
+
+    Node<int> *node1 = new Node<int>(10);
+    Node<int> nodeTemp1(20, node1);
+    Node<int> nodeTemp2(nodeTemp1);
+
+    nodeTemp1.getNextNode()->setValue(30);
+    std::cout << nodeTemp2.getNextNode()->getValue() << std::endl;
+
+    Queue<int> nums1 = Queue<int>();
+    nums1.Enqueue(20);
+    std::cout << nums1.Peek() << std::endl;
     return 0;
 }

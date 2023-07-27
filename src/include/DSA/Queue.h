@@ -1,0 +1,121 @@
+#include "Node.h"
+
+template <typename Value>
+class Queue
+{
+private:
+    Node<Value> *head = nullptr;
+    Node<Value> *tail = nullptr;
+    int size = 0;
+
+public:
+    // Constructors
+    Queue() : head{nullptr}, tail{nullptr} {};
+    Queue(const Value &new_tail_value);
+    Queue(Node<Value> *new_tail);
+    ~Queue();
+
+    // METHODS
+    void Enqueue(const Value &new_tail_value);
+    void Enqueue(Node<Value> *new_tail);
+    Value &Dequeue();
+    Value Peek() const;
+};
+
+template <typename Value>
+Queue<Value>::Queue(const Value &new_tail_value)
+{
+    Node<Value> *new_tail = new Node<Value>(new_tail_value);
+
+    // If the Queue has No Element
+    if (this->size == 0)
+    {
+        this->head = new_tail;
+        this->tail = new_tail;
+        this->size++;
+        return;
+    }
+    // If the Queue has More than 1 Elements
+    else
+    {
+        this->tail->setNextNode(new_tail);
+        this->tail = new_tail;
+        this->size++;
+        return;
+    }
+}
+
+template <typename Value>
+Queue<Value>::Queue(Node<Value> *new_tail)
+{
+    // If the Queue has No Element
+    if (this->size == 0)
+    {
+        this->head = new_tail;
+        this->tail = new_tail;
+        this->size++;
+        return;
+    }
+    // If the Queue has More than 1 Elements
+    else
+    {
+        this->tail->setNextNode(new_tail);
+        this->tail = new_tail;
+        this->size++;
+        return;
+    }
+}
+
+template <typename Value>
+Queue<Value>::~Queue()
+{
+}
+
+template <typename Value>
+void Queue<Value>::Enqueue(const Value &new_tail_value)
+{
+    Node<Value> *new_tail = new Node<Value>(new_tail_value);
+    this->tail->setNextNode(new_tail);
+    this->tail = new_tail;
+    this->size++;
+}
+
+template <typename Value>
+void Queue<Value>::Enqueue(Node<Value> *new_tail)
+{
+    this->tail = new_tail;
+    this->size++;
+}
+
+template <typename Value>
+Value &Queue<Value>::Dequeue()
+{
+    // The Size cannot be Negative
+    if (this->size <= 0)
+    {
+        throw std::out_of_range("Queue Is Empty!!!");
+    }
+    
+    Value head_value = this->head->getValue();
+    Node<Value>* new_head =  this->head->getNextNode();
+    switch (this->size)
+    {
+    case 1:
+        this->head = nullptr;
+        this->tail = nullptr;
+        this.size = 0;
+        break;
+    
+    default:
+        this->head = new_head;
+        this->size--;
+        break;
+    }
+    return head_value;
+}
+
+template <typename Value>
+Value Queue<Value>::Peek() const
+{
+    return this->head->getValue();
+}

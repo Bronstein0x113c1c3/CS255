@@ -14,6 +14,7 @@ public:
     Time(int hours = 0, int minutes = 0);
     Time(std::chrono::hours hours, std::chrono::minutes minutes);
     Time(std::string time_str); // If the User type "20:10"
+    Time(const Time& anotherTime);  // Copy CONSTRUCTOR
 
     // Properties
     int getHours() const;
@@ -28,7 +29,15 @@ public:
 
     Time operator-(const Time &anotherTime) const;
     Time operator+(const Time &anotherTime) const;
+    Time& operator=(const Time &anotherTime);
 };
+// COPY CONSTRUCTOR
+Time::Time(const Time& anotherTime)
+{
+    this->hours = anotherTime.hours;
+    this->minutes = anotherTime.minutes;
+}
+
 
 // Constructors
 Time::Time(int hours, int minutes)
@@ -146,7 +155,6 @@ Time::Time(std::string time_str)
     //? Extract String Type to all different part
     ss >> hours >> delimeter >> minutes;
 
-
     //* To Prevent Exceeding Limit Hour
     if (hours < 0)
     {
@@ -232,3 +240,12 @@ Time Time::operator+(const Time &anotherTime) const
     return Time(this->hours.count() + anotherTime.hours.count(), this->minutes.count() + anotherTime.minutes.count());
 }
 
+Time& Time::operator=(const Time& anotherTime) 
+{
+    if (this != &anotherTime)
+    {
+        this->hours = anotherTime.hours;
+        this->minutes = anotherTime.minutes;
+    }
+    return *this;
+} 

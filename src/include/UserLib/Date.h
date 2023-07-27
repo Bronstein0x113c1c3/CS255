@@ -53,6 +53,13 @@ public:
         os << date.day << "/" << date.month << "/" << date.year;
         return os;
     }
+    // COPY CONSTRUCTOR
+    Date(const Date& date)
+    {
+        this->day = date.day;
+        this->month = month;
+        this->year = year;
+    }
 };
 bool validateThroughLib(string date)
 {
