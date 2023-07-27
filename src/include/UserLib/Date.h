@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-bool validate_through_lib(string date);
-bool validate_with_stream(string date);
+bool validateThroughLib(string date);
+bool validateWithStream(string date);
 bool validate(int a, int b, int c);
 class Date
 {
@@ -19,19 +19,21 @@ public:
             this->day = day;
             this->month = month;
             this->year = year;
+            return;
         }
         else
         {
             this->day = 0;
             this->month = 0;
             this->year = 9999;
+            return;
         }
     }
 
     Date(string date)
     {
         int day = 0, month = 0, year = 9999;
-        if (validate_through_lib(date) && validate_with_stream(date))
+        if (validateThroughLib(date) && validateWithStream(date))
         {
             stringstream ss(date);
             char delimiter;
@@ -39,10 +41,12 @@ public:
             this->day = day;
             this->month = month;
             this->year = year;
+            return;
         }
         this->day = day;
         this->month = month;
         this->year = year;
+        return;
     }
     friend std::ostream &operator<<(std::ostream &os, const Date &date)
     {
@@ -50,7 +54,7 @@ public:
         return os;
     }
 };
-bool validate_through_lib(string date)
+bool validateThroughLib(string date)
 {
     stringstream ss(date);
     tm time{};
@@ -62,7 +66,7 @@ bool validate_through_lib(string date)
     }
     return true;
 }
-bool validate_with_stream(string date)
+bool validateWithStream(string date)
 {
     stringstream ss(date);
     int day, month, year;
