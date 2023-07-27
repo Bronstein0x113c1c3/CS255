@@ -12,9 +12,6 @@ int main(int argc, char *argv[])
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     SDL_Quit();
-    std::string time_str = "24:20";
-
-    std::cout << parsingTime(time_str) << std::endl;
 
     Time timeStart(0, 30);
     Time timeEnd(0, 20);
@@ -29,4 +26,10 @@ int main(int argc, char *argv[])
     Date d1{"-1/9/2002"};
     cout<<d1<<endl;
     // cout<<t.tm_hour<<endl<<t.tm_mon<<endl<<t.tm_wday<<endl<<t.tm_yday<<endl<<t.tm_year;
+
+    std::string time_str = "20 : 10 ";
+    Time time(time_str);
+    std::cout << time << std::endl;
+
+    return 0;
  }

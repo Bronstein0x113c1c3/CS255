@@ -13,6 +13,7 @@ public:
     // Constructor
     Time(int hours = 0, int minutes = 0);
     Time(std::chrono::hours hours, std::chrono::minutes minutes);
+    Time(std::string time_str); // If the User type "20:10"
 
     // Properties
     int getHours() const;
@@ -39,7 +40,7 @@ Time::Time(int hours, int minutes)
         this->minutes = std::chrono::minutes{0};
         return;
     }
-    else if (hours > 24 || minutes > 0)
+    else if (hours > 24 && minutes > 0)
     {
         this->hours = std::chrono::hours{24};
         this->minutes = std::chrono::minutes{0};
@@ -79,10 +80,118 @@ Time::Time(int hours, int minutes)
     this->minutes = std::chrono::minutes{minutes};
 }
 
+// From chrono to Time
 Time::Time(std::chrono::hours hours, std::chrono::minutes minutes)
 {
-    // Use the Above Constructor
-    Time(hours.count(), minutes.count());
+    // Translate hours to int
+    int hours_int = hours.count();
+    int minutes_int = minutes.count();
+
+    //* To Prevent Exceeding Limit Hour
+    if (hours_int < 0)
+    {
+        this->hours = std::chrono::hours{0};
+        this->minutes = std::chrono::minutes{0};
+        return;
+    }
+    else if (hours_int > 24 && minutes_int > 0)
+    {
+        this->hours = std::chrono::hours{24};
+        this->minutes = std::chrono::minutes{0};
+        return;
+    }
+
+    //* To Prevent Exceeding Limit Minute
+    if (minutes_int >= 60)
+    {
+        int hoursToAdd = 0;
+        int spareMinute = minutes_int;
+        while (spareMinute >= 60)
+        {
+            spareMinute -= 60;
+            hoursToAdd++;
+        }
+
+        if (hours_int + hoursToAdd < 24)
+        {
+            //* Make the new Time
+            std::chrono::hours newTime{hours_int + hoursToAdd};
+            this->hours = newTime;
+            this->minutes = std::chrono::minutes{spareMinute};
+            return;
+        }
+        else
+        {
+            //* If the Spare Time is too large
+            this->hours = std::chrono::hours{24};
+            this->minutes = std::chrono::minutes{0};
+            return;
+        }
+    }
+
+    // If none one those Edge Case Appear
+    this->hours = hours;
+    this->minutes = minutes;
+}
+
+// From string to Time
+Time::Time(std::string time_str)
+{
+    std::stringstream ss(time_str);
+
+    char delimeter;
+    int hours;
+    int minutes;
+
+    //? Extract String Type to all different part
+    ss >> hours >> delimeter >> minutes;
+
+
+    //* To Prevent Exceeding Limit Hour
+    if (hours < 0)
+    {
+        this->hours = std::chrono::hours{0};
+        this->minutes = std::chrono::minutes{0};
+        return;
+    }
+    else if (hours > 24 && minutes > 0)
+    {
+        this->hours = std::chrono::hours{24};
+        this->minutes = std::chrono::minutes{0};
+        return;
+    }
+
+    //* To Prevent Exceeding Limit Minute
+    if (minutes >= 60)
+    {
+        int hoursToAdd = 0;
+        int spareMinute = minutes;
+        while (spareMinute >= 60)
+        {
+            spareMinute -= 60;
+            hoursToAdd++;
+        }
+
+        if (hours + hoursToAdd < 24)
+        {
+            //* Make the new Time
+            std::chrono::hours newTime{hours + hoursToAdd};
+            this->hours = newTime;
+            this->minutes = std::chrono::minutes{spareMinute};
+            return;
+        }
+        else
+        {
+            //* If the Spare Time is too large
+            this->hours = std::chrono::hours{24};
+            this->minutes = std::chrono::minutes{0};
+            return;
+        }
+    }
+
+    // If none one those Edge Case Appear
+    this->hours = std::chrono::hours{hours};
+    this->minutes = std::chrono::minutes{minutes};
 }
 
 // Properties
@@ -123,16 +232,3 @@ Time Time::operator+(const Time &anotherTime) const
     return Time(this->hours.count() + anotherTime.hours.count(), this->minutes.count() + anotherTime.minutes.count());
 }
 
-Time parsingTime(std::string time_str)
-{
-    std::stringstream ss(time_str);
-
-    char delimeter;
-    int hour;
-    int minute;
-
-    // Extract String Type to all different part
-    ss >> hour >> delimeter >> minute;
-
-    return Time(hour, minute);
-}
