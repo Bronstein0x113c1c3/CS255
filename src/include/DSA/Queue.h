@@ -13,6 +13,7 @@ public:
     Queue() : head{nullptr}, tail{nullptr} {};
     Queue(const Value &new_tail_value);
     Queue(Node<Value> *new_tail);
+    Queue(std::initializer_list<Value> list);
     ~Queue();
 
     // METHODS
@@ -22,6 +23,7 @@ public:
     Value Peek() const;
 };
 
+// CONSTRUCTORS
 template <typename Value>
 Queue<Value>::Queue(const Value &new_tail_value)
 {
@@ -67,6 +69,29 @@ Queue<Value>::Queue(Node<Value> *new_tail)
 }
 
 template <typename Value>
+Queue<Value>::Queue(std::initializer_list<Value> list)
+{
+    for (const Value &value : list)
+    {
+        Node<Value> *new_tail = new Node<Value>(value);
+        switch (this->size)
+        {
+        case 0:
+            this->head = new_tail;
+            this->tail = new_tail;
+            this->size++;
+            break;
+
+        default:
+            this->tail->setNextNode(new_tail);
+            this->tail = new_tail;
+            this->size++;
+            break;
+        }
+    }
+}
+
+template <typename Value>
 Queue<Value>::~Queue()
 {
 }
@@ -75,14 +100,14 @@ template <typename Value>
 void Queue<Value>::Enqueue(const Value &new_tail_value)
 {
     Node<Value> *new_tail = new Node<Value>(new_tail_value);
-    if (this->size == 0)    // If the Queue Is Empty
+    if (this->size == 0) // If the Queue Is Empty
     {
         this->head = new_tail;
         this->tail = new_tail;
         this->size++;
-        return;        
+        return;
     }
-    
+
     this->tail->setNextNode(new_tail);
     this->tail = new_tail;
     this->size++;
@@ -91,12 +116,12 @@ void Queue<Value>::Enqueue(const Value &new_tail_value)
 template <typename Value>
 void Queue<Value>::Enqueue(Node<Value> *new_tail)
 {
-    if (this->size == 0)    // If the Queue Is Empty
+    if (this->size == 0) // If the Queue Is Empty
     {
         this->head = new_tail;
         this->tail = new_tail;
         this->size++;
-        return;        
+        return;
     }
 
     this->tail->setNextNode(new_tail);
@@ -112,10 +137,10 @@ Value Queue<Value>::Dequeue()
     {
         throw std::out_of_range("Queue Is Empty!!!");
     }
-    
-    Node<Value>* node_to_remove = this->head;
+
+    Node<Value> *node_to_remove = this->head;
     Value node_to_remove_value = node_to_remove->getValue();
-    Node<Value>* new_head =  this->head->getNextNode();
+    Node<Value> *new_head = this->head->getNextNode();
     switch (this->size)
     {
     case 1:
@@ -124,7 +149,7 @@ Value Queue<Value>::Dequeue()
         this->size = 0;
         delete node_to_remove;
         break;
-    
+
     default:
         this->head = new_head;
         this->size--;

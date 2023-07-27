@@ -56,9 +56,14 @@ int main(int argc, char *argv[])
     nodeTemp1.getNextNode()->setValue(30);
     std::cout << nodeTemp2.getNextNode()->getValue() << std::endl;
 
-    Queue<int> nums1 = Queue<int>();
-    nums1.Enqueue(20);
-    nums1.Enqueue(40);
+    Queue<int> nums1 = {1,2,3,4,5,6};
+    // nums1.Enqueue(20);
+    // nums1.Enqueue(40);
+    std::cout << nums1.Dequeue() << std::endl;
+    std::cout << nums1.Dequeue() << std::endl;
+    std::cout << nums1.Dequeue() << std::endl;
+    std::cout << nums1.Dequeue() << std::endl;
+    std::cout << nums1.Dequeue() << std::endl;
     std::cout << nums1.Dequeue() << std::endl;
     std::cout << nums1.Dequeue() << std::endl;
     return 0;
