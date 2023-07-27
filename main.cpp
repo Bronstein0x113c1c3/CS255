@@ -5,16 +5,22 @@
 #include <vector>
 #include <iostream>
 #include <bits/stdc++.h>
-
+#include <chrono>
 
 using namespace std;
 int main(int argc, char *argv[])
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     SDL_Quit();
-    Time time(10, 20);
+    std::string time_str = "24:20";
 
-    std::cout << time << std::endl;
+    std::cout << parsingTime(time_str) << std::endl;
+
+    Time timeStart(0, 30);
+    Time timeEnd(0, 20);
+    Time newTime = timeEnd - timeStart;
+
+    std::cout << newTime << std::endl;
 
     print_hello_world();
     
