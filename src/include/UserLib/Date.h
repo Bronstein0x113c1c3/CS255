@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-bool validation_through_lib(string date);
-bool validation_with_stream(string date);
-bool validation(int a, int b, int c);
+bool validate_through_lib(string date);
+bool validate_with_stream(string date);
+bool validate(int a, int b, int c);
 class Date
 {
 private:
@@ -14,7 +14,7 @@ private:
 public:
     Date(int day = 0, int month = 0, int year = 9999)
     {
-        if (validation(day, month, year))
+        if (validate(day, month, year))
         {
             this->day = day;
             this->month = month;
@@ -31,7 +31,7 @@ public:
     Date(string date)
     {
         int day = 0, month = 0, year = 9999;
-        if (validation_through_lib(date) && validation_with_stream(date))
+        if (validate_through_lib(date) && validate_with_stream(date))
         {
             stringstream ss(date);
             char delimiter;
@@ -50,19 +50,7 @@ public:
         return os;
     }
 };
-Date parsing(string date)
-{
-    int day = 0, month = 0, year = 9999;
-    if (validation_through_lib(date) && validation_with_stream(date))
-    {
-        stringstream ss(date);
-        char delimiter;
-        ss >> day >> delimiter >> month >> delimiter >> year;
-        return Date(day, month, year);
-    }
-    return Date(day, month, year);
-}
-bool validation_through_lib(string date)
+bool validate_through_lib(string date)
 {
     stringstream ss(date);
     tm time{};
@@ -74,7 +62,7 @@ bool validation_through_lib(string date)
     }
     return true;
 }
-bool validation_with_stream(string date)
+bool validate_with_stream(string date)
 {
     stringstream ss(date);
     int day, month, year;
@@ -86,7 +74,7 @@ bool validation_with_stream(string date)
     }
     return true;
 }
-bool validation(int a, int b, int c)
+bool validate(int a, int b, int c)
 {
     if (a < 0 || b < 0 || c < 0 || a >= 32 || b >= 13)
     {
