@@ -14,6 +14,7 @@ public:
     Queue(const Value &new_tail_value);
     Queue(Node<Value> *new_tail);
     Queue(std::initializer_list<Value> list);
+    Queue(const Queue& otherQueue);         // COPY CONSTRUCTOR
     ~Queue();
 
     // METHODS
@@ -21,6 +22,46 @@ public:
     void Enqueue(Node<Value> *new_tail);
     Value Dequeue();
     Value Peek() const;
+
+    // ITERABLE (for Read-only Purpose)
+    class Iterator
+    {
+    private:
+        Node<Value>* current = nullptr;
+    public:
+        Iterator(Node<Value>* iterator) : current{iterator} {};
+        Node<Value>& operator*() const
+        {
+            return *current;
+        }
+
+        Iterator operator++()
+        {
+            this->current = this->current->getNextNode();
+            return *this;
+        } 
+
+        // Define COMPARISON for Iterator
+        bool operator!=(const Iterator& otherNode)
+        {
+            return this->current != otherNode.current;
+        }
+
+        bool operator==(const Iterator& otherNode)
+        {
+            return this->current == otherNode.current;
+        }
+    };
+    
+    Iterator begin()    // Beginning of the Queue
+    {
+        return Iterator(this->head);
+    }
+    
+    Iterator end()
+    {
+        return Iterator(this->tail->getNextNode());
+    }
 };
 
 // CONSTRUCTORS
@@ -91,6 +132,12 @@ Queue<Value>::Queue(std::initializer_list<Value> list)
     }
 }
 
+//! CURRENTLY WORKING ON
+template <typename Value>
+Queue<Value>::Queue(const Queue& otherQueue)         // COPY CONSTRUCTOR
+{
+
+}
 template <typename Value>
 Queue<Value>::~Queue()
 {
