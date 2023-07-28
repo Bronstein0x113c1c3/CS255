@@ -20,8 +20,8 @@ public:
     // METHODS
     void Enqueue(const Value &new_tail_value);
     void Enqueue(Node<Value> *new_tail);
-    Value Dequeue();
-    Value Peek() const;
+    Value& Dequeue();
+    Value& Peek() const;
 
     // OPERATORS
     friend std::ostream& operator<<(std::ostream &os, const Queue<Value>& queue)
@@ -45,30 +45,30 @@ public:
             return *current;
         }
 
-        Iterator operator++()
+        Iterator operator++() 
         {
             this->current = this->current->getNextNode();
             return *this;
         } 
 
         // Define COMPARISON for Iterator
-        bool operator!=(const Iterator& otherNode)
+        bool operator!=(const Iterator& otherNode) const
         {
             return this->current != otherNode.current;
         }
 
-        bool operator==(const Iterator& otherNode)
+        bool operator==(const Iterator& otherNode) const
         {
             return this->current == otherNode.current;
         }
     };
     
-    Iterator begin()    // Beginning of the Queue
+    Iterator begin() const    // Beginning of the Queue
     {
         return Iterator(this->head);
     }
     
-    Iterator end()
+    Iterator end() const
     {
         return Iterator(this->tail->getNextNode());
     }
@@ -187,7 +187,7 @@ void Queue<Value>::Enqueue(Node<Value> *new_tail)
 }
 
 template <typename Value>
-Value Queue<Value>::Dequeue()
+Value& Queue<Value>::Dequeue()
 {
     // The Size cannot be Negative
     if (this->size <= 0)
@@ -217,7 +217,7 @@ Value Queue<Value>::Dequeue()
 }
 
 template <typename Value>
-Value Queue<Value>::Peek() const
+Value& Queue<Value>::Peek() const
 {
     return this->head->getValue();
 }
