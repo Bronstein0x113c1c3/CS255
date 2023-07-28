@@ -23,6 +23,15 @@ public:
     Value Dequeue();
     Value Peek() const;
 
+    // OPERATORS
+    friend std::ostream& operator<<(std::ostream &os, const Queue<Value>& queue)
+    {
+        for (auto current = queue.begin(); current != queue.end(); ++current)
+        {
+            os << *current << '\n';
+        }
+    }
+
     // ITERABLE (for Read-only Purpose)
     class Iterator
     {
@@ -53,12 +62,12 @@ public:
         }
     };
     
-    Iterator begin() const    // Beginning of the Queue
+    Iterator begin()    // Beginning of the Queue
     {
         return Iterator(this->head);
     }
     
-    Iterator end() const
+    Iterator end()
     {
         return Iterator(this->tail->getNextNode());
     }
