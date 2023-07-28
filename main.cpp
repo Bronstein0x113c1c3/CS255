@@ -1,7 +1,5 @@
 #include <SDL2/SDL.h>
 #include <UserLib/test.h>
-#include <UserLib/Time.h>
-#include <UserLib/Date.h>
 #include <vector>
 #include <iostream>
 #include <bits/stdc++.h>
@@ -80,6 +78,9 @@ int main(int argc, char *argv[])
     // int alexAge = name_age_map.retrieve("Alex");
     // std::cout << alexAge << std::endl;
     Record r1 = Record(Date(14, 04, 2003),Time(15, 24),Time(20, 35));
-    cout<<r1;
+    Date d2 = Date(14,04,2003);
+    cout<<d2<<endl;
+    
+    cout<<r1<<endl;
     return 0;
 }

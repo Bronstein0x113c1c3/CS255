@@ -57,8 +57,8 @@ public:
     Date(const Date& date)
     {
         this->day = date.day;
-        this->month = month;
-        this->year = year;
+        this->month = date.month;
+        this->year = date.year;
     }
 };
 bool validateThroughLib(string date)
@@ -91,7 +91,7 @@ bool validate(int a, int b, int c)
     {
         return false;
     }
-    if (b == 2 || a >= 30)
+    if (b == 2 && a >= 30)
     {
         return false;
     }
