@@ -8,6 +8,7 @@
 #include <chrono>
 #include <DSA/Queue.h>
 #include <DSA/HashMap.h>
+#include <UserLib/Record.h>
 
 using namespace std;
 int main(int argc, char *argv[])
@@ -78,5 +79,7 @@ int main(int argc, char *argv[])
 
     // int alexAge = name_age_map.retrieve("Alex");
     // std::cout << alexAge << std::endl;
+    Record r1 = Record(Date(14, 04, 2003),Time(15, 24),Time(20, 35));
+    cout<<r1;
     return 0;
 }

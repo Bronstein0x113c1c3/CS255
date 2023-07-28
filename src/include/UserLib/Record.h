@@ -10,12 +10,7 @@ private:
     Time time_go_home;
 
 public:
-    Record(Date day_worked, Time time_start_work, Time time_go_home)
-    {
-        this->day_worked = day_worked;
-        this->time_start_work = time_start_work;
-        this->time_start_work = time_go_home;
-    }
+    Record(Date day_worked, Time time_start_work, Time time_go_home) : day_worked{day_worked}, time_start_work{time_start_work}, time_go_home{time_go_home} {};
     Record(string record)
     {
         for (char &x : record)
