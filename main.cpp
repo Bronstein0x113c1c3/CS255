@@ -7,6 +7,7 @@
 #include <bits/stdc++.h>
 #include <chrono>
 #include <DSA/Queue.h>
+#include <DSA/HashMap.h>
 
 using namespace std;
 int main(int argc, char *argv[])
@@ -57,14 +58,25 @@ int main(int argc, char *argv[])
     std::cout << nodeTemp2.getNextNode()->getValue() << std::endl;
 
     Queue<int> nums1 = {1,2,3,4,5,6};
-    // nums1.Enqueue(20);
-    // nums1.Enqueue(40);
-    std::cout << nums1.Dequeue() << std::endl;
-    std::cout << nums1.Dequeue() << std::endl;
-    std::cout << nums1.Dequeue() << std::endl;
-    std::cout << nums1.Dequeue() << std::endl;
-    std::cout << nums1.Dequeue() << std::endl;
-    std::cout << nums1.Dequeue() << std::endl;
-    std::cout << nums1.Dequeue() << std::endl;
+    nums1.Enqueue(20);
+    nums1.Enqueue(40);
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    
+    for (Queue<int>::Iterator current = nums1.begin(); current != nums1.end(); ++current)
+    {
+        std::cout << *current << std::endl;
+    }
+
+    // HashMap<std::string, int> name_age_map = HashMap<std::string, int>();
+    // name_age_map["Alex"] = 10;
+
+    // int alexAge = name_age_map.retrieve("Alex");
+    // std::cout << alexAge << std::endl;
     return 0;
 }
