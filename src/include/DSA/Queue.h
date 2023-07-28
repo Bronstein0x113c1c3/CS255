@@ -30,6 +30,7 @@ public:
         {
             os << *current << '\n';
         }
+        return os;
     }
 
     // ITERABLE (for Read-only Purpose)
