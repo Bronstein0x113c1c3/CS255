@@ -53,12 +53,12 @@ public:
         }
     };
     
-    Iterator begin()    // Beginning of the Queue
+    Iterator begin() const    // Beginning of the Queue
     {
         return Iterator(this->head);
     }
     
-    Iterator end()
+    Iterator end() const
     {
         return Iterator(this->tail->getNextNode());
     }
