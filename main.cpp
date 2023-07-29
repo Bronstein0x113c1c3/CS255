@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
     // cout<<d2<<endl;
 
     // cout<<r1<<endl;
+    Stack<int> numsss1 = Stack<int>(30);
     Stack<int> numStack1 = Stack<int>{10, 20, 30};
     numStack1.Push(20);
 

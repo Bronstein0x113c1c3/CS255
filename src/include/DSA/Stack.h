@@ -13,6 +13,8 @@ private:
 public:
     // CONSTRUCTORS
     Stack() : size{0}, top_item{nullptr} {};
+    Stack(const Value& first_top_value);
+    Stack(Node<Value>* first_node);
     Stack(const Stack<Value> &otherStack);
     Stack(std::initializer_list<Value> list);
     ~Stack();
@@ -75,15 +77,31 @@ public:
     Stack &operator=(const Stack<Value> &otherStack);
     friend std::ostream &operator<<(std::ostream &os, const Stack<Value> &stack)
     {
+        os << "Top: " << std::endl;
         for (auto current = stack.begin(); current != stack.end(); ++current)
         {
-            os << *current << '|';
+            os << *current << '\n';
         }
+        os << "End";
         return os;
     }
 };
 
 // CONSTRUCTORS
+template <typename Value>
+Stack<Value>::Stack(const Value& first_top_value)
+{
+    this->top_item = new Node<Value>(first_top_value);
+    this->size++;
+}
+
+template <typename Value>
+Stack<Value>::Stack(Node<Value>* first_node)
+{
+    this->top_item = first_node;
+    this->size++;
+}
+
 template <typename Value>
 Stack<Value>::Stack(std::initializer_list<Value> list)
 {

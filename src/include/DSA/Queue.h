@@ -34,10 +34,12 @@ public:
     // OPERATORS
     friend std::ostream &operator<<(std::ostream &os, const Queue<Value> &queue)
     {
+        os << "Begin: ";
         for (auto current = queue.begin(); current != queue.end(); ++current)
         {
             os << *current << '|';
         }
+        os  << " End";
         return os;
     }
     Queue &operator=(const Queue<Value> &otherQueue);
