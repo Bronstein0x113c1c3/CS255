@@ -1,3 +1,6 @@
+#ifndef QUEUE_H
+#define QUEUE_H
+
 #include "Node.h"
 
 template <typename Value>
@@ -14,7 +17,7 @@ public:
     Queue(const Value &new_tail_value);
     Queue(Node<Value> *new_tail);
     Queue(std::initializer_list<Value> list);
-    Queue(const Queue<Value>& otherQueue);
+    Queue(const Queue<Value> &otherQueue);
     ~Queue();
 
     // PROPERTIES
@@ -25,55 +28,56 @@ public:
     void Enqueue(const Value &new_tail_value);
     void Enqueue(Node<Value> *new_tail);
     Value Dequeue();
-    Value& Peek() const;
-    void clear() ;
+    Value &Peek() const;
+    void Clear();
 
     // OPERATORS
-    friend std::ostream& operator<<(std::ostream &os, const Queue<Value>& queue)
-    {   
+    friend std::ostream &operator<<(std::ostream &os, const Queue<Value> &queue)
+    {
         for (auto current = queue.begin(); current != queue.end(); ++current)
         {
-            os << *current << '\n';
+            os << *current << '|';
         }
         return os;
     }
-    Queue& operator=(const Queue<Value>& otherQueue);
+    Queue &operator=(const Queue<Value> &otherQueue);
 
     // ITERABLE (for Read-only Purpose)
     class Iterator
     {
     private:
-        Node<Value>* current = nullptr;
+        Node<Value> *current = nullptr;
+
     public:
-        Iterator(Node<Value>* iterator) : current{iterator} {};
-        Node<Value>& operator*() const
+        Iterator(Node<Value> *iterator) : current{iterator} {};
+        Node<Value> &operator*() const
         {
             return *current;
         }
 
-        Iterator operator++() 
+        Iterator operator++()
         {
             this->current = this->current->getNextNode();
             return *this;
-        } 
+        }
 
         // Define COMPARISON for Iterator
-        bool operator!=(const Iterator& otherNode) const
+        bool operator!=(const Iterator &otherNode) const
         {
             return this->current != otherNode.current;
         }
 
-        bool operator==(const Iterator& otherNode) const
+        bool operator==(const Iterator &otherNode) const
         {
             return this->current == otherNode.current;
         }
     };
-    
-    Iterator begin() const    // Beginning of the Queue
+
+    Iterator begin() const // Beginning of the Queue
     {
         return Iterator(this->head);
     }
-    
+
     Iterator end() const
     {
         if (!isEmpty())
@@ -154,7 +158,7 @@ Queue<Value>::Queue(std::initializer_list<Value> list)
 
 // COPY CONSTRUCTOR
 template <typename Value>
-Queue<Value>::Queue(const Queue<Value>& otherQueue) : size{otherQueue.getSize()}
+Queue<Value>::Queue(const Queue<Value> &otherQueue) : size{otherQueue.getSize()}
 {
     if (otherQueue.size == 0)
     {
@@ -164,8 +168,8 @@ Queue<Value>::Queue(const Queue<Value>& otherQueue) : size{otherQueue.getSize()}
     }
 
     this->head = new Node<Value>(otherQueue.head->getValue());
-    Node<Value>* current = head;
-    Node<Value>* otherCurrent = otherQueue.head->getNextNode();
+    Node<Value> *current = head;
+    Node<Value> *otherCurrent = otherQueue.head->getNextNode();
 
     while (otherCurrent != nullptr)
     {
@@ -259,16 +263,16 @@ Value Queue<Value>::Dequeue()
 }
 
 template <typename Value>
-Value& Queue<Value>::Peek() const
+Value &Queue<Value>::Peek() const
 {
     return this->head->getValue();
 }
 
 template <typename Value>
-void Queue<Value>::clear() 
+void Queue<Value>::Clear()
 {
     int copySize = this->getSize();
-    for (int time = 0; time < copySize ; time++)
+    for (int time = 0; time < copySize; time++)
     {
         this->Dequeue();
     }
@@ -276,7 +280,7 @@ void Queue<Value>::clear()
 
 // OPERATORS
 template <typename Value>
-Queue<Value>& Queue<Value>::operator=(const Queue<Value>& otherQueue)
+Queue<Value> &Queue<Value>::operator=(const Queue<Value> &otherQueue)
 {
     if (otherQueue.size == 0)
     {
@@ -286,8 +290,8 @@ Queue<Value>& Queue<Value>::operator=(const Queue<Value>& otherQueue)
     }
 
     this->head = new Node<Value>(otherQueue.head->getValue());
-    Node<Value>* current = head;
-    Node<Value>* otherCurrent = otherQueue.head->getNextNode();
+    Node<Value> *current = head;
+    Node<Value> *otherCurrent = otherQueue.head->getNextNode();
 
     while (otherCurrent != nullptr)
     {
@@ -297,6 +301,8 @@ Queue<Value>& Queue<Value>::operator=(const Queue<Value>& otherQueue)
     }
 
     this->tail = current;
-    
+
     return *this;
 }
+
+#endif

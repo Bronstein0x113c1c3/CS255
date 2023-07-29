@@ -1,3 +1,6 @@
+#ifndef HUMAN_H
+#define HUMAN_H
+
 #include <string>
 #include "../DSA/Queue.h"
 
@@ -43,22 +46,23 @@ public:
     //PROPERTIES
     int getID() { return this->ID; };
     string getLastMidName() const { return this->last_mid_name; };
-    void setLastMidName(string last_mid_name) { this->last_mid_name = last_mid_name; };
     string getFirstName() const { return this->first_name; };
-    void setFirstName(string first_name) { this->first_name = first_name; };
     string getDepartment() const { return this->department; };
-    void setDepartment(string department) { this->department = department; };
     string getPosition() const { return this->position; };
-    void setPosition(string position) { this->position = position; };
     Date getDateOfBirth() const { return this->date_of_birth; };
-    void setDateOfBirth(Date date_of_birth) { this->date_of_birth = date_of_birth; };
     string getBirthPlace() const { return this->birth_place; };
-    void setBirthPlace(string birth_place) { this->birth_place = birth_place; };
     string getEmail() const { return this->email; };
-    void setEmail(string email) { this->email = email; };
     string getPhoneNum() const { return this->phone_num; };
-    void setPhoneNum(string phone_num) { this->phone_num = phone_num; };
     Date getFirstDayAtWork() const { return this->first_day_at_work; };
+
+    void setLastMidName(string last_mid_name) { this->last_mid_name = last_mid_name; };
+    void setFirstName(string first_name) { this->first_name = first_name; };
+    void setDepartment(string department) { this->department = department; };
+    void setPosition(string position) { this->position = position; };
+    void setDateOfBirth(Date date_of_birth) { this->date_of_birth = date_of_birth; };
+    void setBirthPlace(string birth_place) { this->birth_place = birth_place; };
+    void setEmail(string email) { this->email = email; };
+    void setPhoneNum(string phone_num) { this->phone_num = phone_num; };
     void setFirstDayAtWork(Date first_day_at_work) { this->first_day_at_work = first_day_at_work; };
     Queue<Record> getDaysWork() const { return this->days_work; };
 
@@ -90,4 +94,6 @@ Human::~Human()
 {
 }
 
-class Employee:Human
+// class Employee:Human
+
+#endif

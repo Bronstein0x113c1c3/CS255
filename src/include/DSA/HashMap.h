@@ -1,3 +1,6 @@
+#ifndef HASHMAP_H
+#define HASHMAP_H
+
 #include <vector>
 #include <functional>
 #include <math.h>
@@ -241,3 +244,5 @@ HashMap<Key, Value>& HashMap<Key, Value>::operator=(const HashMap<Key, Value> &o
 
     return *this;
 }
+
+#endif

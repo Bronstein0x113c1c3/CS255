@@ -1,5 +1,8 @@
-#include "./Time.h"
-#include "./Date.h"
+#ifndef RECORD_H
+#define RECORD_H
+
+#include "Time.h"
+#include "Date.h"
 #include <sstream>
 using namespace std;
 class Record
@@ -47,3 +50,5 @@ public:
     void setTimeStartWork(Time time_started) { this->time_start_work = time_started; };
     void setTimeGoHome(Time time_go_home) { this->time_go_home = time_go_home; };
 };
+
+#endif  

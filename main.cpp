@@ -7,6 +7,7 @@
 #include <DSA/Queue.h>
 #include <DSA/HashMap.h>
 #include <UserLib/Record.h>
+#include <DSA/Stack.h>
 
 using namespace std;
 int main(int argc, char *argv[])
@@ -64,10 +65,10 @@ int main(int argc, char *argv[])
     nums1.Enqueue(40);
 
     Queue<int> nums2(nums1);
-    nums1.clear();
-    nums2.clear();
+    // nums1.Clear();
+    // nums2.Clear();
     std::cout << nums1 << std::endl;
-    std::cout << nums2 << std::endl;
+    // std::cout << nums2 << std::endl;
     // std::cout << nums1.Dequeue() << std::endl;
     // std::cout << nums1.Dequeue() << std::endl;
     // std::cout << nums1.Dequeue() << std::endl;
@@ -99,5 +100,10 @@ int main(int argc, char *argv[])
     // cout<<d2<<endl;
 
     // cout<<r1<<endl;
+    Stack<int> numStack1 = Stack<int>{10, 20, 30};
+    numStack1.Push(20);
+
+    std::cout << numStack1 << std::endl;
+    
     return 0;
 }

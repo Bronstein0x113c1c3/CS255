@@ -1,3 +1,6 @@
+#ifndef NODE_H
+#define NODE_H
+
 #include <iostream>
 
 template <typename Value>
@@ -38,7 +41,8 @@ Node<Value>::Node(const Node &otherNode) : value{otherNode.value}, next_node{nul
 {
     if (otherNode.getNextNode() != nullptr)
     {
-        this->next_node = otherNode.getNextNode();
+        Value otherNodeValue = otherNode.getValue();
+        this->next_node = new Node<Value>(otherNodeValue);
     }
 }
 
@@ -87,8 +91,11 @@ Node<Value>& Node<Value>::operator=(const Node& otherNode)
 
         if (otherNode.getNextNode() != nullptr)
         {
-            this->next_node = otherNode.getNextNode();
+            Value next_value = otherNode.getValue();
+            this->next_node = new Node<Value>(next_value);
         }
     }
     return *this;
 }
+
+#endif

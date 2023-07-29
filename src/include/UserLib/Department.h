@@ -1,3 +1,6 @@
+#ifndef DEPARTMENT_H
+#define DEPARTMENT_H
+
 class Department
 {
 private:
@@ -14,3 +17,5 @@ Department::Department(/* args */)
 Department::~Department()
 {
 }
+
+#endif

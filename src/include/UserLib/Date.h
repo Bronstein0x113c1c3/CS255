@@ -1,3 +1,6 @@
+#ifndef DATE_H
+#define DATE_H
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -97,3 +100,5 @@ bool validate(int a, int b, int c)
     }
     return true;
 }
+
+#endif 
