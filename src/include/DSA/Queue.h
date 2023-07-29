@@ -17,6 +17,9 @@ public:
     Queue(const Queue& otherQueue);         // COPY CONSTRUCTOR
     ~Queue();
 
+    // PROPERTIES
+    int getSize() const;
+
     // METHODS
     void Enqueue(const Value &new_tail_value);
     void Enqueue(Node<Value> *new_tail);
@@ -144,13 +147,20 @@ Queue<Value>::Queue(std::initializer_list<Value> list)
 
 //! CURRENTLY WORKING ON
 template <typename Value>
-Queue<Value>::Queue(const Queue& otherQueue)         // COPY CONSTRUCTOR
+Queue<Value>::Queue(const Queue& otherQueue) : size{otherQueue.size}, head{otherQueue.size}, tail{otherQueue.tail}         // COPY CONSTRUCTOR
 {
-
 }
+
 template <typename Value>
 Queue<Value>::~Queue()
 {
+}
+
+// PROPERTIES
+template <typename Value>
+int Queue<Value>::getSize() const
+{
+    return this->size;
 }
 
 template <typename Value>
