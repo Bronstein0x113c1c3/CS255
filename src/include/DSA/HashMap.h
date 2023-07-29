@@ -1,6 +1,7 @@
 #include <vector>
 #include <functional>
 #include <math.h>
+#include <utility>
 
 template <typename Key, typename Value>
 struct Bucket
@@ -25,6 +26,7 @@ public:
     HashMap(int size_array);
     HashMap();
     HashMap(std::initializer_list<std::pair<const Key, Value>> list);
+    HashMap(const HashMap<Key, Value> &otherHashMap); // COPY CONSTRUCTOR
     ~HashMap();
 
     // PROPERTIES
@@ -38,7 +40,8 @@ public:
     Value retrieve(Key);
 
     // OPERATORS
-    Value& operator[](const Key& key);
+    Value &operator[](const Key &key);
+    HashMap &operator=(const HashMap<Key, Value> &otherHashMap);
 };
 
 template <typename Key, typename Value>
@@ -55,7 +58,7 @@ void HashMap<Key, Value>::expandArraySize(int space)
     {
         throw std::out_of_range("Cannot Shrink Array Size!!!");
     }
-    
+
     int old_size = this->getSizeArray();
     int new_size = old_size + space;
 
@@ -75,15 +78,33 @@ HashMap<Key, Value>::HashMap() : size_array(100)
     this->array.resize(size_array);
 }
 
-// template <typename Key, typename Value>
-// HashMap<Key,Value>:: HashMap(std::initializer_list<std::pair<const Key, Value>> list)
-// {
-//     this->size_array = 100;
-//     for (const auto& pair: list)
-//     {
-        
-//     }
-// }
+//! CURRENTLY WORKING ON
+template <typename Key, typename Value>
+HashMap<Key, Value>::HashMap(std::initializer_list<std::pair<const Key, Value>> list)
+{
+    this->size_array = 100;
+    this->array.resize(100);
+    for (const auto &pair : list)
+    {
+        Key key = pair.first;
+        Value value = pair.second;
+        this->assign(key, value);
+    }
+}
+
+template <typename Key, typename Value>
+HashMap<Key, Value>::HashMap(const HashMap<Key, Value> &otherHashMap) // COPY CONSTRUCTOR
+{
+    // RESIZE THE ARRAY SIZE AND UPDATE THE SIZE
+    this->size_array = otherHashMap.size_array;
+    this->array.resize(otherHashMap.getSizeArray());
+
+    for (int index = 0; index < otherHashMap.getSizeArray(); index++)
+    {
+        this->array[index] = otherHashMap.array[index];
+    }
+}
+
 template <typename Key, typename Value>
 HashMap<Key, Value>::~HashMap()
 {
@@ -175,7 +196,7 @@ Value HashMap<Key, Value>::retrieve(Key key)
 
 // OPERATORS
 template <typename Key, typename Value>
-Value& HashMap<Key, Value>::operator[](const Key& key)
+Value &HashMap<Key, Value>::operator[](const Key &key)
 {
     // Using Hash Collision: Linear Probing
     int hash_value = this->hash(key);
@@ -184,25 +205,39 @@ Value& HashMap<Key, Value>::operator[](const Key& key)
     //? SEARCH FOR THE KEY IN THE ARRAY
     for (int index = array_index; index < this->getSizeArray(); index++)
     {
-        if (this->array[index].key == key)  // If that is the Key
+        if (this->array[index].key == key) // If that is the Key
         {
             this->array[index].key = key;
             return this->array[index].value;
             array_index = index;
         }
-        else if (this->array[index].key == Key())    // If the Key is default key -> That is the Key
+        else if (this->array[index].key == Key()) // If the Key is default key -> That is the Key
         {
             this->array[index].key = key;
             return this->array[index].value;
         }
-        
     }
 
-    // If the key is not found, insert it into the HashMap 
+    // If the key is not found, insert it into the HashMap
     // By expand the Array and then put it into that array_index
     this->expandArraySize(1);
 
     array_index++;
     this->array[array_index].key = key;
     return this->array[array_index].value;
+}
+
+template <typename Key, typename Value>
+HashMap<Key, Value>& HashMap<Key, Value>::operator=(const HashMap<Key, Value> &otherHashMap)
+{
+    // RESIZE THE ARRAY SIZE AND UPDATE THE SIZE
+    this->size_array = otherHashMap.size_array;
+    this->array.resize(otherHashMap.getSizeArray());
+
+    for (int index = 0; index < otherHashMap.getSizeArray(); index++)
+    {
+        this->array[index] = otherHashMap.array[index];
+    }
+
+    return *this;
 }
