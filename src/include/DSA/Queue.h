@@ -14,27 +14,30 @@ public:
     Queue(const Value &new_tail_value);
     Queue(Node<Value> *new_tail);
     Queue(std::initializer_list<Value> list);
-    Queue(const Queue& otherQueue);         // COPY CONSTRUCTOR
+    Queue(const Queue<Value>& otherQueue);
     ~Queue();
 
     // PROPERTIES
     int getSize() const;
+    bool isEmpty() const;
 
     // METHODS
     void Enqueue(const Value &new_tail_value);
     void Enqueue(Node<Value> *new_tail);
-    Value& Dequeue();
+    Value Dequeue();
     Value& Peek() const;
+    void clear() ;
 
     // OPERATORS
     friend std::ostream& operator<<(std::ostream &os, const Queue<Value>& queue)
-    {
+    {   
         for (auto current = queue.begin(); current != queue.end(); ++current)
         {
             os << *current << '\n';
         }
         return os;
     }
+    Queue& operator=(const Queue<Value>& otherQueue);
 
     // ITERABLE (for Read-only Purpose)
     class Iterator
@@ -73,7 +76,11 @@ public:
     
     Iterator end() const
     {
-        return Iterator(this->tail->getNextNode());
+        if (!isEmpty())
+        {
+            return Iterator(this->tail->getNextNode());
+        }
+        return Iterator(nullptr);
     }
 };
 
@@ -145,10 +152,29 @@ Queue<Value>::Queue(std::initializer_list<Value> list)
     }
 }
 
-//! CURRENTLY WORKING ON
+// COPY CONSTRUCTOR
 template <typename Value>
-Queue<Value>::Queue(const Queue& otherQueue) : size{otherQueue.size}, head{otherQueue.size}, tail{otherQueue.tail}         // COPY CONSTRUCTOR
+Queue<Value>::Queue(const Queue<Value>& otherQueue) : size{otherQueue.getSize()}
 {
+    if (otherQueue.size == 0)
+    {
+        this->head = nullptr;
+        this->tail = nullptr;
+        return;
+    }
+
+    this->head = new Node<Value>(otherQueue.head->getValue());
+    Node<Value>* current = head;
+    Node<Value>* otherCurrent = otherQueue.head->getNextNode();
+
+    while (otherCurrent != nullptr)
+    {
+        current->setNextNode(new Node<Value>(otherCurrent->getValue()));
+        current = current->getNextNode();
+        otherCurrent = otherCurrent->getNextNode();
+    }
+
+    this->tail = current;
 }
 
 template <typename Value>
@@ -161,6 +187,12 @@ template <typename Value>
 int Queue<Value>::getSize() const
 {
     return this->size;
+}
+
+template <typename Value>
+bool Queue<Value>::isEmpty() const
+{
+    return this->size == 0;
 }
 
 template <typename Value>
@@ -197,7 +229,7 @@ void Queue<Value>::Enqueue(Node<Value> *new_tail)
 }
 
 template <typename Value>
-Value& Queue<Value>::Dequeue()
+Value Queue<Value>::Dequeue()
 {
     // The Size cannot be Negative
     if (this->size <= 0)
@@ -230,4 +262,41 @@ template <typename Value>
 Value& Queue<Value>::Peek() const
 {
     return this->head->getValue();
+}
+
+template <typename Value>
+void Queue<Value>::clear() 
+{
+    int copySize = this->getSize();
+    for (int time = 0; time < copySize ; time++)
+    {
+        this->Dequeue();
+    }
+}
+
+// OPERATORS
+template <typename Value>
+Queue<Value>& Queue<Value>::operator=(const Queue<Value>& otherQueue)
+{
+    if (otherQueue.size == 0)
+    {
+        this->head = nullptr;
+        this->tail = nullptr;
+        return *this;
+    }
+
+    this->head = new Node<Value>(otherQueue.head->getValue());
+    Node<Value>* current = head;
+    Node<Value>* otherCurrent = otherQueue.head->getNextNode();
+
+    while (otherCurrent != nullptr)
+    {
+        current->setNextNode(new Node<Value>(otherCurrent->getValue()));
+        current = current->getNextNode();
+        otherCurrent = otherCurrent->getNextNode();
+    }
+
+    this->tail = current;
+    
+    return *this;
 }
