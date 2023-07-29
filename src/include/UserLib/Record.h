@@ -40,4 +40,10 @@ public:
     {
         return this->time_go_home - this->time_start_work;
     }
+    Date getDayWorked() const { return this->day_worked; };
+    Time getTimeStartWork() const { return this->time_start_work; };
+    Time getTimeGoHome() const { return this->time_go_home; };
+    void setDayWorked(Date day_worked) { this->day_worked = day_worked; };
+    void setTimeStartWork(Time time_started) { this->time_start_work = time_started; };
+    void setTimeGoHome(Time time_go_home) { this->time_go_home = time_go_home; };
 };
