@@ -49,38 +49,55 @@ int main(int argc, char *argv[])
          << time_start_work << endl
          << time_go_home << endl;
 
-    Node<int> *node1 = new Node<int>(10);
-    Node<int> nodeTemp1(20, node1);
-    Node<int> nodeTemp2(nodeTemp1);
+    // Node<int> *node1 = new Node<int>(10);
+    // Node<int> nodeTemp1(20, node1);
+    // Node<int> nodeTemp2 = nodeTemp1;
 
-    nodeTemp1.getNextNode()->setValue(30);
-    std::cout << nodeTemp2.getNextNode()->getValue() << std::endl;
+    // nodeTemp1.getNextNode()->setValue(30);
+    // std::cout << nodeTemp2.getNextNode()->getValue() << std::endl;
+    // std::cout << nodeTemp1.getNextNode()->getValue() << std::endl;
+    // std::cout << &nodeTemp1 << std::endl;
+    // std::cout << &nodeTemp2 << std::endl;
 
-    Queue<int> nums1 = {1,2,3,4,5,6};
+    Queue<int> nums1 = {1, 2, 3, 4, 5, 6};
     nums1.Enqueue(20);
     nums1.Enqueue(40);
-    // std::cout << nums1.Dequeue() << std::endl;
-    // std::cout << nums1.Dequeue() << std::endl;
-    // std::cout << nums1.Dequeue() << std::endl;
-    // std::cout << nums1.Dequeue() << std::endl;
-    // std::cout << nums1.Dequeue() << std::endl;
-    // std::cout << nums1.Dequeue() << std::endl;
-    // std::cout << nums1.Dequeue() << std::endl;
-    
-    for (Queue<int>::Iterator current = nums1.begin(); current != nums1.end(); ++current)
-    {
-        std::cout << *current << std::endl;
-    }
 
-    // HashMap<std::string, int> name_age_map = HashMap<std::string, int>();
-    // name_age_map["Alex"] = 10;
+    Queue<int> nums2(nums1);
+    nums1.clear();
+    nums2.clear();
+    std::cout << nums1 << std::endl;
+    std::cout << nums2 << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
+    // std::cout << nums1.Dequeue() << std::endl;
 
-    // int alexAge = name_age_map.retrieve("Alex");
-    // std::cout << alexAge << std::endl;
-    Record r1 = Record(Date(14, 04, 2003),Time(15, 24),Time(20, 35));
-    Date d2 = Date(14,04,2003);
-    cout<<d2<<endl;
-    
-    cout<<r1<<endl;
+    // for (Queue<int>::Iterator current = nums1.begin(); current != nums1.end(); ++current)
+    // {
+    //     std::cout << *current << std::endl;
+    // }
+
+    HashMap<std::string, int> name_age_map = {
+        {"Alex", 10},
+        {"Helen", 20}
+    };
+    name_age_map["Alex"];
+    decltype(name_age_map) name_age_map_1(name_age_map);
+    name_age_map["Alex"] = 100;
+    name_age_map["Helen"] = 2000;
+
+    int alexAge = name_age_map_1["Alex"];
+    std::cout << alexAge << std::endl;
+    std::cout << name_age_map["Helen"] << std::endl;
+
+    // Record r1 = Record(Date(14, 04, 2003),Time(15, 24),Time(20, 35));
+    // Date d2 = Date(14,04,2003);
+    // cout<<d2<<endl;
+
+    // cout<<r1<<endl;
     return 0;
 }
