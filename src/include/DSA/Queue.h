@@ -14,9 +14,9 @@ private:
 public:
     // Constructors
     Queue() : head{nullptr}, tail{nullptr} {};
-    Queue(const Value &new_tail_value);
+    Queue(const Value new_tail_value);
     Queue(Node<Value> *new_tail);
-    Queue(std::initializer_list<Value> list);
+    Queue(const std::initializer_list<Value> list);
     Queue(const Queue<Value> &otherQueue);
     ~Queue();
 
@@ -25,10 +25,10 @@ public:
     bool isEmpty() const;
 
     // METHODS
-    void Enqueue(const Value &new_tail_value);
+    void Enqueue(const Value new_tail_value);
     void Enqueue(Node<Value> *new_tail);
     Value Dequeue();
-    Value &Peek() const;
+    Value Peek() const;
     void Clear();
 
     // OPERATORS
@@ -92,7 +92,7 @@ public:
 
 // CONSTRUCTORS
 template <typename Value>
-Queue<Value>::Queue(const Value &new_tail_value)
+Queue<Value>::Queue(const Value new_tail_value)
 {
     Node<Value> *new_tail = new Node<Value>(new_tail_value);
 
@@ -117,26 +117,28 @@ Queue<Value>::Queue(const Value &new_tail_value)
 template <typename Value>
 Queue<Value>::Queue(Node<Value> *new_tail)
 {
+    Node<Value>* new_tail_temp = new Node<Value>(new_tail->getValue());
+    delete new_tail;    // PREVENT MEMORY LEAK
     // If the Queue has No Element
     if (this->size == 0)
     {
-        this->head = new_tail;
-        this->tail = new_tail;
+        this->head = new_tail_temp;
+        this->tail = new_tail_temp;
         this->size++;
         return;
     }
     // If the Queue has More than 1 Elements
     else
     {
-        this->tail->setNextNode(new_tail);
-        this->tail = new_tail;
+        this->tail->setNextNode(new_tail_temp);
+        this->tail = new_tail_temp;
         this->size++;
         return;
     }
 }
 
 template <typename Value>
-Queue<Value>::Queue(std::initializer_list<Value> list)
+Queue<Value>::Queue(const std::initializer_list<Value> list)
 {
     for (const Value &value : list)
     {
@@ -202,7 +204,7 @@ bool Queue<Value>::isEmpty() const
 }
 
 template <typename Value>
-void Queue<Value>::Enqueue(const Value &new_tail_value)
+void Queue<Value>::Enqueue(const Value new_tail_value)
 {
     Node<Value> *new_tail = new Node<Value>(new_tail_value);
     if (this->size == 0) // If the Queue Is Empty
@@ -221,16 +223,17 @@ void Queue<Value>::Enqueue(const Value &new_tail_value)
 template <typename Value>
 void Queue<Value>::Enqueue(Node<Value> *new_tail)
 {
+    Node<Value> new_tail_temp = new Node<Value>(new_tail->getValue());
     if (this->size == 0) // If the Queue Is Empty
     {
-        this->head = new_tail;
-        this->tail = new_tail;
+        this->head = new_tail_temp;
+        this->tail = new_tail_temp;
         this->size++;
         return;
     }
 
-    this->tail->setNextNode(new_tail);
-    this->tail = new_tail;
+    this->tail->setNextNode(new_tail_temp);
+    this->tail = new_tail_temp;
     this->size++;
 }
 
@@ -265,7 +268,7 @@ Value Queue<Value>::Dequeue()
 }
 
 template <typename Value>
-Value &Queue<Value>::Peek() const
+Value Queue<Value>::Peek() const
 {
     return this->head->getValue();
 }

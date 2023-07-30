@@ -19,10 +19,10 @@ public:
     Node(const Node &otherNode); // Copy constructor
     // PROPERTIES
     Value getValue() const;
-    void setValue(const Value &new_value);
+    void setValue(const Value new_value);
 
     Node *getNextNode() const;
-    void setNextNode(const Value &new_value);
+    void setNextNode(const Value new_value);
     void setNextNode(Node *new_next_node);
 
     // OPERATORS
@@ -54,7 +54,7 @@ Value Node<Value>::getValue() const
 }
 
 template <typename Value>
-void Node<Value>::setValue(const Value &new_value)
+void Node<Value>::setValue(const Value new_value)
 {
     this->value = new_value;
 }
@@ -66,7 +66,7 @@ Node<Value> *Node<Value>::getNextNode() const
 }
 
 template <typename Value>
-void Node<Value>::setNextNode(const Value &new_value)
+void Node<Value>::setNextNode(const Value new_value)
 {
     Node<Value> *new_next_node = new Node(new_value);
     this->next_node = new_next_node;

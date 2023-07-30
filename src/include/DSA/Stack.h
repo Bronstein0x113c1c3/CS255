@@ -13,8 +13,8 @@ private:
 public:
     // CONSTRUCTORS
     Stack() : size{0}, top_item{nullptr} {};
-    Stack(const Value& first_top_value);
-    Stack(Node<Value>* first_node);
+    Stack(const Value first_top_value);
+    Stack(Node<Value> *first_node);
     Stack(const Stack<Value> &otherStack);
     Stack(std::initializer_list<Value> list);
     ~Stack();
@@ -26,7 +26,7 @@ public:
     bool isEmpty() const;
 
     // METHOD
-    void Push(const Value &top_value);
+    void Push(const Value top_value);
     void Push(const Node<Value> *top_node);
     Value Pop();
     Value Peek() const;
@@ -89,16 +89,18 @@ public:
 
 // CONSTRUCTORS
 template <typename Value>
-Stack<Value>::Stack(const Value& first_top_value)
+Stack<Value>::Stack(const Value first_top_value)
 {
     this->top_item = new Node<Value>(first_top_value);
     this->size++;
 }
 
 template <typename Value>
-Stack<Value>::Stack(Node<Value>* first_node)
+Stack<Value>::Stack(Node<Value> *first_node)
 {
-    this->top_item = first_node;
+    Node<Value> *first_node_temp = new Node<Value>(first_node->getValue());
+
+    this->top_item = first_node_temp;
     this->size++;
 }
 
@@ -157,7 +159,7 @@ bool Stack<Value>::isEmpty() const
 
 // METHODS
 template <typename Value>
-void Stack<Value>::Push(const Value &top_value)
+void Stack<Value>::Push(const Value top_value)
 {
     Node<Value> *new_top_node = new Node<Value>(top_value);
     new_top_node->setNextNode(this->top_item);
@@ -168,8 +170,9 @@ void Stack<Value>::Push(const Value &top_value)
 template <typename Value>
 void Stack<Value>::Push(const Node<Value> *new_top_node)
 {
-    new_top_node->setNextNode(this->top_item);
-    this->top_item = new_top_node;
+    Node<Value> *new_top_node_temp = new Node<Value>(new_top_node->getValue());
+    new_top_node_temp->setNextNode(this->top_item);
+    this->top_item = new_top_node_temp;
     this->size++;
 }
 

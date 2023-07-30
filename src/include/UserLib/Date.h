@@ -10,12 +10,13 @@ bool validate(int a, int b, int c);
 class Date
 {
 private:
-    int day;
-    int month;
-    int year;
+    int day = 0;
+    int month = 0;
+    int year = 9999;
 
 public:
-    Date(int day = 0, int month = 0, int year = 9999)
+    // CONSTRUCTTORS
+    Date(const int day = 0, const int month = 0, const int year = 9999)
     {
         if (validate(day, month, year))
         {
@@ -33,12 +34,12 @@ public:
         }
     }
 
-    Date(string date)
+    Date(const std::string date)
     {
         int day = 0, month = 0, year = 9999;
         if (validateThroughLib(date) && validateWithStream(date))
         {
-            stringstream ss(date);
+            std::stringstream ss(date);
             char delimiter;
             ss >> day >> delimiter >> month >> delimiter >> year;
             this->day = day;
@@ -49,7 +50,6 @@ public:
         this->day = day;
         this->month = month;
         this->year = year;
-        return;
     }
     friend std::ostream &operator<<(std::ostream &os, const Date &date)
     {
@@ -57,14 +57,26 @@ public:
         return os;
     }
     // COPY CONSTRUCTOR
-    Date(const Date& date)
+    Date(const Date &date)
     {
         this->day = date.day;
         this->month = date.month;
         this->year = date.year;
     }
+
+    // OPERATOR
+    Date& operator=(const Date& otherDate)
+    {
+        if (this != &otherDate)
+        {
+            this->day = otherDate.day;
+            this->month = otherDate.month;
+            this->year = otherDate.month;
+        }
+        return *this;
+    }
 };
-bool validateThroughLib(string date)
+bool validateThroughLib(const string date)
 {
     stringstream ss(date);
     tm time{};
@@ -76,7 +88,7 @@ bool validateThroughLib(string date)
     }
     return true;
 }
-bool validateWithStream(string date)
+bool validateWithStream(const string date)
 {
     stringstream ss(date);
     int day, month, year;
@@ -88,7 +100,7 @@ bool validateWithStream(string date)
     }
     return true;
 }
-bool validate(int a, int b, int c)
+bool validate(const int a, const int b, const int c)
 {
     if (a < 0 || b < 0 || c < 0 || a >= 32 || b >= 13)
     {
@@ -101,4 +113,4 @@ bool validate(int a, int b, int c)
     return true;
 }
 
-#endif 
+#endif

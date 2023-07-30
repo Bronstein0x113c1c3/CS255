@@ -37,8 +37,8 @@ public:
 
     // METHODS FOR HASH PURPOSE
     void expandArraySize(int space);
-    int hash(Key key);
-    int compressor(int hash_code);
+    int hash(Key key) const;
+    int compressor(int hash_code) const;
     void assign(Key, Value);
     Value retrieve(Key);
 
@@ -114,7 +114,7 @@ HashMap<Key, Value>::~HashMap()
 }
 
 template <typename Key, typename Value>
-int HashMap<Key, Value>::hash(Key key)
+int HashMap<Key, Value>::hash(Key key) const
 {
     int hash_value = 0;
     std::hash<Key> hashFunc;
@@ -123,7 +123,7 @@ int HashMap<Key, Value>::hash(Key key)
 }
 
 template <typename Key, typename Value>
-int HashMap<Key, Value>::compressor(int hash_code)
+int HashMap<Key, Value>::compressor(int hash_code) const
 {
     return hash_code % this->getSizeArray();
 }
