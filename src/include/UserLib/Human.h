@@ -9,21 +9,24 @@
 
 class Human
 {
-private:
+protected:
     int ID;
-    std::string last_mid_name;
-    std::string first_name;
-    std::string department;
+    std::string last_mid_name = "Nguyen Hoang Tuan";
+    std::string first_name = "Anh";
+    std::string department = "BKEntertainment";
     std::string position;
-    Date date_of_birth;
-    std::string birth_place;
-    std::string email;
-    std::string phone_num;
-    Date first_day_at_work;
+    Date date_of_birth = Date();
+    std::string birth_place = "0/0/9999";
+    std::string email = "abcxyz@gmail.com";
+    std::string phone_num = "09034546566";
+    Date first_day_at_work = Date();
     Queue<Record> days_work;
 
 public:
-    Human() : date_of_birth{Date()}, first_day_at_work{Date()}, days_work{Queue<Record>()} {};
+    Human()
+    {
+        this->position = "Human";
+    };
     Human(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work);
     ~Human();
     friend std::ostream &operator<<(std::ostream &os, const Human &human)
@@ -97,24 +100,60 @@ Human::~Human()
 
 class Employee : public Human
 {
+public:
+    Employee() : Human()
+    {
+        this->position = "Employee";
+    };
+    Employee(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work) : Human(ID, last_mid_name, first_name, department, "Employee", dob, birth_place, email, phone_num, first_day_at_work){};
 };
 class DeputyManager : public Human
 {
+    DeputyManager() : Human()
+    {
+        this->position = "Deputy Manager";
+    };
+    DeputyManager(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work) : Human(ID, last_mid_name, first_name, department, "Deputy Manager", dob, birth_place, email, phone_num, first_day_at_work){};
 };
 class Manager : public Human
 {
+    Manager() : Human()
+    {
+        this->position = "Manager";
+    };
+    Manager(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work) : Human(ID, last_mid_name, first_name, department, "Manager", dob, birth_place, email, phone_num, first_day_at_work){};
 };
 class ViceDirector : public Human
 {
+    ViceDirector() : Human()
+    {
+        this->position = "Vice Director";
+    };
+    ViceDirector(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work) : Human(ID, last_mid_name, first_name, department, "Vice Director", dob, birth_place, email, phone_num, first_day_at_work){};
 };
 class Director : public Human
 {
+    Director() : Human()
+    {
+        this->position = "Director";
+    };
+    Director(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work) : Human(ID, last_mid_name, first_name, department, "Director", dob, birth_place, email, phone_num, first_day_at_work){};
 };
 class VicePresident : public Human
 {
+    VicePresident() : Human()
+    {
+        this->position = "Vice President";
+    };
+    VicePresident(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work) : Human(ID, last_mid_name, first_name, department, "Vice President", dob, birth_place, email, phone_num, first_day_at_work){};
 };
 class President : public Human
 {
+    President() : Human()
+    {
+        this->position = "President";
+    };
+    President(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work) : Human(ID, last_mid_name, first_name, department, "President", dob, birth_place, email, phone_num, first_day_at_work){};
 };
 
 #endif
