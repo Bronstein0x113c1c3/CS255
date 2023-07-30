@@ -55,6 +55,7 @@ public:
     std::string getPhoneNum() const { return this->phone_num; };
     Date getFirstDayAtWork() const { return this->first_day_at_work; };
 
+    void setID(const int ID) { this->ID = ID; };
     void setLastMidName(const std::string last_mid_name) { this->last_mid_name = last_mid_name; };
     void setFirstName(const std::string first_name) { this->first_name = first_name; };
     void setDepartment(const std::string department) { this->department = department; };
