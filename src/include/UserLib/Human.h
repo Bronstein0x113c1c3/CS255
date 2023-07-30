@@ -109,6 +109,7 @@ public:
 };
 class DeputyManager : public Human
 {
+public:
     DeputyManager() : Human()
     {
         this->position = "Deputy Manager";
@@ -117,6 +118,7 @@ class DeputyManager : public Human
 };
 class Manager : public Human
 {
+public:
     Manager() : Human()
     {
         this->position = "Manager";
@@ -125,6 +127,7 @@ class Manager : public Human
 };
 class ViceDirector : public Human
 {
+public:
     ViceDirector() : Human()
     {
         this->position = "Vice Director";
@@ -133,6 +136,7 @@ class ViceDirector : public Human
 };
 class Director : public Human
 {
+public:
     Director() : Human()
     {
         this->position = "Director";
@@ -141,6 +145,7 @@ class Director : public Human
 };
 class VicePresident : public Human
 {
+public:
     VicePresident() : Human()
     {
         this->position = "Vice President";
@@ -149,6 +154,7 @@ class VicePresident : public Human
 };
 class President : public Human
 {
+public:
     President() : Human()
     {
         this->position = "President";
