@@ -24,6 +24,7 @@ private:
     int size_array = 500;
     std::vector<Bucket<Key, Value>> array;
     int amount_value_occupy = 0;
+
 public:
     // CONSTRUCTORS
     HashMap(int size_array);
@@ -46,6 +47,19 @@ public:
     // OPERATORS
     Value &operator[](const Key &key);
     HashMap &operator=(const HashMap<Key, Value> &otherHashMap);
+    friend std::ostream &operator<<(std::ostream &os, const HashMap<Key, Value> &hashMap)
+    {
+        os << "Begin: ";
+        for (int index = 0; index < hashMap.getSizeArray(); index++)
+        {
+            if (hashMap.array[index].key != Key())
+            {
+                os << hashMap.array[index].value << '|';
+            }
+        }
+        os << " End";
+        return os;
+    }
 };
 
 template <typename Key, typename Value>
@@ -243,7 +257,7 @@ Value &HashMap<Key, Value>::operator[](const Key &key)
 }
 
 template <typename Key, typename Value>
-HashMap<Key, Value>& HashMap<Key, Value>::operator=(const HashMap<Key, Value> &otherHashMap)
+HashMap<Key, Value> &HashMap<Key, Value>::operator=(const HashMap<Key, Value> &otherHashMap)
 {
     this->amount_value_occupy = otherHashMap.amount_value_occupy;
     // RESIZE THE ARRAY SIZE AND UPDATE THE SIZE
