@@ -23,7 +23,7 @@ class HashMap
 private:
     int size_array = 0;
     std::vector<Bucket<Key, Value>> array;
-
+    int amount_value_occupy = 0;
 public:
     // CONSTRUCTORS
     HashMap(int size_array);
@@ -34,6 +34,7 @@ public:
 
     // PROPERTIES
     int getSizeArray() const;
+    int getAmountValueOccupy() const;
 
     // METHODS FOR HASH PURPOSE
     void expandArraySize(int space);
@@ -51,6 +52,12 @@ template <typename Key, typename Value>
 int HashMap<Key, Value>::getSizeArray() const
 {
     return this->size_array;
+}
+
+template <typename Key, typename Value>
+int HashMap<Key, Value>::getAmountValueOccupy() const
+{
+    return this->amount_value_occupy;
 }
 
 // Space: number of slot it need to be add in
@@ -92,12 +99,14 @@ HashMap<Key, Value>::HashMap(std::initializer_list<std::pair<const Key, Value>> 
         Key key = pair.first;
         Value value = pair.second;
         this->assign(key, value);
+        this->amount_value_occupy++;
     }
 }
 
 template <typename Key, typename Value>
 HashMap<Key, Value>::HashMap(const HashMap<Key, Value> &otherHashMap) // COPY CONSTRUCTOR
 {
+    this->amount_value_occupy = otherHashMap.amount_value_occupy;
     // RESIZE THE ARRAY SIZE AND UPDATE THE SIZE
     this->size_array = otherHashMap.size_array;
     this->array.resize(otherHashMap.getSizeArray());
@@ -131,6 +140,7 @@ int HashMap<Key, Value>::compressor(int hash_code) const
 template <typename Key, typename Value>
 void HashMap<Key, Value>::assign(Key key, Value value)
 {
+    this->amount_value_occupy++;
     // Using Hash Collision: Linear Probing
     int hash_value = this->hash(key);
     int array_index = this->compressor(hash_value);
@@ -217,6 +227,7 @@ Value &HashMap<Key, Value>::operator[](const Key &key)
         else if (this->array[index].key == Key()) // If the Key is default key -> That is the Key
         {
             this->array[index].key = key;
+            this->amount_value_occupy++;
             return this->array[index].value;
         }
     }
@@ -227,12 +238,14 @@ Value &HashMap<Key, Value>::operator[](const Key &key)
 
     array_index++;
     this->array[array_index].key = key;
+    this->amount_value_occupy++;
     return this->array[array_index].value;
 }
 
 template <typename Key, typename Value>
 HashMap<Key, Value>& HashMap<Key, Value>::operator=(const HashMap<Key, Value> &otherHashMap)
 {
+    this->amount_value_occupy = otherHashMap.amount_value_occupy;
     // RESIZE THE ARRAY SIZE AND UPDATE THE SIZE
     this->size_array = otherHashMap.size_array;
     this->array.resize(otherHashMap.getSizeArray());
