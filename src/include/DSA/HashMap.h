@@ -21,7 +21,7 @@ template <typename Key, typename Value>
 class HashMap
 {
 private:
-    int size_array = 0;
+    int size_array = 500;
     std::vector<Bucket<Key, Value>> array;
     int amount_value_occupy = 0;
 public:
@@ -83,7 +83,7 @@ HashMap<Key, Value>::HashMap(int size_array) : size_array(size_array)
 }
 
 template <typename Key, typename Value>
-HashMap<Key, Value>::HashMap() : size_array(100)
+HashMap<Key, Value>::HashMap() : size_array(500)
 {
     this->array.resize(size_array);
 }
@@ -92,8 +92,8 @@ HashMap<Key, Value>::HashMap() : size_array(100)
 template <typename Key, typename Value>
 HashMap<Key, Value>::HashMap(std::initializer_list<std::pair<const Key, Value>> list)
 {
-    this->size_array = 100;
-    this->array.resize(100);
+    this->size_array = 500;
+    this->array.resize(500);
     for (const auto &pair : list)
     {
         Key key = pair.first;
