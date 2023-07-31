@@ -38,6 +38,14 @@ public:
         return os;
     };
 
+    bool operator==(const Department &otherDepartment)
+    {
+        return ((this->name) == otherDepartment.name);
+    }
+    bool operator!=(const Department &otherDepartment)
+    {
+        return this->name != otherDepartment.name;
+    }
     // Add some stuffs
     void addEmployee(Employee employee)
     {
@@ -45,6 +53,7 @@ public:
     };
     // DeputyManager: Human
     void addDeputyManager(DeputyManager deputy_manager)
+
     {
         this->deputy_manager_list.Enqueue(deputy_manager);
     };

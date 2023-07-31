@@ -28,7 +28,12 @@ public:
            << corporation.company_list << std::endl;
         return os;
     }
-
+    bool operator==(const Corporation& otherCorporation){
+        return this->name==otherCorporation.name;
+    }
+    bool operator!=(const Corporation& otherCorporation){
+        return this->name!=otherCorporation.name;
+    }
     // PROPERTIES
     std::string getName() { return this->name; };
     President getPresident() { return this->president; };

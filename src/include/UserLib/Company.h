@@ -52,6 +52,23 @@ public:
     {
         this->vice_director.Enqueue(vice_director);
     }
+    // OPERATOR
+    friend std::ostream &operator<<(std::ostream &os, const Company &company)
+    {
+        os << company.name << std::endl
+           << company.director << endl
+           << company.vice_director << endl
+           << company.department_list << endl;
+        return os;
+    }
+    bool operator==(const Company &otherCompany)
+    {
+        this->name == otherCompany.name;
+    }
+    bool operator!=(const Company &otherCompany)
+    {
+        return this->name != otherCompany.name;
+    }
 };
 
 Company::Company(/* args */)
