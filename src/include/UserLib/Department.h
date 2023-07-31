@@ -48,6 +48,7 @@ public:
     {
         this->deputy_manager_list.Enqueue(deputy_manager);
     };
+    bool operator==(const Department &otherDepartment);
 };
 
 Department::Department()

@@ -52,6 +52,7 @@ public:
     {
         this->vice_director.Enqueue(vice_director);
     }
+    bool operator==(const Company& otherCompany);
 };
 
 Company::Company(/* args */)

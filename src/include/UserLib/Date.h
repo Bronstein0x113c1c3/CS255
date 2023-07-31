@@ -65,7 +65,7 @@ public:
     }
 
     // OPERATOR
-    Date& operator=(const Date& otherDate)
+    Date &operator=(const Date &otherDate)
     {
         if (this != &otherDate)
         {
@@ -75,7 +75,9 @@ public:
         }
         return *this;
     }
+    bool operator==(const Date &otherDate);
 };
+
 bool validateThroughLib(const string date)
 {
     stringstream ss(date);

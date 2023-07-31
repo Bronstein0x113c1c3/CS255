@@ -75,6 +75,9 @@ public:
     {
         this->days_work.Enqueue(new_record);
     }
+
+    // OPERATORS
+    bool operator==(const Human& otherHuman);
 };
 
 Human::Human(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work)

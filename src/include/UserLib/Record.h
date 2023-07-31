@@ -77,6 +77,9 @@ public:
     void setDayWorked(const Date &day_worked) { this->day_worked = day_worked; };
     void setTimeStartWork(const Time &time_started) { this->time_start_work = time_started; };
     void setTimeGoHome(const Time &time_go_home) { this->time_go_home = time_go_home; };
+
+    // OPERATORS
+    bool operator==(const Record& otherRecord);
 };
 
 #endif
