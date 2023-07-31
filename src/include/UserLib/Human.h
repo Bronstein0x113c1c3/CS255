@@ -77,7 +77,26 @@ public:
     }
 
     // OPERATORS
-    bool operator==(const Human& otherHuman);
+    bool operator==(const Human &otherHuman)
+    {
+        bool a1 = this->first_name == otherHuman.first_name;
+        bool a2 = this->last_mid_name == otherHuman.last_mid_name;
+        bool a3 = this->ID == otherHuman.ID;
+        bool a4 = this->birth_place == otherHuman.birth_place;
+        bool a5 = this->date_of_birth == otherHuman.date_of_birth;
+        bool a6 = this->email == otherHuman.email;
+        return a1 && a2 && a3 && a4 && a5 && a6;
+    }
+    bool operator!=(const Human &otherHuman)
+    {
+        bool a1 = this->first_name == otherHuman.first_name;
+        bool a2 = this->last_mid_name == otherHuman.last_mid_name;
+        bool a3 = this->ID == otherHuman.ID;
+        bool a4 = this->birth_place == otherHuman.birth_place;
+        bool a5 = this->date_of_birth == otherHuman.date_of_birth;
+        bool a6 = this->email == otherHuman.email;
+        return !a1 || !a2 || !a3 || !a4 || !a5 || !a6;
+    };
 };
 
 Human::Human(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work)
