@@ -75,7 +75,14 @@ public:
         }
         return *this;
     }
-    bool operator==(const Date &otherDate);
+    bool operator==(const Date &otherDate)
+    {
+        return this->day == otherDate.day && this->month == otherDate.month && this->year == otherDate.year;
+    }
+    bool operator!=(const Date &otherDate)
+    {
+        return this->day != otherDate.day || this->month == otherDate.month || this->year == otherDate.year;
+    }
 };
 
 bool validateThroughLib(const string date)

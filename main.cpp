@@ -85,8 +85,7 @@ int main(int argc, char *argv[])
 
     HashMap<std::string, int> name_age_map = {
         {"Alex", 10},
-        {"Helen", 20}
-    };
+        {"Helen", 20}};
     name_age_map["Alex"] = 100;
     name_age_map["Helen"] = 2000;
     name_age_map["SadNguyen"] = 9999;
@@ -96,24 +95,26 @@ int main(int argc, char *argv[])
     // std::cout << name_age_map["Helen"] << std::endl;
     std::cout << name_age_map << std::endl;
 
-    // Record r1 = Record(Date(14, 04, 2003),Time(15, 24),Time(20, 35));
-    // Date d2 = Date(14,04,2003);
-    // cout<<d2<<endl;
+    Record r1 = Record(Date(14, 04, 2003), Time(15, 24), Time(20, 35));
+    Date d2 = Date(14, 04, 2003);
+    Date d1 = Date(14, 02, 2023);
+    cout << (d2 == d1) << endl;
 
+   
     // cout<<r1<<endl;
     // Stack<int> numsss1 = Stack<int>(30);
     // Stack<int> numStack1 = Stack<int>{10, 20, 30};
     // numStack1.Push(20);
 
     // std::cout << numStack1 << std::endl;
-    
+
     // Date d1(10, 12, 1999);
     // Human hm(10, "Alex","Chicken", "ChickenTail", "ViceDirector", "20/12/2003", "Bach Khoa", "nguyentrungson217@gmail.com","09074113456", "20-10-2003");
     // hm.setFirstDayAtWork(d1);
 
     // Human hm2 = hm;
     // hm2.setID(30);
-    
+
     // std::cout << hm2 << std:: endl;
     // std::cout << "-------------------------------" << std::endl;
     // std::cout << hm << std::endl;
