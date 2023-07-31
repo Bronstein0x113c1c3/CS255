@@ -33,6 +33,8 @@ public:
     Time operator-(const Time &anotherTime) const;
     Time operator+(const Time &anotherTime) const;
     Time &operator=(const Time &anotherTime);
+    bool operator==(const Time &otherTime);
+    bool operator!=(const Time &otherTime);
 };
 // COPY CONSTRUCTOR
 Time::Time(const Time &anotherTime)
@@ -253,6 +255,16 @@ Time &Time::operator=(const Time &anotherTime)
         this->minutes = anotherTime.minutes;
     }
     return *this;
+}
+
+bool Time::operator==(const Time &otherTime)
+{
+    return this->hours == otherTime.hours && this->minutes == otherTime.minutes;
+}
+
+bool Time::operator!=(const Time &otherTime)
+{
+    return this->hours != otherTime.hours || this->minutes != otherTime.hours;
 }
 
 #endif

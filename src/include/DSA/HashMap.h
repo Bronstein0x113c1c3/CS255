@@ -49,12 +49,18 @@ public:
     HashMap &operator=(const HashMap<Key, Value> &otherHashMap);
     friend std::ostream &operator<<(std::ostream &os, const HashMap<Key, Value> &hashMap)
     {
+        int amountValuesFind = 0;       // To Prevent Time Complexity O(n)
         os << "Begin: ";
         for (int index = 0; index < hashMap.getSizeArray(); index++)
         {
             if (hashMap.array[index].key != Key())
             {
+                amountValuesFind++;
                 os << hashMap.array[index].value << '|';
+                if (amountValuesFind == hashMap.getAmountValueOccupy())
+                {
+                    break;
+                }
             }
         }
         os << " End";
