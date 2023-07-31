@@ -16,7 +16,7 @@ protected:
     std::string department = "BKEntertainment";
     std::string position;
     Date date_of_birth = Date();
-    std::string birth_place = "0/0/9999";
+    std::string birth_place = "Ha Tay";
     std::string email = "abcxyz@gmail.com";
     std::string phone_num = "09034546566";
     Date first_day_at_work = Date();
