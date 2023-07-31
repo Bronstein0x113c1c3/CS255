@@ -20,7 +20,7 @@ Stack<Human> &searchByName(const std::string name_input);
 Human &searchByID(const int ID);
 
 // ADJUST FUNCTIONS
-void addHuman(const Human new_human);
+void addHuman(const Human &new_human);
 void updateHumanInfo(const Human &human);
 
 // EXIT FUNCTION
