@@ -5,18 +5,21 @@
 #include <regex>
 
 //* VALIDATE HUMAN ATTRIBUTE FUNCTIONS
-bool validateID(std::string ID);
+bool validateNum(std::string ID);
 bool validateName(std::string name);
 bool validatePosition(std::string posistion_name);
 bool validateDate(std::string date);
-bool validateBirthPlace(std::string birth_place);
+bool validatePlace(std::string birth_place);
 bool validateEmail(std::string email);
 bool validatePhoneNum(std::string phone_num);
 
-//* VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME
-bool validateCorporationName(std::string department_name);
-bool validateCompanyName(std::string company_name);
-bool validateDepartmentName(std::string department_name);
+//* VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM FILE
+bool validateCorporationNameFromFile(std::string department_name);
+bool validateCompanyNameFromFile(std::string company_name);
+bool validateDepartmentNameFromFile(std::string department_name);
+
+//* VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM TERMINAL
+bool validateNameFromTerminal(std::string name);
 
 //? VALIDATE OTHER UTILITIES
 bool validateFileTxt(std::string filename);
@@ -64,10 +67,10 @@ bool validatePhoneNum(std::string phone_num)
 }
 
 // * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM FILE
-bool validateCorporationNameFrom(std::string department_name)
+bool validateCorporationNameFromFile(std::string corporation_name)
 {
-    std::regex department_pattern("([A-Z]{3}[a-z]+)");
-    return std::regex_match(department_name, department_pattern);
+    std::regex corporation_pattern("([A-Z]{3}[a-z]+)");
+    return std::regex_match(corporation_name, corporation_pattern);
 }
 
 bool validateCompanyNameFromFile(std::string company_name)
@@ -80,6 +83,13 @@ bool validateDepartmentNameFromFile(std::string department_name)
 {
     std::regex department_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
     return std::regex_match(department_name, department_pattern);
+}
+
+// * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM TERMINAL
+bool validateNameFromTerminal(std::string name)
+{
+    std::regex name_pattern("^[^\\s](.+)[^\\s]$");
+    return std::regex_match(name,name_pattern); 
 }
 
 //? VALIDATE OTHER UTILITIES

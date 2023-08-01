@@ -24,6 +24,7 @@ public:
     Manager getManager() const { return this->manager; };
 
     // SETTERS
+    void setName(std::string name) { this->name = name; };
     void setDeputyManagerList(const Queue<DeputyManager> &deputy_manager_list) { this->deputy_manager_list = deputy_manager_list; };
     void setManager(Manager manager) { this->manager = manager; };
     void setEmployeeList(const HashMap<int, Employee> &employee_list) { this->employee_list = employee_list; };
@@ -40,7 +41,7 @@ public:
 
     bool operator==(const Department &otherDepartment)
     {
-        return ((this->name) == otherDepartment.name);
+        return this->name == otherDepartment.name;
     }
     bool operator!=(const Department &otherDepartment)
     {
@@ -57,7 +58,6 @@ public:
     {
         this->deputy_manager_list.Enqueue(deputy_manager);
     };
-    bool operator==(const Department &otherDepartment);
 };
 
 Department::Department()

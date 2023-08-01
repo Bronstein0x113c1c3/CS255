@@ -22,7 +22,7 @@ public:
         this->vice_director = vice_director;
         this->department_list = department_list;
     }
-    ~Company();
+    ~Company() {};
     std::string getName() { return this->name; };
     Director getDirector() { return this->director; };
     Queue<ViceDirector> getViceDirectorList() { return this->vice_director; };
@@ -70,13 +70,5 @@ public:
         return this->name != otherCompany.name;
     }
 };
-
-Company::Company(/* args */)
-{
-}
-
-Company::~Company()
-{
-}
 
 #endif

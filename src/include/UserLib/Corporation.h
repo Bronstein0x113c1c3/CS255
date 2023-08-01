@@ -48,7 +48,6 @@ public:
     // METHODS
     void addVicePresident(VicePresident vice_president) { this->vice_president.Enqueue(vice_president); };
     void addCompany(Company company) { this->company_list.Enqueue(company); };
-    bool operator==(const Corporation& otherCorporation);
 };
 
 Corporation::Corporation(std::string name, President president, Queue<VicePresident> vice_president, Queue<Company> company)
