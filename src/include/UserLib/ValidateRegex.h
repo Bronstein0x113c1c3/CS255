@@ -70,13 +70,13 @@ bool validateCorporationNameFrom(std::string department_name)
     return std::regex_match(department_name, department_pattern);
 }
 
-bool validateCompanyNameFrom(std::string company_name)
+bool validateCompanyNameFromFile(std::string company_name)
 {
     std::regex company_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
     return std::regex_match(company_name, company_pattern);
 }
 
-bool validateDepartmentNameFrom(std::string department_name)
+bool validateDepartmentNameFromFile(std::string department_name)
 {
     std::regex department_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
     return std::regex_match(department_name, department_pattern);
