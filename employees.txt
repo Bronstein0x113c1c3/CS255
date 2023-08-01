@@ -1,0 +1,11 @@
+001; Sad Nguyen; BKCorporation; CEO; 21/07/2003; Ha Noi; nguyentrungson217@gmail.com; 0903488634; 20/02/2023
+002; Tuan Anh; BKTech; 
+
+// Mình cần thay đổi cấu trúc file text
+// by how???
+// Ví dụ
+```
+001; Nguyen Trung Son; BKCorporation; CEO; 21/07/2003; Ha Noi; nguyentrungson217@gmail.com; 090348834; 20/02/2023; 
+002; Nguyen Hoang Tuan Anh; BKCorporation->BKEntertainment; Director; 10/11/2000; Ha Tay; brocode@gmail.com; 090909090
+003; Duy Tran; BKCorporation->BKEntertainment->ITDepartment; Manager; Ha Noi; 
+```
