@@ -30,22 +30,25 @@ bool validatePosition(std::string posistion_name){
 
 bool validateDate(std::string date)
 {
-    std::regex date_pattern("([0-9]{2})(?:-|.|\\/)([0-9]{1,2})(?:-|.|\\/)([0-9]{4})");
+    std::regex date_pattern("(((0[1-9]|[12]\\d|3[01])\\/(0[13578]|1[02])\\/((19|[2-9]\\d)\\d{2}))|((0[1-9]|[12]\\d|30)\\/(0[13456789]|1[012])\\/((19|[2-9]\\d)\\d{2}))|((0[1-9]|1\\d|2[0-8])\\/02\\/((19|[2-9]\\d)\\d{2}))|(29\\/02\\/((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))");
     return std::regex_match(date, date_pattern);
 }
 
-bool validateBirthPlace(std::string date)
+bool validateBirthPlace(std::string birth_place)
 {
-    return true;   
+    std::regex place_pattern("[A-Z]{1}[a-z]+");
+    return std::regex_match(birth_place, place_pattern);   
 }
 
 bool validateEmail(std::string email)
 {
-    return true;
+    std::regex email_pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$");
+    return std::regex_match(email, email_pattern);
 }
 
 bool validatePhoneNum(std::string phone_num)
 {
-    return true;
+    std::regex phone_num_pattern("0[0-9]{10,11}");
+    return std::regex_match(phone_num, phone_num_pattern);
 }
 #endif
