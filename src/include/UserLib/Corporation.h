@@ -9,7 +9,7 @@ class Corporation
 {
 private:
     std::string name = "BKCorporation";
-    President president;
+    President president = President();
     Queue<VicePresident> vice_president;
     Queue<Company> company_list;
 

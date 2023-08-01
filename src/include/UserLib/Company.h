@@ -6,9 +6,9 @@ using namespace std;
 class Company
 {
 private:
-    std::string name;
+    std::string name = "BKEntertainment";
     // Director: Human
-    Director director;
+    Director director = Director();
     // ViceDirector: Human
     Queue<ViceDirector> vice_director;
     Queue<Department> department_list;

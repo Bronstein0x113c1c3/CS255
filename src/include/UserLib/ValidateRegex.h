@@ -88,7 +88,7 @@ bool validateDepartmentNameFromFile(std::string department_name)
 // * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM TERMINAL
 bool validateNameFromTerminal(std::string name)
 {
-    std::regex name_pattern("^[^\\s](.+)[^\\s]$");
+    std::regex name_pattern("^[^\\s]{0}([a-zA-Z0-9]+)[^\\s]{0}$");
     return std::regex_match(name,name_pattern); 
 }
 

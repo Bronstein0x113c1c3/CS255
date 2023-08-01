@@ -5,9 +5,9 @@
 class Department
 {
 private:
-    std::string name;
+    std::string name = "ITDepartment";
     // Manager: Human
-    Manager manager;
+    Manager manager = Manager();
     // Employee: Human
     HashMap<int, Employee> employee_list;
     Queue<DeputyManager> deputy_manager_list;
