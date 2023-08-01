@@ -21,11 +21,10 @@ bool validateID(std::string ID){
     return std::regex_match(ID,std::regex("([0-9])+"));
 }
 bool validateDepartmentName(std::string department_name){
-    return std::regex_match(department_name,std::regex("([A-Za-z])+"));
+    return std::regex_match(department_name,std::regex("(([A-Z]{3})([a-z]+))"));
 }
 bool validatePosition(std::string posistion_name){
-    return std::regex_match(posistion_name,std::regex("([A-Za-z])+"));
-
+    return std::regex_match(posistion_name,std::regex("(([A-Z]{1}[a-z]+)\\s?){1,}"));
 }
 
 bool validateDate(std::string date)
