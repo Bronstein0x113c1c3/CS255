@@ -9,6 +9,10 @@
 
 // ALL THE REQUIREMENTS FUNCTION
 
+// GET INPUT FUNCTIONS
+Human& getHumanFromTerminal();
+Human& getHumanFromFileTxt();
+
 // DISPLAY FUNCTIONS
 void displayCorporationInfo(const Corporation &corporation);
 void displayHumanInfo(const int ID);
