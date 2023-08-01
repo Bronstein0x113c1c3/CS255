@@ -11,22 +11,19 @@ private:
     Director director = Director();
     // ViceDirector: Human
     Queue<ViceDirector> vice_director;
-    Queue<Department> department_list;
+    HashMap<std::string,Department> department_list;
 
 public:
     Company(){};
-    Company(std::string name, Director director, Queue<ViceDirector> vice_director, Queue<Department> department_list)
+    Company(std::string name)
     {
         this->name = name;
-        this->director = director;
-        this->vice_director = vice_director;
-        this->department_list = department_list;
     }
     ~Company() {};
     std::string getName() { return this->name; };
     Director getDirector() { return this->director; };
     Queue<ViceDirector> getViceDirectorList() { return this->vice_director; };
-    Queue<Department> getDepartmentList() { return this->department_list; };
+    HashMap<std::string,Department> getDepartmentList() { return this->department_list; };
 
     void setViceDirectorList(Queue<ViceDirector> vice_director_list)
     {
@@ -40,13 +37,13 @@ public:
     {
         this->director = director;
     };
-    void setDepartmentList(Queue<Department> department_list)
+    void setDepartmentList(HashMap<std::string,Department> department_list)
     {
         this->department_list = department_list;
     };
     void addDepartment(Department department)
     {
-        this->department_list.Enqueue(department);
+        this->department_list.assign(department.getName(),department);
     };
     void addViceDirector(ViceDirector vice_director)
     {
