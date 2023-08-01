@@ -16,7 +16,7 @@
 Corporation makeCorporation(std::string file_path = "");
 
 // GET INPUT FUNCTIONS
-Human getHuman(std::string file_path = std::string());
+Human getHuman(std::string file_path = "");
 
 // DISPLAY FUNCTIONS
 void displayCorporationInfo(const Corporation &corporation);
