@@ -17,9 +17,9 @@ struct Human {
     string phone;
 };
 
-vector<Human> readObjectsFromFile(const string& filename) {
+vector<Human> readObjectsFromFile(const string& filename, string delimeter) {
     vector<Human> objects;
-    ifstream file(filename);
+    ifstream file("filename.txt");
 
     if (!file.is_open()) {
         cout << "Cannot open the file." << endl;
@@ -29,7 +29,7 @@ vector<Human> readObjectsFromFile(const string& filename) {
     string line;
     while (getline(file, line)) {
         // Assuming each line contains all fields separated by commas
-        size_t pos1 = 0, pos2;
+        size_t pos1 = 0, pos2, deli_length = delimeter.length();
         pos2 = line.find(';', pos1);
         int ID;
         try {
@@ -38,32 +38,31 @@ vector<Human> readObjectsFromFile(const string& filename) {
             // Ignore invalid IDs
             continue;
         }
-
-        pos1 = pos2 + 1;
+        //start from pos1, search ';'. After that return new string from position 0 to after ';'
+        pos1 = pos2 + deli_length;
         pos2 = line.find(';', pos1);
         string name = line.substr(pos1, pos2 - pos1);
 
-        pos1 = pos2 + 1;
+        pos1 = pos2 + deli_length;
         pos2 = line.find(';', pos1);
         string company = line.substr(pos1, pos2 - pos1);
 
-        pos1 = pos2 + 1;
+        pos1 = pos2 + deli_length;
         pos2 = line.find(';', pos1);
         string position = line.substr(pos1, pos2 - pos1);
 
-        pos1 = pos2 + 1;
+        pos1 = pos2 + deli_length;
         pos2 = line.find(';', pos1);
         string birth = line.substr(pos1, pos2 - pos1);
 
-        pos1 = pos2 + 1;
+        pos1 = pos2 + deli_length;
         pos2 = line.find(';', pos1);
         string address = line.substr(pos1, pos2 - pos1);
 
-        pos1 = pos2 + 1;
+        pos1 = pos2 + deli_length;
         pos2 = line.find(';', pos1);
         string mail = line.substr(pos1, pos2 - pos1);
 
-        pos1 = pos2 + 1;
         string phone = line.substr(pos1);
 
         // Create a Person object and add it to the vector
@@ -130,8 +129,8 @@ Human createHumanFromInput(const vector<Human>& objects) {
     return newHuman;
 }
 void PrintFullData(const vector<Human>& objects){
+    cout << "----------FULL DATA----------" << endl;
     for (const auto& Human : objects) {
-        cout << "----------FULL DATA----------" << endl;
         cout << "ID: " << Human.ID << endl;
         cout << "Name: " << Human.name << endl;
         cout << "Company: " << Human.company << endl;
@@ -140,19 +139,20 @@ void PrintFullData(const vector<Human>& objects){
         cout << "Address: " << Human.address << endl;
         cout << "Mail: " << Human.mail << endl;
         cout << "Phone: " << Human.phone << endl;
-        cout << "----------------------" << endl;
+        cout << "-----------------------------" << endl;
     }
 }
 
 int main() {
     const string filename = "filename.txt";
-    vector<Human> objects = readObjectsFromFile("C:/Users/Administrator/Desktop/Duy/filename.txt");
+    std::string delimiter = ";"; // the delimiter
+    vector<Human> objects = readObjectsFromFile(filename, delimiter);
     //Add New Human to file
     Human newHuman = createHumanFromInput(objects);
     writeObjectToFile(filename, newHuman);
     cout << "New person has been added to the file." << endl;
  
-    vector<Human> updatedObjects = readObjectsFromFile(filename);
+    vector<Human> updatedObjects = readObjectsFromFile(filename, delimiter);
     PrintFullData(updatedObjects);
 
     return 0;
