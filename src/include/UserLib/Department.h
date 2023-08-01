@@ -22,6 +22,7 @@ public:
     Queue<DeputyManager> getDeputyManagerList() const { return this->deputy_manager_list; };
     HashMap<int, Employee> getEmployeeList() const { return this->employee_list; };
     Manager getManager() const { return this->manager; };
+    std::string getName() const { return this->name; };
 
     // SETTERS
     void setName(std::string name) { this->name = name; };
