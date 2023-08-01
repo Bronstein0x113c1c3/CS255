@@ -11,7 +11,7 @@
 
 // GET INPUT FUNCTIONS
 Human& getHumanFromTerminal();
-Human& getHumanFromFileTxt();
+Human& getHumanFromFileTxt(const std::string file_path);
 
 // DISPLAY FUNCTIONS
 void displayCorporationInfo(const Corporation &corporation);
