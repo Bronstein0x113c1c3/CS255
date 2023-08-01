@@ -34,12 +34,16 @@ public:
     // OPERATORS
     friend std::ostream &operator<<(std::ostream &os, const Queue<Value> &queue)
     {
-        os << "Begin: ";
-        for (auto current = queue.begin(); current != queue.end(); ++current)
+        if (!queue.isEmpty())
         {
-            os << *current << '|';
+            os << "Begin: ";
+            for (auto current = queue.begin(); current != queue.end(); ++current)
+            {
+                os << *current << '|';
+            }
+            os << " End";
         }
-        os  << " End";
+
         return os;
     }
     Queue &operator=(const Queue<Value> &otherQueue);
@@ -117,8 +121,8 @@ Queue<Value>::Queue(const Value new_tail_value)
 template <typename Value>
 Queue<Value>::Queue(Node<Value> *new_tail)
 {
-    Node<Value>* new_tail_temp = new Node<Value>(new_tail->getValue());
-    delete new_tail;    // PREVENT MEMORY LEAK
+    Node<Value> *new_tail_temp = new Node<Value>(new_tail->getValue());
+    delete new_tail; // PREVENT MEMORY LEAK
     // If the Queue has No Element
     if (this->size == 0)
     {

@@ -11,7 +11,7 @@ struct Bucket
 {
     Key key;
     Value value;
-    bool operator==(const Bucket<Key, Value> &otherBucket) const
+    bool operator==(const Bucket<Key, Value> &otherBucket) 
     {
         return this->key == otherBucket.key && this->value == otherBucket.value;
     }
