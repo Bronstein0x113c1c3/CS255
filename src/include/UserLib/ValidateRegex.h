@@ -3,6 +3,8 @@
 
 #include <string>
 #include <regex>
+
+// VALIDATE REGEX FUNCTIONS
 bool validateID(std::string ID);
 bool validateName(std::string name);
 bool validateDepartmentName(std::string department_name);
@@ -26,4 +28,24 @@ bool validatePosition(std::string posistion_name){
 
 }
 
+bool validateDate(std::string date)
+{
+    std::regex date_pattern("([0-9]{2})(?:-|.|\\/)([0-9]{1,2})(?:-|.|\\/)([0-9]{4})");
+    return std::regex_match(date, date_pattern);
+}
+
+bool validateBirthPlace(std::string date)
+{
+    return true;   
+}
+
+bool validateEmail(std::string email)
+{
+    return true;
+}
+
+bool validatePhoneNum(std::string phone_num)
+{
+    return true;
+}
 #endif
