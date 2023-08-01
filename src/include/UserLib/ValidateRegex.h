@@ -1,6 +1,7 @@
 #ifndef VALIDATEREGEX_H
 #define VALIDATEREGEX_H
 
+#include <regex>
 #include <string>
 
 bool validateID(std::string ID);
