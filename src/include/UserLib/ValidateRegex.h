@@ -4,28 +4,36 @@
 #include <string>
 #include <regex>
 
-// VALIDATE REGEX FUNCTIONS
+//* VALIDATE HUMAN ATTRIBUTE FUNCTIONS
 bool validateID(std::string ID);
 bool validateName(std::string name);
-bool validateDepartmentName(std::string department_name);
 bool validatePosition(std::string posistion_name);
 bool validateDate(std::string date);
 bool validateBirthPlace(std::string birth_place);
 bool validateEmail(std::string email);
 bool validatePhoneNum(std::string phone_num);
 
+//* VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME
+bool validateCorporationName(std::string department_name);
+bool validateCompanyName(std::string company_name);
+bool validateDepartmentName(std::string department_name);
+
+//? VALIDATE OTHER UTILITIES
+bool validateFileTxt(std::string filename);
+
+//-------------------------------------------------------------------
+
+//* VALIDATE HUMAN ATTRIBUTE FUNCTIONS
+bool validateNum(std::string ID)
+{
+    return std::regex_match(ID, std::regex("([0-9])+"));
+}
+
 bool validateName(std::string name)
 {
     return (std::regex_match(name, std::regex("(([A-Z]{1}[a-z]+)\\s?){1,}")));
 }
-bool validateID(std::string ID)
-{
-    return std::regex_match(ID, std::regex("([0-9])+"));
-}
-bool validateDepartmentName(std::string department_name)
-{
-    return std::regex_match(department_name, std::regex("(([A-Z]{3})([a-z]+))"));
-}
+
 bool validatePosition(std::string posistion_name)
 {
     return std::regex_match(posistion_name, std::regex("(([A-Z]{1}[a-z]+)?){1,}"));
@@ -37,10 +45,10 @@ bool validateDate(std::string date)
     return std::regex_match(date, date_pattern);
 }
 
-bool validateBirthPlace(std::string birth_place)
+bool validatePlace(std::string place)
 {
     std::regex place_pattern("[A-Z]{1}[a-z]+");
-    return std::regex_match(birth_place, place_pattern);
+    return std::regex_match(place, place_pattern);
 }
 
 bool validateEmail(std::string email)
@@ -54,4 +62,31 @@ bool validatePhoneNum(std::string phone_num)
     std::regex phone_num_pattern("0[0-9]{10,11}");
     return std::regex_match(phone_num, phone_num_pattern);
 }
+
+// * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME
+bool validateCorporationName(std::string department_name)
+{
+    std::regex department_pattern("([A-Z]{3}[a-z]+)");
+    return std::regex_match(department_name, department_pattern);
+}
+
+bool validateCompanyName(std::string company_name)
+{
+    std::regex company_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
+    return std::regex_match(company_name, company_pattern);
+}
+
+bool validateDepartmentName(std::string department_name)
+{
+    std::regex department_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
+    return std::regex_match(department_name, department_pattern);
+}
+
+//? VALIDATE OTHER UTILITIES
+bool validateFileTxt(std::string filename)
+{
+    std::regex filename_pattern("^[^\\s](.*).txt$");
+    return std::regex_match(filename, filename_pattern);
+}
+
 #endif
