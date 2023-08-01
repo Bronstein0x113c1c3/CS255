@@ -11,7 +11,7 @@ struct Bucket
 {
     Key key;
     Value value;
-    bool operator==(const Bucket<Key, Value> &otherBucket) 
+    bool operator==(const Bucket<Key, Value> &otherBucket)
     {
         return this->key == otherBucket.key && this->value == otherBucket.value;
     }
@@ -49,21 +49,24 @@ public:
     HashMap &operator=(const HashMap<Key, Value> &otherHashMap);
     friend std::ostream &operator<<(std::ostream &os, const HashMap<Key, Value> &hashMap)
     {
-        int amountValuesFind = 0;       // To Prevent Time Complexity O(n)
-        os << "Begin: ";
-        for (int index = 0; index < hashMap.getSizeArray(); index++)
+        if (hashMap.getAmountValueOccupy() != 0)
         {
-            if (hashMap.array[index].key != Key())
+            int amountValuesFind = 0; // To Prevent Time Complexity O(n)
+            os << "Begin: ";
+            for (int index = 0; index < hashMap.getSizeArray(); index++)
             {
-                amountValuesFind++;
-                os << hashMap.array[index].value << '|';
-                if (amountValuesFind == hashMap.getAmountValueOccupy())
+                if (hashMap.array[index].key != Key())
                 {
-                    break;
+                    amountValuesFind++;
+                    os << hashMap.array[index].value << '|';
+                    if (amountValuesFind == hashMap.getAmountValueOccupy())
+                    {
+                        break;
+                    }
                 }
             }
+            os << " End";
         }
-        os << " End";
         return os;
     }
 };

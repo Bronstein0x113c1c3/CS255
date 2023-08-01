@@ -11,14 +11,14 @@ class Human
 {
 protected:
     int ID;
-    std::string last_mid_name = "Nguyen Hoang Tuan";
-    std::string first_name = "Anh";
-    std::string department = "BKEntertainment";
-    std::string position;
+    std::string last_mid_name = "";
+    std::string first_name = "";
+    std::string department = "";
+    std::string position = "";
     Date date_of_birth = Date();
-    std::string birth_place = "Ha Tay";
-    std::string email = "abcxyz@gmail.com";
-    std::string phone_num = "09034546566";
+    std::string birth_place = "";
+    std::string email = "";
+    std::string phone_num = "";
     Date first_day_at_work = Date();
     Queue<Record> days_work;
 

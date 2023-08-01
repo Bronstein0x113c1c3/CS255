@@ -43,7 +43,6 @@ public:
             }
             os << " End";
         }
-
         return os;
     }
     Queue &operator=(const Queue<Value> &otherQueue);
