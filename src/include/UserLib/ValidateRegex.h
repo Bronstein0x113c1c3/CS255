@@ -63,20 +63,20 @@ bool validatePhoneNum(std::string phone_num)
     return std::regex_match(phone_num, phone_num_pattern);
 }
 
-// * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME
-bool validateCorporationName(std::string department_name)
+// * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM FILE
+bool validateCorporationNameFrom(std::string department_name)
 {
     std::regex department_pattern("([A-Z]{3}[a-z]+)");
     return std::regex_match(department_name, department_pattern);
 }
 
-bool validateCompanyName(std::string company_name)
+bool validateCompanyNameFrom(std::string company_name)
 {
     std::regex company_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
     return std::regex_match(company_name, company_pattern);
 }
 
-bool validateDepartmentName(std::string department_name)
+bool validateDepartmentNameFrom(std::string department_name)
 {
     std::regex department_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
     return std::regex_match(department_name, department_pattern);
