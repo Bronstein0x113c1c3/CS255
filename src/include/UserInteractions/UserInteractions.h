@@ -13,7 +13,7 @@
 // ALL THE REQUIREMENTS FUNCTION
 
 // MAKE FUNCTIONS
-Corporation makeCorporation(std::string file_path = std::string());
+Corporation makeCorporation(std::string file_path = "");
 
 // GET INPUT FUNCTIONS
 Human getHuman(std::string file_path = std::string());
@@ -32,6 +32,9 @@ Human searchByID(const int ID);
 void addHuman(const Human &new_human);
 void updateHumanInfo(const Human &human);
 
+// WRITE TO FILE
+void writeToFileTxt(const Corporation &corporation, std::string file_path);
+
 // EXIT FUNCTION
 void exitProgram();
 
@@ -39,7 +42,7 @@ void exitProgram();
 
 // MAKE CORPORATION use file_path to extract data from a FILE
 // DEFAULT: it will get Input from TERMINAL
-Corporation makeCorporation(std::string file_path = std::string())
+Corporation makeCorporation(std::string file_path)
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
