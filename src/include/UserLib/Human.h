@@ -13,7 +13,7 @@ protected:
     int ID;
     std::string last_mid_name = "";
     std::string first_name = "";
-    std::string department = "";
+    std::string work_place = "";
     std::string position = "";
     Date date_of_birth = Date();
     std::string birth_place = "";
@@ -34,7 +34,7 @@ public:
         os << human.ID << "\n";
         os << human.last_mid_name << "\n";
         os << human.first_name << "\n";
-        os << human.department << "\n";
+        os << human.work_place << "\n";
         os << human.position << "\n";
         os << human.date_of_birth << "\n";
         os << human.birth_place << "\n";
@@ -50,7 +50,7 @@ public:
     int getID() const { return this->ID; };
     std::string getLastMidName() const { return this->last_mid_name; };
     std::string getFirstName() const { return this->first_name; };
-    std::string getDepartment() const { return this->department; };
+    std::string getDepartment() const { return this->work_place; };
     std::string getPosition() const { return this->position; };
     Date getDateOfBirth() const { return this->date_of_birth; };
     std::string getBirthPlace() const { return this->birth_place; };
@@ -61,7 +61,7 @@ public:
     void setID(const int ID) { this->ID = ID; };
     void setLastMidName(const std::string last_mid_name) { this->last_mid_name = last_mid_name; };
     void setFirstName(const std::string first_name) { this->first_name = first_name; };
-    void setDepartment(const std::string department) { this->department = department; };
+    void setDepartment(const std::string work_place) { this->work_place = work_place; };
     void setPosition(const std::string position) { this->position = position; };
     void setDateOfBirth(const Date &date_of_birth) { this->date_of_birth = date_of_birth; };
     void setBirthPlace(const std::string birth_place) { this->birth_place = birth_place; };
@@ -99,12 +99,12 @@ public:
     };
 };
 
-Human::Human(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work)
+Human::Human(int ID, std::string last_mid_name, std::string first_name, std::string work_place, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work)
 {
     this->ID = ID;
     this->last_mid_name = last_mid_name;
     this->first_name = first_name;
-    this->department = department;
+    this->work_place = work_place;
     this->position = position;
     this->date_of_birth = Date(dob);
     this->birth_place = birth_place;
