@@ -65,10 +65,13 @@ void addHuman(const Corporation &corporation, std::string file_path = "")
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
-    Human human = Human();
     if (file_path != "" && validateFileTxt(file_path))
     {
-        
+        addHumanFromFile(corporation, file_path);
+    }
+    else // DO THE TERMINAL PART
+    {
+        addHumanFromTerminal(corporation);
     }
 }
 
