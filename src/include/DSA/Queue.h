@@ -45,7 +45,7 @@ public:
         }
         else
         {
-            os << "Empty Queue!!!";
+            os << "Empty Value!!!";
         }
         return os;
     }
