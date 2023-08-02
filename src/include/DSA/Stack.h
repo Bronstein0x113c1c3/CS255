@@ -77,12 +77,20 @@ public:
     Stack &operator=(const Stack<Value> &otherStack);
     friend std::ostream &operator<<(std::ostream &os, const Stack<Value> &stack)
     {
-        os << "Top: " << std::endl;
-        for (auto current = stack.begin(); current != stack.end(); ++current)
+        if (!stack.isEmpty())
         {
-            os << *current << '\n';
+            os << "Top: " << std::endl;
+            for (auto current = stack.begin(); current != stack.end(); ++current)
+            {
+                os << *current << '\n';
+            }
+            os << "End";
         }
-        os << "End";
+        else
+        {
+            os << "Empty Queue";
+        }
+
         return os;
     }
 };

@@ -67,6 +67,10 @@ public:
             }
             os << " End";
         }
+        else
+        {
+            os << "Empty HashMap!!!"
+        }
         return os;
     }
 };
