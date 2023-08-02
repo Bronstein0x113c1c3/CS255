@@ -67,7 +67,7 @@ Corporation makeCorporationFromTerminal()
         // ASK HOW MANY DEPARTMENTS THEY WANT TO ADD
         int amountDepartmentWantToCreate = 0;
         std::string string_amountDepartmentWantToCreate;
-        std::cout << "Number of Departments in " << company_name << " :";
+        std::cout << "Number of Departments in " << company_name << ":";
         std::cin >> string_amountDepartmentWantToCreate;
 
         //! DO SOME INTEGER VALIDATIONS
