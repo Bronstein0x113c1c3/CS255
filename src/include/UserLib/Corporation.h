@@ -12,7 +12,7 @@ private:
     std::string name = "BKCorporation";
     President president = President();
     Queue<VicePresident> vice_president;
-    HashMap<std::string, Company> company_list;
+    std::map<std::string, Company> company_list;
 
 public:
     // CONSTRUCTORS
@@ -25,8 +25,13 @@ public:
     {
         os << corporation.name << std::endl
            << corporation.president << std::endl
-           << corporation.vice_president << std::endl
-           << corporation.company_list << std::endl;
+           << corporation.vice_president << std::endl;
+
+        for (auto current = corporation.company_list.begin(); current != corporation.company_list.end(); ++current)
+        {
+            std::cout << current->first << ": " << current->second << std::endl;
+        }
+
         return os;
     }
     bool operator==(const Corporation &otherCorporation)
@@ -41,16 +46,25 @@ public:
     std::string getName() { return this->name; };
     President getPresident() { return this->president; };
     Queue<VicePresident> getVicePresidentList() { return this->vice_president; };
-    HashMap<std::string, Company> getCompanyList() { return this->company_list; };
+    std::map<std::string, Company> getCompanyList()
+    {
+        return this->company_list;
+    };
 
     void setName(std::string name) { this->name = name; };
     void setPresident(President president) { this->president = president; };
     void setVicePresidentList(const Queue<VicePresident> &vice_president_list) { this->vice_president = vice_president_list; };
-    void setCompanyList(const HashMap<std::string, Company> &company_list) { this->company_list = company_list; };
+    void setCompanyList(const std::map<std::string, Company> &company_list)
+    {
+        this->company_list = company_list;
+    };
 
     // METHODS
     void addVicePresident(VicePresident vice_president) { this->vice_president.Enqueue(vice_president); };
-    void addCompany(Company company) { this->company_list.assign(company.getName(), company); };
+    void addCompany(Company company)
+    {
+        this->company_list[company.getName()] = company;
+    };
 };
 
 Corporation::Corporation(std::string name, President president, Queue<VicePresident> vice_president, HashMap<std::string, Company> company)

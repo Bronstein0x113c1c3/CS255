@@ -1,16 +1,6 @@
 #include <SDL2/SDL.h>
-#include <UserLib/test.h>
-#include <vector>
-#include <iostream>
-#include <bits/stdc++.h>
-#include <chrono>
-#include <DSA/Queue.h>
-#include <DSA/HashMap.h>
-#include <UserLib/Record.h>
-#include <DSA/Stack.h>
-#include <UserLib/Human.h>
-#include <UserLib/ValidateRegex.h>
 #include <UserInteractions/UserInteractions.h>
+#include "src/include/UserInteractions/MakeCorporation.h"
 
 using namespace std;
 int main(int argc, char *argv[])
@@ -102,8 +92,7 @@ int main(int argc, char *argv[])
     // Date d1 = Date(14, 02, 2023);
     // cout << (d2 == d1) << endl;
 
-   
-    // cout<<r1<<endl;
+       // cout<<r1<<endl;
     // Stack<int> numsss1 = Stack<int>(30);
     // Stack<int> numStack1 = Stack<int>{10, 20, 30};
     // numStack1.Push(20);
@@ -121,12 +110,13 @@ int main(int argc, char *argv[])
     // std::cout << "-------------------------------" << std::endl;
     // std::cout << hm << std::endl;
     // std::cout << std::boolalpha << validatePhoneNum("090756822") << std::endl;
-    // Corporation new_corp = makeCorporation();
-    // std::cout << new_corp << std::endl;
-    HashMap<std::string, int> name_age_map = HashMap<std::string, int>();
-    name_age_map["Alex"] = 1000;
-    // std::cout << name_age_map["Alex"] << std::endl;
-    HashMap<std::string, int> name_age_map_2(name_age_map);
-    cout << name_age_map_2 << std::endl;
+    // Corporation corp = makeCorporationFromFile("employees.txt");
+    Corporation corpTerm = makeCorporationFromTerminal();
+    std::cout << corpTerm << std::endl;
+    // HashMap<std::string, int> name_age_map = HashMap<std::string, int>();
+    // name_age_map["Alex"] = 1000;
+    // // std::cout << name_age_map["Alex"] << std::endl;
+    // HashMap<std::string, int> name_age_map_2(name_age_map);
+    // cout << name_age_map_2 << std::endl;
     return 0;
 }

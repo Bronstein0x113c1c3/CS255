@@ -3,6 +3,7 @@
 using namespace std;
 #include "./Department.h"
 
+
 class Company
 {
 private:
@@ -11,7 +12,7 @@ private:
     Director director = Director();
     // ViceDirector: Human
     Queue<ViceDirector> vice_director;
-    HashMap<std::string,Department> department_list;
+    std::map<std::string,Department> department_list;
 
 public:
     Company(){};
@@ -23,7 +24,10 @@ public:
     std::string getName() { return this->name; };
     Director getDirector() { return this->director; };
     Queue<ViceDirector> getViceDirectorList() { return this->vice_director; };
-    HashMap<std::string,Department> getDepartmentList() { return this->department_list; };
+    std::map<std::string,Department> getDepartmentList() 
+    { 
+        return this->department_list; 
+    };
 
     void setViceDirectorList(Queue<ViceDirector> vice_director_list)
     {
@@ -37,13 +41,14 @@ public:
     {
         this->director = director;
     };
-    void setDepartmentList(HashMap<std::string,Department> department_list)
+    void setDepartmentList(std::map<std::string,Department> department_list)
     {
         this->department_list = department_list;
     };
     void addDepartment(Department department)
     {
-        this->department_list.assign(department.getName(),department);
+        this->department_list[department.getName()] = department;
+        // this->department_list.assign(department.getName(),department);
     };
     void addViceDirector(ViceDirector vice_director)
     {
@@ -54,8 +59,11 @@ public:
     {
         os << company.name << std::endl
            << company.director << endl
-           << company.vice_director << endl
-           << company.department_list << endl;
+           << company.vice_director << endl;
+        for (auto current = company.department_list.begin(); current != company.department_list.end(); ++current)
+        {
+            std::cout << current->first << ": " << current->second << std::endl;
+        }
         return os;
     }
     bool operator==(const Company &otherCompany)
