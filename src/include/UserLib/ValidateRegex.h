@@ -2,6 +2,7 @@
 #define VALIDATEREGEX_H
 
 #include <string>
+#include <string>
 #include <regex>
 #include <tuple>
 
@@ -24,6 +25,12 @@ bool validateNameFromTerminal(std::string name);
 
 //? VALIDATE OTHER UTILITIES
 bool validateFileTxt(std::string filename);
+
+//! EXTRACT DATA
+std::tuple<std::string, std::string> extractName(std::string full_name);
+std::tuple<std::string> extractCorporationFromFile(std::string corporation_name);
+std::tuple<std::string, std::string> extractCompanyFromFile(std::string company_name);
+std::tuple<std::string, std::string, std::string> extractDepartmentFromFile(std::string department_name);
 
 //-------------------------------------------------------------------
 
@@ -120,6 +127,19 @@ std::tuple<std::string, std::string, std::string> extractDepartmentFromFile(std:
     }
     return std::tuple<std::string, std::string, std::string>("Department", "Department", "Department");
 }
+
+std::tuple<std::string, std::string> extractName(std::string full_name)
+{    
+    // WORK WITH NAME WITH 5 WORDS
+    std::regex name_pattern("([A-Z]{1}[a-z]+)\\s(([A-Z]{1}[a-z]*)\\s?)+");
+    std::smatch list_of_data;
+    if (std::regex_search(full_name,list_of_data, name_pattern))
+    {
+        return {list_of_data[1], list_of_data[2]}; 
+    }
+    
+}
+
 // * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM TERMINAL
 bool validateNameFromTerminal(std::string name)
 {

@@ -2,6 +2,7 @@
 #define VALIDATENUMANDNAME_H
 
 #include <iostream>
+#include <tuple>
 #include "../UserLib/ValidateRegex.h"
 
 // DO SOME INT VALIDATION FUNCTION
@@ -13,7 +14,7 @@ std::string getNumAfterValidate(std::string num)
         {
             return num;
         }
-        std::cout << "Wrong Format" << std::endl;
+        std::cout << "Wrong Format!!!" << std::endl;
         std::cout << "Enter Num Again: ";
         std::cin >> num;
 
@@ -31,11 +32,28 @@ std::string getNameAfterValidate(std::string place, std::string name)
         {
             return name;
         }
-        std::cout << "Wrong Format" << std::endl;
+        std::cout << "Wrong Format!!!" << std::endl;
         std::cout << "Enter " << place << " Name Again: ";
         std::cin >> name;
 
         std::cin.ignore();
+    }
+}
+
+// DO THE VALUE VALIDATION FUNCTION
+std::string getValueAfterValidate(std::string value, std::function<bool(std::string)> validateFunc)
+{
+    while (true)
+    {
+        if (validateFunc(value))
+        {
+            return value;
+        }
+        std::cout << "Wrong Format!!!" << std::endl;
+        std::cout << "Enter Value Again: ";
+        std::cin >> value;
+
+        std::cin.ignore(); 
     }
 }
 
