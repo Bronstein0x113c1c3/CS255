@@ -3,11 +3,11 @@
 
 #include "../UserLib/Human.h"
 #include "../UserLib/Corporation.h"
-#include "../UserLib/ValidateRegex.h"
+#include "ValidateNumAndName.h"
 
 // GET HUMAN FUNCTION
-Human addHumanFromFile(const Corporation &corporation, const std::string file_path);
-Human addHumanFromTerminal(const Corporation &corporation);
+void addHumanFromFile(const Corporation &corporation, const std::string file_path);
+void addHumanFromTerminal(const Corporation &corporation);
 
 // VALIDATE NAME FUNCTION
 std::string getNameAfterValidate(std::string place, std::string name);
@@ -15,11 +15,11 @@ std::string getNameAfterValidate(std::string place, std::string name);
 // VALIDATE NUM FUNCTION
 std::string getNumAfterValidate(std::string num);
 
-Human addHumanFromFile(const Corporation &corporation, const std::string file_path)
+void addHumanFromFile(const Corporation &corporation, const std::string file_path)
 {
 }
 
-Human addHumanFromTerminal(const Corporation &corporation)      //! DUY PART
+void addHumanFromTerminal(const Corporation &corporation)      //! DUY PART
 {
     //* HUMAN ATTRIBUTES
     int ID = 0;
@@ -36,33 +36,5 @@ Human addHumanFromTerminal(const Corporation &corporation)      //! DUY PART
     
 }
 
-// DO SOME INT VALIDATION FUNCTION
-std::string getNumAfterValidate(std::string num)
-{
-    while (true)
-    {
-        if (validateNum(num))
-        {
-            return num;
-        }
-        std::cout << "Wrong Format" << std::endl;
-        std::cout << "Enter Num Again: ";
-        std::cin >> num;
-    }
-}
 
-// DO SOME STRING VALIDATION FUNCTION
-std::string getNameAfterValidate(std::string place, std::string name)
-{
-    while (true)
-    {
-        if (validateNameFromTerminal(name))
-        {
-            return name;
-        }
-        std::cout << "Wrong Format" << std::endl;
-        std::cout << "Enter " << place << " Name Again: ";
-        std::cin >> name;
-    }
-}
 #endif
