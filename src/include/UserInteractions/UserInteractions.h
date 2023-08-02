@@ -14,7 +14,7 @@
 // ALL THE REQUIREMENTS FUNCTION
 
 // MAKE FUNCTIONS
-HashMap<std::string, Corporation> makeCorporation(std::string file_path);
+HashMap<std::string, Corporation> makeCorporation(std::string file_path = "");
 
 // DISPLAY FUNCTIONS
 void displayCorporationInfo(const Corporation &corporation);
@@ -43,7 +43,7 @@ void exitProgram();
 
 // MAKE CORPORATION use file_path to extract data from a FILE
 // DEFAULT: it will get Input from TERMINAL to MAKE COPORATION
-HashMap<std::string, Corporation> makeCorporation(std::string file_path = "")
+HashMap<std::string, Corporation> makeCorporation(std::string file_path)
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
@@ -62,7 +62,7 @@ HashMap<std::string, Corporation> makeCorporation(std::string file_path = "")
 
 // ADD HUMAN use file_path to extract data from a FILE
 // DEFAULT: it will get Input from TERMINAL to MAKE HUMAN
-void addHuman(const Corporation &corporation, std::string file_path = "")
+void addHuman(const Corporation &corporation, std::string file_path)
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART

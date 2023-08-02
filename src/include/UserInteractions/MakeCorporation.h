@@ -10,23 +10,86 @@ HashMap<std::string, Corporation> makeCorporationFromTerminal();
 
 HashMap<std::string, Corporation> makeCorporationFromFile(std::string file_path)
 {
-    HashMap<std::string, Corporation> corporations;
+    HashMap<std::string, Corporation> corporations = HashMap<std::string, Corporation>();
     std::ifstream fs(file_path);
     std::string line;
+    std::cout << "HELLO" << std::endl;
     while (getline(fs, line))
     {
         std::regex pattern("(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+){0,1};\\s");
         smatch list_of_data;
         if (std::regex_search(line, list_of_data, pattern))
         {
-            if (validateCompanyNameFromFile(list_of_data[3]))
+            // if (validateCompanyNameFromFile(list_of_data[3]))
+            // {
+            //     std::regex pattern("([A-Z]{3}[a-z]+)");
+            //     std::smatch company;
+            //     if (std::regex_search(list_of_data[3], company, pattern))
+            //     {
+            //         std::cout << "Corporation: " << company[1] << endl;
+            //     }
+            // }
+            if (validateCorporationNameFromFile(list_of_data[3]))
             {
-                regex pattern("([A-Z]{3}[a-z]+)");
-                smatch company;
-                if (std::regex_search(list_of_data[3], company, pattern))
-                {
-                    std::cout << "Corporation: " << company[1] << endl;
-                }
+                std::cout << "Corporation mode: " << list_of_data[3] << std::endl;
+                std::tuple<std::string> result = extractCorporationFromFile(list_of_data[3]);
+                std::string corporation_name;
+                std::tie(corporation_name) = result;
+
+                // CREATE CORPORATION
+                Corporation corporation = Corporation();
+                corporation.setName(corporation_name);
+
+                // ASSIGN TO LIST
+
+                // BEFORE ASSIGN -> CHECK AVAILABLE corp && CHECK SIZE
+                // IF SIZE == 0 -> ASSIGN 
+                // IF CHECK NOT AVAILABLE -> ASSIGN TO LIST
+            }
+            else if (validateCompanyNameFromFile(list_of_data[3]))
+            {
+                std::cout << "Company mode: " << list_of_data[3] << std::endl;
+                std::tuple<std::string, std::string> result = extractCompanyFromFile(list_of_data[3]);
+                std::string corporation_name;
+                std::string company_name;
+                std::tie(corporation_name, company_name) = result;
+
+                // CREATE CORPORATION
+                Corporation corporation = Corporation();
+                corporation.setName(corporation_name);
+
+                // CREATE COMPANY
+                Company company = Company();
+                company.setName(company_name);
+
+                // ASSIGN TO LIST
+            }
+            else if (validateDepartmentNameFromFile(list_of_data[3]))
+            {
+                std::cout << "Department mode: " << list_of_data[3] << std::endl;
+                std::tuple<std::string, std::string, std::string> result = extractDepartmentFromFile(list_of_data[3]);
+                std::string corporation_name;
+                std::string company_name;
+                std::string department_name;
+
+                std::tie(corporation_name, company_name, department_name) = result;
+                // std::cout << corporation_name << std::endl;
+                // std::cout << company_name << std::endl;
+                // std::cout << department_name << std::endl;
+
+                // CREATE CORPORATION
+                Corporation corporation = Corporation();
+                corporation.setName(corporation_name);
+
+                // CREATE COMPANY
+                Company company = Company();
+                company.setName(company_name);
+
+                // CREATE DEPARTMENT
+                Department department = Department();
+                department.setName(department_name);
+
+                // ASSIGN TO LIST
             }
         }
     }
@@ -36,7 +99,7 @@ HashMap<std::string, Corporation> makeCorporationFromFile(std::string file_path)
 HashMap<std::string, Corporation> makeCorporationFromTerminal()
 {
     //! SET FLAG
-    HashMap<std::string, Corporation> corporations;
+    HashMap<std::string, Corporation> corporations = HashMap<std::string, Corporation>();
 
     // WELCOME
     std::cout << "-----------------------Welcome to CORPORATION maker-----------------------" << std::endl;

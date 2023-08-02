@@ -75,50 +75,50 @@ bool validateCorporationNameFromFile(std::string corporation_name)
     std::regex corporation_pattern("([A-Z]{3}[a-z]+)");
     return std::regex_match(corporation_name, corporation_pattern);
 }
-tuple<std::string> extractCorporationFromFile(std::string corporation_name)
+std::tuple<std::string> extractCorporationFromFile(std::string corporation_name)
 {
-    tuple<std::string> result;
+    std::tuple<std::string> result;
     std::regex corporation_pattern("([A-Z]{3}[a-z]+)");
-    smatch list_of_data;
-    if (regex_search(corporation_name, list_of_data, corporation_pattern))
+    std::smatch list_of_data;
+    if (std::regex_search(corporation_name, list_of_data, corporation_pattern))
     {
         // result = make_tuple(list_of_data[1]);
-        return tuple<std::string>(list_of_data[1]);
+        return std::tuple<std::string>(list_of_data[1]);
     }
-    return tuple<std::string>("Corporation");
+    return std::tuple<std::string>("Corporation");
 }
 bool validateCompanyNameFromFile(std::string company_name)
 {
     std::regex company_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
     return std::regex_match(company_name, company_pattern);
 }
-tuple<std::string, std::string> extractCompanyFromFile(std::string company_name)
+std::tuple<std::string, std::string> extractCompanyFromFile(std::string company_name)
 {
-    tuple<std::string, std::string> result;
+    std::tuple<std::string, std::string> result;
     std::regex corporation_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
-    smatch list_of_data;
-    if (regex_search(company_name, list_of_data, corporation_pattern))
+    std::smatch list_of_data;
+    if (std::regex_search(company_name, list_of_data, corporation_pattern))
     {
         // result = make_tuple(list_of_data[1], list_of_data[2]);
-        return tuple<std::string, std::string>(list_of_data[1], list_of_data[2]);
+        return std::tuple<std::string, std::string>(list_of_data[1], list_of_data[2]);
     }
-    return tuple<std::string, std::string>("Company", "Company");
+    return std::tuple<std::string, std::string>("Company", "Company");
 }
 bool validateDepartmentNameFromFile(std::string department_name)
 {
     std::regex department_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
     return std::regex_match(department_name, department_pattern);
 }
-tuple<std::string, std::string, std::string> extractDepartmentFromFile(std::string department_name)
+std::tuple<std::string, std::string, std::string> extractDepartmentFromFile(std::string department_name)
 {
-    tuple<std::string, std::string, std::string> result;
+    std::tuple<std::string, std::string, std::string> result;
     std::regex department_pattern("([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)->([A-Z]{3}[a-z]+)");
-    smatch list_of_data;
-    if (regex_search(department_name, list_of_data, department_pattern))
+    std::smatch list_of_data;
+    if (std::regex_search(department_name, list_of_data, department_pattern))
     {
-        return tuple<std::string, std::string, std::string>(list_of_data[1], list_of_data[2], list_of_data[3]);
+        return std::tuple<std::string, std::string, std::string>(list_of_data[1], list_of_data[2], list_of_data[3]);
     }
-    return tuple<std::string, std::string, std::string>("Department", "Department", "Department");
+    return std::tuple<std::string, std::string, std::string>("Department", "Department", "Department");
 }
 // * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM TERMINAL
 bool validateNameFromTerminal(std::string name)
