@@ -6,6 +6,7 @@
 #include "../UserLib/Department.h"
 #include "../UserLib/Human.h"
 #include "../DSA/Stack.h"
+#include "../DSA/HashMap.h"
 #include "../UserLib/ValidateRegex.h"
 #include "AddHuman.h"
 #include "MakeCorporation.h"
@@ -13,7 +14,7 @@
 // ALL THE REQUIREMENTS FUNCTION
 
 // MAKE FUNCTIONS
-Corporation makeCorporation(std::string file_path = "");
+HashMap<std::string, Corporation> makeCorporation(std::string file_path);
 
 // DISPLAY FUNCTIONS
 void displayCorporationInfo(const Corporation &corporation);
@@ -42,21 +43,21 @@ void exitProgram();
 
 // MAKE CORPORATION use file_path to extract data from a FILE
 // DEFAULT: it will get Input from TERMINAL to MAKE COPORATION
-Corporation makeCorporation(std::string file_path)
+HashMap<std::string, Corporation> makeCorporation(std::string file_path = "")
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
-    Corporation corporation = Corporation();
-    if (file_path != "" && validateFileTxt(file_path)) 
+    HashMap<std::string, Corporation> corporations;
+    if (file_path != "" && validateFileTxt(file_path))
     {
-        corporation = makeCorporationFromFile(file_path);
+        corporations = makeCorporationFromFile(file_path);
     }
     else // DO THE TERMINAL PART
     {
-        corporation = makeCorporationFromTerminal();
+        corporations = makeCorporationFromTerminal();
     }
 
-    return corporation;
+    return corporations;
 }
 
 // ADD HUMAN use file_path to extract data from a FILE
@@ -65,11 +66,21 @@ void addHuman(const Corporation &corporation, std::string file_path = "")
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
-    Human human = Human();
     if (file_path != "" && validateFileTxt(file_path))
     {
-        
+        addHumanFromFile(corporation, file_path);
+    }
+    else // DO THE TERMINAL PART
+    {
+        addHumanFromTerminal(corporation);
     }
 }
+
+// DISPLAY PURPOSE ONLY
+// Result: images\Output.png
+void displayCorporationInfo(const Corporation &corporation);
+void displayHumanInfo(const int ID); //! USE searchByID()
+void displayUnitInfo(const Company &company);
+void displayUnitInfo(const Department &department);
 
 #endif
