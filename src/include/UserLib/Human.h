@@ -50,7 +50,7 @@ public:
     int getID() const { return this->ID; };
     std::string getLastMidName() const { return this->last_mid_name; };
     std::string getFirstName() const { return this->first_name; };
-    std::string getDepartment() const { return this->work_place; };
+    std::string getWorkPlace() const { return this->work_place; };
     std::string getPosition() const { return this->position; };
     Date getDateOfBirth() const { return this->date_of_birth; };
     std::string getBirthPlace() const { return this->birth_place; };
@@ -61,7 +61,7 @@ public:
     void setID(const int ID) { this->ID = ID; };
     void setLastMidName(const std::string last_mid_name) { this->last_mid_name = last_mid_name; };
     void setFirstName(const std::string first_name) { this->first_name = first_name; };
-    void setDepartment(const std::string work_place) { this->work_place = work_place; };
+    void setWorkPlace(const std::string work_place) { this->work_place = work_place; };
     void setPosition(const std::string position) { this->position = position; };
     void setDateOfBirth(const Date &date_of_birth) { this->date_of_birth = date_of_birth; };
     void setBirthPlace(const std::string birth_place) { this->birth_place = birth_place; };
