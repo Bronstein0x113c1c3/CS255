@@ -9,7 +9,9 @@
 //* VALIDATE HUMAN ATTRIBUTE FUNCTIONS
 bool validateNum(std::string ID);
 bool validateName(std::string name);
-bool validatePosition(std::string posistion_name);
+bool validateCorporationPosition(std::string position_name);
+bool validateCompanyPosition(std::string position_name);
+bool validateDepartmentPosition(std::string position_name);
 bool validateDate(std::string date);
 bool validatePlace(std::string birth_place);
 bool validateEmail(std::string email);
@@ -45,9 +47,9 @@ bool validateName(std::string name)
     return (std::regex_match(name, std::regex("(([A-Z]{1}[a-z]+)\\s?){1,}")));
 }
 
-bool validatePosition(std::string posistion_name)
+bool validatePosition(std::string position_name)
 {
-    return std::regex_match(posistion_name, std::regex("(([A-Z]{1}[a-z]+)?){1,}"));
+    return std::regex_match(position_name, std::regex("(([A-Z]{1}[a-z]+)?){1,}"));
 }
 
 bool validateDate(std::string date)
@@ -58,8 +60,30 @@ bool validateDate(std::string date)
 
 bool validatePlace(std::string place)
 {
-    std::regex place_pattern("[A-Z]{1}[a-z]+");
+    std::regex place_pattern("(([A-Z]{1}[a-z]+)\\s?){1,}");
     return std::regex_match(place, place_pattern);
+}
+
+bool validateCorporationPosition(std::string position_name)
+{
+    bool statement1 = position_name == "President";
+    bool statement2 = position_name == "Vice President";
+    return statement1 || statement2;
+}
+
+bool validateCompanyPosition(std::string position_name)
+{
+    bool statement1 = position_name == "Director";
+    bool statement2 = position_name == "Vice Director";
+    return statement1 || statement2;
+}
+
+bool validateDepartmentPosition(std::string position_name)
+{
+    bool statement1 = position_name == "Manager";
+    bool statement2 = position_name == "Deputy Manager";
+    bool statement3 = position_name == "Employee";
+    return statement1 || statement2 || statement3;
 }
 
 bool validateEmail(std::string email)
@@ -143,7 +167,7 @@ std::tuple<std::string, std::string> extractName(std::string full_name)
 // * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM TERMINAL
 bool validateNameFromTerminal(std::string name)
 {
-    std::regex name_pattern("^[^\\s]{0}([a-zA-Z0-9]+)[^\\s]{0}$");
+    std::regex name_pattern("(?:([a-zA-Z0-9]+)\\s?)+");
     return std::regex_match(name, name_pattern);
 }
 

@@ -50,7 +50,7 @@ std::string getValueAfterValidate(std::string value, std::function<bool(std::str
             return value;
         }
         std::cout << "Wrong Format!!!" << std::endl;
-        std::cout << "Enter Value Again: ";
+        std::cout << "Enter Again: ";
         std::cin >> value;
 
         std::cin.ignore(); 

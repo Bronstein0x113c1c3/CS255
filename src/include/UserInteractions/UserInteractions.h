@@ -69,7 +69,7 @@ Corporation makeCorporation(std::string file_path)
 }
 
 // ADD HUMAN will get Input from TERMINAL to MAKE HUMAN
-void addHuman(const Corporation &corporation, std::string file_path)
+void addHuman(const Corporation &corporation)
 {
     //* MAKE HUMAN
     Human human = Human();
@@ -104,8 +104,10 @@ void addHuman(const Corporation &corporation, std::string file_path)
     ID = stoi(string_ID);
     human.setID(ID);
 
+    //!! VALIDATE ID ??
+
     //? Name
-    std::cout << "Enter Name: ";
+    std::cout << "Enter NAME: ";
     std::cin >> name;
 
     // IGNORE THE NEW LINE CHARACTER
@@ -117,20 +119,112 @@ void addHuman(const Corporation &corporation, std::string file_path)
 
     first_name = std::get<0>(name_extracted);
     last_mid_name = std::get<1>(name_extracted);
+    human.setFirstName(first_name);
+    human.setLastMidName(last_mid_name);
 
     //? WORK PLACE
-    std::cout << "Enter Work Place" << std::endl;
+    //? WORK PLACE + POSITION -> ASSIGN TO THE EQUIVALENT CORPORATION position
+    std::cout << "Enter WORK PLACE" << std::endl;
+    std::cout << "Corporation or Company or Department: ";
     std::cin >> work_place;
-    
+
     // IGNORE THE NEW LINE CHARACTER
     std::cin.ignore();
 
-    //! DO SOME STRING VALIDATIONS 
-    work_place = getValueAfterValidate(work_place, validatePlace);
+    //! DO SOME STRING VALIDATIONS
+    // IF THE USER TYPE UNVAILABLE
+    while (work_place != "Corporation" || work_place != "Company" || work_place != "Department")
+    {
+        if (work_place == "Corporation" || work_place == "Company" || work_place == "Department")
+        {
+            break;
+        }
+        std::cout << "Enter WORK PLACE again" << std::endl;
+        std::cout << "Corporation or Company or Department: ";
+        std::cin >> work_place;
+
+        // IGNORE THE NEW LINE CHARACTER
+        std::cin.ignore();
+    }
+    
+    human.setWorkPlace(work_place);
+
+    //? EVALUATE POSITION BASED ON WORK PLACE
+    //? POSITION
+    if (work_place == "Corporation")
+    {
+        std::cout << "Enter POSITION: " << std::endl;
+        std::cout << "President or Vice President: ";
+        std::cin >> position;
+        position = getValueAfterValidate(position, validateCorporationPosition);
+    }
+    else if (work_place == "Company")
+    {
+        std::cout << "Enter POSITION: " << std::endl;
+        std::cout << "Director or Vice Director: ";
+        std::cin >> position;
+        position = getValueAfterValidate(position, validateCompanyPosition);
+    }
+    else if (work_place == "Department")
+    {
+        std::cout << "Enter POSITION: " << std::endl;
+        std::cout << "Manager or Deputy Manager or Employee: ";
+        std::cin >> position;
+        position = getValueAfterValidate(position, validateDepartmentPosition);
+    }
+    // IGNORE THE NEW LINE CHARACTER
+    std::cin.ignore();
+
+    human.setPosition(position);
+
+    //? DATE OF BIRTH
+    std::cout << "Enter DATE OF BIRTH: ";
+    std::cin >> date_of_birth;
+
+    // IGNORE THE NEW LINE CHARATER
+    std::cin.ignore();
+
+    date_of_birth = getValueAfterValidate(date_of_birth, validateDate);
+    human.setDateOfBirth(date_of_birth);
+
+    //? BIRTH PLACE
+    std::cout << "Enter BIRTH PLACE: ";
+    std::cin >> birth_place;
+
+    // IGNORE THE NEW LINE CHARACTER
+    std::cin.ignore();
+
+    birth_place = getValueAfterValidate(birth_place, validatePlace);
+    human.setBirthPlace(birth_place);
+
+    //? EMAIL
+    std::cout << "Enter EMAIL: ";
+    std::cin >> email;
+
+    // IGNORE THE NEW LINE CHARACTER
+    std::cin.ignore();
+
+    email = getValueAfterValidate(email, validateEmail);
+    human.setEmail(email);
+
+    //? PHONE NUM
+    std::cout << "Enter PHONE NUMBER: ";
+    std::cin >> phone_num;
+
+    // IGNORE THE NEW LINE CHARACTER
+    std::cin.ignore();
+
+    phone_num = getValueAfterValidate(phone_num, validatePhoneNum);
+    human.setPhoneNum(phone_num);
+
+    //? FIRST DAY AT WORK
+    std::cout << "Enter FIRST DAY AT WORK follow the format dd/mm/yyyy: ";
+    std::cin >> first_day_at_work;
+
+    first_day_at_work = getValueAfterValidate(first_day_at_work, validateDate);
+    human.setFirstDayAtWork(first_day_at_work);
 
     
-
-
 }
 
 #endif
