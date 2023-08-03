@@ -32,7 +32,7 @@ public:
     std::string getName() const { return this->name; };
 
     // SETTERS
-    void setName(std::string name) const { this->name = name; };
+    void setName(std::string name) { this->name = name; };
     void setDeputyManagerList(const Queue<DeputyManager> &deputy_manager_list) { this->deputy_manager_list = deputy_manager_list; };
     void setManager(Manager manager) { this->manager = manager; };
     void setEmployeeList(const std::map<int, Employee> &employee_list) 
