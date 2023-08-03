@@ -43,7 +43,7 @@ public:
         return this->name != otherCorporation.name;
     }
     // PROPERTIES
-    std::string getName() { return this->name; };
+    std::string getName() const { return this->name; };
     President getPresident() { return this->president; };
     Queue<VicePresident> getVicePresidentList() { return this->vice_president; };
     std::map<std::string, Company> getCompanyList()

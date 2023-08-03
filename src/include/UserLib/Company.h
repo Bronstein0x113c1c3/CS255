@@ -21,7 +21,7 @@ public:
         this->name = name;
     }
     ~Company() {};
-    std::string getName() { return this->name; };
+    std::string getName() const { return this->name; };
     Director getDirector() { return this->director; };
     Queue<ViceDirector> getViceDirectorList() { return this->vice_director; };
     std::map<std::string,Department> getDepartmentList() 
