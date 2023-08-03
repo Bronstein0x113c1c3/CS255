@@ -17,10 +17,10 @@
 Corporation makeCorporation(std::string file_path = "");
 
 // DISPLAY FUNCTIONS
-void displayCorporationInfo(const Corporation &corporation);
+void displayCorporationInfo(Corporation &corporation);
 void displayHumanInfo(const int ID); //! USE searchByID()
-void displayUnitInfo(const Company &company);
-void displayUnitInfo(const Department &department);
+void displayUnitInfo(Company &company);
+void displayUnitInfo(Department &department);
 
 // SEARCH FUNCTIONS USE CONCURRENCY - PARRALELISM
 Stack<Human> searchByName(const std::string name_input);
@@ -44,7 +44,7 @@ void exitProgram();
 
 // DISPLAY PURPOSE ONLY
 // Result: images\Output.png
-void displayCorporationInfo(const Corporation &corporation);
+void displayCorporationInfo(Corporation &corporation);
 void displayHumanInfo(const int ID); //! USE searchByID()
 void displayUnitInfo(const Company &company);
 void displayUnitInfo(const Department &department);
@@ -69,7 +69,7 @@ Corporation makeCorporation(std::string file_path)
 }
 
 // ADD HUMAN will get Input from TERMINAL to MAKE HUMAN
-void addHuman(const Corporation &corporation)
+void addHuman(Corporation &corporation)
 {
     //* MAKE HUMAN
     Human human = Human();
@@ -146,7 +146,6 @@ void addHuman(const Corporation &corporation)
         // IGNORE THE NEW LINE CHARACTER
         std::cin.ignore();
     }
-    
     human.setWorkPlace(work_place);
 
     //? EVALUATE POSITION BASED ON WORK PLACE
@@ -164,6 +163,14 @@ void addHuman(const Corporation &corporation)
         std::cout << "Director or Vice Director: ";
         std::cin >> position;
         position = getValueAfterValidate(position, validateCompanyPosition);
+
+        // DISPLAY ALL THE AVAILABLE COMPANY
+        std::cout << "Available Company in " + corporation.getName() + ": ";
+        std::map<std::string, Company> company_list = corporation.getCompanyList();
+        for (auto current = company_list.begin(); current != company_list.end(); ++current)
+        {
+            /* code */
+        }
     }
     else if (work_place == "Department")
     {
@@ -223,8 +230,6 @@ void addHuman(const Corporation &corporation)
 
     first_day_at_work = getValueAfterValidate(first_day_at_work, validateDate);
     human.setFirstDayAtWork(first_day_at_work);
-
-    
 }
 
 #endif
