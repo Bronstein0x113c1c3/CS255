@@ -29,7 +29,7 @@ public:
         os << "Vice Presidents: ";
         for (auto current = corporation.vice_president.begin(); current != corporation.vice_president.end(); ++current)
         {
-            VicePresident* vp = (*current).getValue();
+            VicePresident *vp = (*current).getValue();
             os << *vp << ", ";
         }
         os << std::endl;
@@ -60,7 +60,14 @@ public:
     {
         return this->company_list;
     };
-
+    Queue<VicePresident *> *getPointerofVicePresidentList()
+    {
+        return &(this->vice_president);
+    };
+    std::map<std::string, Company *> *getPointerofCompanyList()
+    {
+        return &(this->company_list);
+    };
     void setName(std::string name) { this->name = name; };
     void setPresident(President *president) { this->president = *president; };
     void setVicePresidentList(const Queue<VicePresident *> &vice_president_list) { this->vice_president = vice_president_list; };

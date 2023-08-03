@@ -31,6 +31,14 @@ public:
     Manager getManager() const { return this->manager; };
     std::string getName() const { return this->name; };
 
+    std::map<int, Employee *> *getPointerOfEmployeeList()
+    {
+        return &(this->employee_list);
+    }
+    Queue<DeputyManager *> *getPointerOfDeputyManagerList()
+    {
+        return &(this->deputy_manager_list);
+    };
     // SETTERS
     void setName(std::string name) { this->name = name; };
     void setDeputyManagerList(const Queue<DeputyManager *> deputy_manager_list) { this->deputy_manager_list = deputy_manager_list; };

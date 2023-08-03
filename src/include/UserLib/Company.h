@@ -10,8 +10,8 @@ private:
     // Director: Human
     Director director = Director();
     // ViceDirector: Human
-    Queue<ViceDirector*> vice_director = Queue<ViceDirector*>();
-    std::map<std::string, Department*> department_list;
+    Queue<ViceDirector *> vice_director = Queue<ViceDirector *>();
+    std::map<std::string, Department *> department_list;
 
 public:
     Company(){};
@@ -20,15 +20,23 @@ public:
         this->name = name;
     }
     ~Company(){};
+
     std::string getName() const { return this->name; };
     Director getDirector() { return this->director; };
-    Queue<ViceDirector*> &getViceDirectorList()  { return this->vice_director; };
-    std::map<std::string,Department*> getDepartmentList() 
-    { 
-        return this->department_list; 
+    Queue<ViceDirector *> &getViceDirectorList() { return this->vice_director; };
+    std::map<std::string, Department *> getDepartmentList()
+    {
+        return this->department_list;
     };
-
-    void setViceDirectorList(Queue<ViceDirector*> vice_director_list)
+    std::map<std::string, Department *> *getPointerOfDepartmentList()
+    {
+        return &(this->department_list);
+    };
+    Queue<ViceDirector *> *getPointerOfViceDirector()
+    {
+        return &(this->vice_director);
+    };
+    void setViceDirectorList(Queue<ViceDirector *> vice_director_list)
     {
         this->vice_director = vice_director_list;
     };
@@ -36,20 +44,20 @@ public:
     {
         this->name = name;
     };
-    void setDirector(Director* director)
+    void setDirector(Director *director)
     {
         this->director = *director;
     };
-    void setDepartmentList(std::map<std::string, Department*> department_list)
+    void setDepartmentList(std::map<std::string, Department *> department_list)
     {
         this->department_list = department_list;
     };
-    void addDepartment(Department* department)
+    void addDepartment(Department *department)
     {
         this->department_list[department->getName()] = department;
         // this->department_list.assign(department.getName(),department);
     };
-    void addViceDirector(ViceDirector* vice_director)
+    void addViceDirector(ViceDirector *vice_director)
     {
         this->vice_director.Enqueue(vice_director);
     }
@@ -58,19 +66,19 @@ public:
     {
         os << "-----------------------------------------------------------" << std::endl;
         os << "Company: " + company.name << std::endl;
-        os << "Director: " + company.director.getFirstName() + " " +company.director.getLastMidName() << endl;
+        os << "Director: " + company.director.getFirstName() + " " + company.director.getLastMidName() << endl;
         os << "Vice Directors: ";
         for (auto current = company.vice_director.begin(); current != company.vice_director.end(); ++current)
         {
-            ViceDirector* vice_director = (*current).getValue();
+            ViceDirector *vice_director = (*current).getValue();
             os << *current << ", ";
         }
         os << std::endl;
-        
+
         os << "Departments: ";
         for (auto current = company.department_list.begin(); current != company.department_list.end(); ++current)
         {
-            os << current->first<< ": " <<current->second << ", ";
+            os << current->first << ": " << current->second << ", ";
         }
         os << std::endl;
         os << "-----------------------------------------------------------" << std::endl;

@@ -61,6 +61,7 @@ public:
     std::string getEmail() const { return this->email; };
     std::string getPhoneNum() const { return this->phone_num; };
     Date getFirstDayAtWork() const { return this->first_day_at_work; };
+    Queue<Record *> *getPointerDaysWork() { return &(this->days_work); };
 
     void setID(const int ID) { this->ID = ID; };
     void setLastMidName(const std::string last_mid_name) { this->last_mid_name = last_mid_name; };
