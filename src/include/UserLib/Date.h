@@ -65,16 +65,16 @@ public:
     }
 
     // OPERATOR
-    Date &operator=(const Date &otherDate)
-    {
-        if (this != &otherDate)
-        {
-            this->day = otherDate.day;
-            this->month = otherDate.month;
-            this->year = otherDate.month;
-        }
-        return *this;
-    }
+    // Date &operator=(const Date &otherDate)
+    // {
+    //     if (this != &otherDate)
+    //     {
+    //         this->day = otherDate.day;
+    //         this->month = otherDate.month;
+    //         this->year = otherDate.month;
+    //     }
+    //     return *this;
+    // }
     bool operator==(const Date &otherDate)
     {
         return this->day == otherDate.day && this->month == otherDate.month && this->year == otherDate.year;
