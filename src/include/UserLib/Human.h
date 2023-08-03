@@ -53,6 +53,7 @@ public:
     int getID() const { return this->ID; };
     std::string getLastMidName() const { return this->last_mid_name; };
     std::string getFirstName() const { return this->first_name; };
+    std::string getFullName() const { return this->first_name + " " + this->last_mid_name; };
     std::string getWorkPlace() const { return this->work_place; };
     std::string getPosition() const { return this->position; };
     Date getDateOfBirth() const { return this->date_of_birth; };
