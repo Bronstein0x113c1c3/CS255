@@ -54,7 +54,7 @@ bool validatePosition(std::string position_name)
 
 bool validateDate(std::string date)
 {
-    std::regex date_pattern("*(((0[1-9]|[12]\\d|3[01])\\/(0[13578]|1[02])\\/((19|[2-9]\\d)\\d{2}))|((0[1-9]|[12]\\d|30)\\/(0[13456789]|1[012])\\/((19|[2-9]\\d)\\d{2}))|((0[1-9]|1\\d|2[0-8])\\/02\\/((19|[2-9]\\d)\\d{2}))|(29\\/02\\/((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))");
+    std::regex date_pattern("([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})");
     return std::regex_match(date, date_pattern);
 }
 
@@ -94,7 +94,7 @@ bool validateEmail(std::string email)
 
 bool validatePhoneNum(std::string phone_num)
 {
-    std::regex phone_num_pattern("0[0-9]{10,11}");
+    std::regex phone_num_pattern("0[0-9]{9,10}");
     return std::regex_match(phone_num, phone_num_pattern);
 }
 

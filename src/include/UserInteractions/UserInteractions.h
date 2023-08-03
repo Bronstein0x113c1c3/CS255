@@ -15,7 +15,7 @@
 // ALL THE REQUIREMENTS FUNCTION
 
 // MAKE FUNCTIONS
-Corporation makeCorporation(std::string file_path = "");
+Corporation* makeCorporation(std::string file_path = "");
 
 // DISPLAY FUNCTIONS
 void displayCorporationInfo(Corporation &corporation);
@@ -52,23 +52,21 @@ void displayUnitInfo(const Department &department);
 
 // MAKE CORPORATION use file_path to extract data from a FILE
 // DEFAULT: it will get Input from TERMINAL to MAKE COPORATION
-Corporation makeCorporation(std::string file_path)
+Corporation* makeCorporation(std::string file_path)
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
-    Corporation corporation;
-    if (file_path != "" && validateFileTxt(file_path))
-    {
-        corporation = makeCorporationFromFile(file_path);
-    }
-    else // DO THE TERMINAL PART
-    {
-        corporation = makeCorporationFromTerminal();
-    }
-
+    Corporation *corporation;
+    // if (file_path != "" && validateFileTxt(file_path))
+    // {
+    //     corporation = makeCorporationFromFile(file_path);
+    // }
+    // else // DO THE TERMINAL PART
+    // {
+    corporation = makeCorporationFromTerminal();
+    // }
+    // std::cout << corporation << std::endl;
     return corporation;
 }
-
-
 
 #endif

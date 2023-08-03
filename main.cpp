@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
     // Date d1 = Date(14, 02, 2023);
     // cout << (d2 == d1) << endl;
 
-       // cout<<r1<<endl;
+    // cout<<r1<<endl;
     // Stack<int> numsss1 = Stack<int>(30);
     // Stack<int> numStack1 = Stack<int>{10, 20, 30};
     // numStack1.Push(20);
@@ -111,8 +111,14 @@ int main(int argc, char *argv[])
     // std::cout << hm << std::endl;
     // std::cout << std::boolalpha << validatePhoneNum("090756822") << std::endl;
     // Corporation corp = makeCorporationFromFile("employees.txt");
-    Corporation corpTerm = makeCorporationFromTerminal();
+
+    Corporation *corpTerm = makeCorporation();
+    addHuman(corpTerm);
     std::cout << corpTerm << std::endl;
+
+    // Corporation corporation = Corporation();
+    // std::map<std::string, Company> company_list = corporation.getCompanyList();
+
     // HashMap<std::string, int> name_age_map = HashMap<std::string, int>();
     // name_age_map["Alex"] = 1000;
     // // std::cout << name_age_map["Alex"] << std::endl;

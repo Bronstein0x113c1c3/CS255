@@ -19,7 +19,7 @@ std::string getNumAfterValidate(std::string num)
         std::cin >> num;
 
         // IGNORE THE WHITE SPACE and the newline
-        std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
 
@@ -34,9 +34,9 @@ std::string getNameAfterValidate(std::string place, std::string name)
         }
         std::cout << "Wrong Format!!!" << std::endl;
         std::cout << "Enter " << place << " Name Again: ";
-        std::cin >> name;
+        std::getline(std::cin, name);
 
-        std::cin.ignore();
+        // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
 
@@ -51,9 +51,7 @@ std::string getValueAfterValidate(std::string value, std::function<bool(std::str
         }
         std::cout << "Wrong Format!!!" << std::endl;
         std::cout << "Enter Again: ";
-        std::cin >> value;
-
-        std::cin.ignore(); 
+        std::getline(std::cin, value);
     }
 }
 

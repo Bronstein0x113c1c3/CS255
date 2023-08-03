@@ -20,7 +20,7 @@ protected:
     std::string email = "";
     std::string phone_num = "";
     Date first_day_at_work = Date();
-    Queue<Record> days_work;
+    Queue<Record *> days_work = Queue<Record *>();
 
 public:
     Human()
@@ -31,21 +31,24 @@ public:
     ~Human();
     friend std::ostream &operator<<(std::ostream &os, const Human &human)
     {
-        os << human.ID << "\n";
-        os << human.last_mid_name << "\n";
-        os << human.first_name << "\n";
-        os << human.work_place << "\n";
-        os << human.position << "\n";
-        os << human.date_of_birth << "\n";
-        os << human.birth_place << "\n";
-        os << human.email << "\n";
-        os << human.phone_num << "\n";
-        os << human.first_day_at_work << "\n";
-        os << human.days_work << "\n";
+        os << "ID: " << human.ID << "\n";
+        os << "Last-mid name: " << human.last_mid_name << "\n";
+        os << "First name: " << human.first_name << "\n";
+        os << "Workplace: " << human.work_place << "\n";
+        os << "Position: " << human.position << "\n";
+        os << "Date of birth: " << human.date_of_birth << "\n";
+        os << "Birth place: " << human.birth_place << "\n";
+        os << "Email: " << human.email << "\n";
+        os << "Phone number: " << human.phone_num << "\n";
+        os << "First day at work: " << human.first_day_at_work << "\n";
+        for (auto current = human.days_work.begin(); current != human.days_work.end(); ++current)
+        {
+            Record *record = (*current).getValue();
+            os << *record << std::endl;
+        }
         return os;
     };
-    void addRecord(const Queue<Record> &record);
-
+    void setRecord(const Queue<Record *> record);
     // PROPERTIES
     int getID() const { return this->ID; };
     std::string getLastMidName() const { return this->last_mid_name; };
@@ -68,10 +71,13 @@ public:
     void setEmail(const std::string email) { this->email = email; };
     void setPhoneNum(const std::string phone_num) { this->phone_num = phone_num; };
     void setFirstDayAtWork(const Date &first_day_at_work) { this->first_day_at_work = first_day_at_work; };
-    Queue<Record> getDaysWork() const { return this->days_work; };
-
+    Queue<Record *> getDaysWork() { return this->days_work; };
+    void addRecord(Record *record)
+    {
+        this->days_work.Enqueue(record);
+    };
     // METHODS
-    void addDaysWork(const Record new_record)
+    void addDaysWork(Record *new_record)
     {
         this->days_work.Enqueue(new_record);
     }
@@ -112,7 +118,7 @@ Human::Human(int ID, std::string last_mid_name, std::string first_name, std::str
     this->phone_num = phone_num;
     this->first_day_at_work = Date(first_day_at_work);
 }
-void Human::addRecord(const Queue<Record> &record)
+void Human::setRecord(Queue<Record *> record)
 {
     this->days_work = record;
 }
