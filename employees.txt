@@ -1,3 +1,3 @@
-001; Nguyen Trung Son; BKCorporation; CEO; 21/07/2003; Ha Noi; nguyentrungson217@gmail.com; 090348834; 20/02/2023; 
+001; Nguyen Trung Son; BKCorporation; President; 21/07/2003; Ha Noi; nguyentrungson217@gmail.com; 090348834; 20/02/2023; 
 002; Nguyen Hoang Tuan Anh; BKCorporation->BKEntertainment; Director; 10/11/2000; Ha Tay; brocode@gmail.com; 0903486634; ; 
 003; Tran Khach Duy; BKCorporation->BKEntertainment->ITDepartment; Manager; 20/08/2000; An Duong; duytran@gmail.com; 0903486634; ; 
