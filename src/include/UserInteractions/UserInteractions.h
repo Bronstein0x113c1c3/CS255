@@ -15,28 +15,28 @@
 // ALL THE REQUIREMENTS FUNCTION
 
 // MAKE FUNCTIONS
-Corporation* makeCorporation(std::string file_path = "");
+Corporation *makeCorporation(std::string file_path = "");
 
 // DISPLAY FUNCTIONS
-void displayCorporationInfo(Corporation &corporation);
+void displayCorporationInfo(Corporation *orporation);
 void displayHumanInfo(const int ID); //! USE searchByID()
-void displayUnitInfo(Company &company);
-void displayUnitInfo(Department &department);
+void displayUnitInfo(Company *company);
+void displayUnitInfo(Department *department);
 
 // SEARCH FUNCTIONS USE CONCURRENCY - PARRALELISM
 Stack<Human> searchByName(const std::string name_input);
 Human searchByID(const int ID);
 
 // CHECKING FUNCTION
-bool isHumanExist(const Human &human); //! USE searchByID() to return True or False
+bool isHumanExist(const Human *human); //! USE searchByID() to return True or False
 
 // ADJUST FUNCTIONS USING TERMINAL
-void addHuman(Corporation &corporation);        //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
-void updateHumanInfo(Corporation &corporation); //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
-void addDaysWorked(Human &human);
+void addHuman(Corporation *corporation);        //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
+void updateHumanInfo(Corporation *corporation); //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
+void addDaysWorked(Human *human);
 
 // WRITE TO FILE
-void writeToFileTxt(const Corporation &corporation, std::string file_path);
+void writeToFileTxt(const Corporation *corporation, std::string file_path);
 
 // EXIT FUNCTION
 void exitProgram();
@@ -45,14 +45,14 @@ void exitProgram();
 
 // DISPLAY PURPOSE ONLY
 // Result: images\Output.png
-void displayCorporationInfo(Corporation &corporation);
+void displayCorporationInfo(Corporation *corporation);
 void displayHumanInfo(const int ID); //! USE searchByID()
-void displayUnitInfo(const Company &company);
-void displayUnitInfo(const Department &department);
+void displayUnitInfo(const Company *company);
+void displayUnitInfo(const Department *department);
 
 // MAKE CORPORATION use file_path to extract data from a FILE
 // DEFAULT: it will get Input from TERMINAL to MAKE COPORATION
-Corporation* makeCorporation(std::string file_path)
+Corporation *makeCorporation(std::string file_path)
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
