@@ -27,7 +27,7 @@ public:
     {
         this->position = "Human";
     };
-    Human(int ID, std::string last_mid_name, std::string first_name, std::string department, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work);
+    Human(int ID, std::string last_mid_name, std::string first_name, std::string work_place, std::string position, std::string dob, std::string birth_place, std::string email, std::string phone_num, std::string first_day_at_work);
     ~Human();
     friend std::ostream &operator<<(std::ostream &os, const Human &human)
     {
