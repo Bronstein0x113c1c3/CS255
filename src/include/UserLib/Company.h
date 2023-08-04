@@ -6,11 +6,11 @@ using namespace std;
 class Company
 {
 private:
-    std::string name = "BKEntertainment";
+    std::string name;
     // Director: Human
-    Director director = Director();
+    Director* director;
     // ViceDirector: Human
-    Queue<ViceDirector *> vice_director = Queue<ViceDirector *>();
+    Queue<ViceDirector *> vice_director;
     std::map<std::string, Department *> department_list;
 
 public:
@@ -22,7 +22,7 @@ public:
     ~Company(){};
 
     std::string getName() const { return this->name; };
-    Director getDirector() { return this->director; };
+    Director getDirector() const { return *(this->director); };
     Queue<ViceDirector *> &getViceDirectorList() { return this->vice_director; };
     std::map<std::string, Department *> getDepartmentList()
     {
@@ -46,7 +46,7 @@ public:
     };
     void setDirector(Director *director)
     {
-        this->director = *director;
+        this->director = director;
     };
     void setDepartmentList(std::map<std::string, Department *> department_list)
     {
@@ -66,7 +66,7 @@ public:
     {
         os << "-----------------------------------------------------------" << std::endl;
         os << "Company: " + company.name << std::endl;
-        os << "Director: " + company.director.getFirstName() + " " + company.director.getLastMidName() << endl;
+        os << "Director: " + company.director->getFirstName() + " " + company.director->getLastMidName() << endl;
         os << "Vice Directors: ";
         for (auto current = company.vice_director.begin(); current != company.vice_director.end(); ++current)
         {

@@ -9,15 +9,15 @@
 class Corporation
 {
 private:
-    std::string name = "BKCorporation";
-    President president = President();
-    Queue<VicePresident *> vice_president = Queue<VicePresident *>();
+    std::string name;
+    President* president;
+    Queue<VicePresident *> vice_president;
     std::map<std::string, Company *> company_list;
 
 public:
     // CONSTRUCTORS
     Corporation(){};
-    Corporation(std::string name, President president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company);
+    Corporation(std::string name, President* president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company);
     ~Corporation();
 
     // OPERATORS
@@ -25,7 +25,7 @@ public:
     {
         os << "-----------------------------------------------------------" << std::endl;
         os << "Corporation: " + corporation.name << std::endl;
-        os << "President: " + corporation.president.getFirstName() + " " + corporation.president.getLastMidName() << std::endl;
+        os << "President: " + corporation.president->getFirstName() + " " + corporation.president->getLastMidName() << std::endl;
         os << "Vice Presidents: ";
         for (auto current = corporation.vice_president.begin(); current != corporation.vice_president.end(); ++current)
         {
@@ -54,7 +54,7 @@ public:
     }
     // PROPERTIES
     std::string getName() const { return this->name; };
-    President getPresident() { return this->president; };
+    President getPresident() { return *(this->president); };
     Queue<VicePresident *> getVicePresidentList() { return this->vice_president; };
     std::map<std::string, Company *> getCompanyList()
     {
@@ -69,7 +69,7 @@ public:
         return &(this->company_list);
     };
     void setName(std::string name) { this->name = name; };
-    void setPresident(President *president) { this->president = *president; };
+    void setPresident(President *president) { this->president = president; };
     void setVicePresidentList(const Queue<VicePresident *> &vice_president_list) { this->vice_president = vice_president_list; };
     void setCompanyList(const std::map<std::string, Company *> company_list)
     {
@@ -84,7 +84,7 @@ public:
     };
 };
 
-Corporation::Corporation(std::string name, President president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company)
+Corporation::Corporation(std::string name, President* president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company)
 {
     this->name = name;
     this->president = president;

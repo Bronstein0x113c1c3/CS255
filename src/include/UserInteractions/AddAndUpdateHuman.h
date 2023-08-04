@@ -39,7 +39,7 @@ std::string askUpdateOrStop(std::string userInput)
 void addAndUpdateHuman(Corporation *corporation)
 {
     //* HUMAN ATTRIBUTES
-    int ID = 0;
+    unsigned short ID = 0;
     std::string string_ID = "";
     std::string name = "";
     std::string first_name = "";

@@ -14,14 +14,14 @@ private:
 
 public:
     // Constructor
-    Time(const int hours = 0, const int minutes = 0);
+    Time(const unsigned short hours = 0, const unsigned short minutes = 0);
     Time(const std::chrono::hours hours, const std::chrono::minutes minutes); //! CURRENTLY THIS LINE
     Time(const std::string time_str);                                         // If the User type "20:10"
-    Time(const Time &anotherTime);                                            // Copy CONSTRUCTOR
+    Time(const Time* anotherTime);                                            // Copy CONSTRUCTOR
 
     // Properties
-    int getHours() const;
-    int getMinutes() const;
+    unsigned short getHours() const;
+    unsigned short getMinutes() const;
 
     // Operators
     friend std::ostream &operator<<(std::ostream &os, const Time &time)
@@ -37,17 +37,17 @@ public:
     bool operator!=(const Time &otherTime);
 };
 // COPY CONSTRUCTOR
-Time::Time(const Time &anotherTime)
+Time::Time(const Time* anotherTime)
 {
-    if (this != &anotherTime)
+    if (this != anotherTime)
     {
-        this->hours = anotherTime.hours;
-        this->minutes = anotherTime.minutes;
+        this->hours = anotherTime->hours;
+        this->minutes = anotherTime->minutes;
     }
 }
 
 // Constructors
-Time::Time(const int hours, const int minutes)
+Time::Time(const unsigned short hours, const unsigned short minutes)
 {
     //* To Prevent Exceeding Limit Hour
     if (hours < 0)
@@ -66,8 +66,8 @@ Time::Time(const int hours, const int minutes)
     //* To Prevent Exceeding Limit Minute
     if (minutes >= 60)
     {
-        int hoursToAdd = 0;
-        int spareMinute = minutes;
+        unsigned short hoursToAdd = 0;
+        unsigned short spareMinute = minutes;
         while (spareMinute >= 60)
         {
             spareMinute -= 60;
@@ -156,8 +156,8 @@ Time::Time(const std::string time_str)
     std::stringstream ss(time_str);
 
     char delimeter;
-    int hours;
-    int minutes;
+    unsigned short hours;
+    unsigned short minutes;
 
     //? Extract String Type to all different part
     ss >> hours >> delimeter >> minutes;
@@ -179,8 +179,8 @@ Time::Time(const std::string time_str)
     //* To Prevent Exceeding Limit Minute
     if (minutes >= 60)
     {
-        int hoursToAdd = 0;
-        int spareMinute = minutes;
+        unsigned short hoursToAdd = 0;
+        unsigned short spareMinute = minutes;
         while (spareMinute >= 60)
         {
             spareMinute -= 60;
@@ -210,12 +210,12 @@ Time::Time(const std::string time_str)
 }
 
 // Properties
-int Time::getHours() const
+unsigned short Time::getHours() const
 {
     return this->hours.count();
 }
 
-int Time::getMinutes() const
+unsigned short Time::getMinutes() const
 {
     return this->hours.count();
 }
@@ -225,8 +225,8 @@ Time Time::operator-(const Time &anotherTime) const
 {
     // Calculating the number of hours short of employees
     // arrive late or leave early. Round up to 1 hour
-    int minutesShortage = this->minutes.count() - anotherTime.minutes.count();
-    int hoursShortage = this->hours.count() - anotherTime.hours.count();
+    unsigned short minutesShortage = this->minutes.count() - anotherTime.minutes.count();
+    unsigned short hoursShortage = this->hours.count() - anotherTime.hours.count();
 
     if (minutesShortage != 0)
     {

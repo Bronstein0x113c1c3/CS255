@@ -39,8 +39,8 @@ void searchIDInDepartment(Department* department_to_search, Human* human_to_find
     }
 
     //? CHECK EMPLOYEE
-    std::map<int, Employee *> employees_list = department_to_search->getEmployeeList();
-    std::map<int, Employee *>::const_iterator iter;
+    std::map<unsigned short, Employee *> employees_list = department_to_search->getEmployeeList();
+    std::map<unsigned short, Employee *>::const_iterator iter;
 
     for (iter = employees_list.begin(); iter != employees_list.end(); ++iter)
     {

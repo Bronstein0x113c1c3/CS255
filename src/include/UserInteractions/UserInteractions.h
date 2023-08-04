@@ -68,9 +68,17 @@ Corporation *makeCorporation(std::string file_path)
 }
 
 // DISPLAY FUNCTIONS
-void displayCorporationInfo(Corporation *orporation)
+void displayCorporationInfo(Corporation *corporation)
 {
-
+    cout << "Corporation: " << corporation->getName() << endl;
+    cout << "President: " << corporation->getPresident() << endl;
+    cout << "Vice Presidents: ";
+    for (auto current = corporation->getVicePresidentList().begin(); current != corporation->getVicePresidentList().end(); ++current)
+        {
+            VicePresident *vice_president = (*current).getValue();
+            cout << *vice_president << ", ";
+        }
+        cout << std::endl;
 }
 
 void displayHumanInfo(const int ID) //! USE searchByID()
@@ -80,12 +88,29 @@ void displayHumanInfo(const int ID) //! USE searchByID()
 
 void displayUnitInfo(Company *company)
 {
+    cout << "Company: " << company->getName() << endl;
+    cout << "Director: " << company->getDirector() << endl;
+    cout << "Vice Directors: ";
+        for (auto current = company->getViceDirectorList().begin(); current != company->getViceDirectorList().end(); ++current)
+        {
+            ViceDirector *vice_director = (*current).getValue();
+            cout << *vice_director << ", ";
+        }
+        cout << std::endl;
 
 }
 
 void displayUnitInfo(Department *department)
 {
-
+    cout << "Department: " << department->getName() << endl;
+    cout << "Manager: " << department->getManager() << endl;
+    cout << "Depute Managers: ";
+    for (auto current = department->getDeputyManagerList().begin(); current != department->getDeputyManagerList().end(); ++current)
+        {
+            DeputyManager *deputy_manager = (*current).getValue();
+            cout << *deputy_manager << ", ";
+        }
+        cout << std::endl;
 }
 
 // EXIT FUNCTION

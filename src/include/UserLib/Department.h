@@ -8,30 +8,30 @@ class Department
 private:
     std::string name = "ITDepartment";
     // Manager: Human
-    Manager manager;
+    Manager* manager;
     // Employee: Human
-    std::map<int, Employee *> employee_list;
-    Queue<DeputyManager *> deputy_manager_list = Queue<DeputyManager *>();
+    std::map<unsigned short, Employee *> employee_list;
+    Queue<DeputyManager *> deputy_manager_list;
 
 public:
     Department();
     ~Department();
-    Department(std::string name, Manager manager, const std::map<int, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list);
+    Department(std::string name, Manager* manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list);
 
     // PROPERTIES
-    int getMemberNums() const
+    unsigned short getMemberNums() const
     {
         return 1 + this->deputy_manager_list.getSize() + this->employee_list.size();
     };
     Queue<DeputyManager *> getDeputyManagerList() { return this->deputy_manager_list; };
-    std::map<int, Employee *> getEmployeeList()
+    std::map<unsigned short, Employee *> getEmployeeList()
     {
         return this->employee_list;
     };
-    Manager getManager() const { return this->manager; };
+    Manager getManager() const { return *(this->manager); };
     std::string getName() const { return this->name; };
 
-    std::map<int, Employee *> *getPointerOfEmployeeList()
+    std::map<unsigned short, Employee *> *getPointerOfEmployeeList()
     {
         return &(this->employee_list);
     }
@@ -42,8 +42,8 @@ public:
     // SETTERS
     void setName(std::string name) { this->name = name; };
     void setDeputyManagerList(const Queue<DeputyManager *> deputy_manager_list) { this->deputy_manager_list = deputy_manager_list; };
-    void setManager(Manager *manager) { this->manager = *manager; };
-    void setEmployeeList(const std::map<int, Employee *> employee_list)
+    void setManager(Manager *manager) { this->manager = manager; };
+    void setEmployeeList(const std::map<unsigned short, Employee *> employee_list)
     {
         this->employee_list = employee_list;
     };
@@ -53,7 +53,7 @@ public:
     {
         os << "-----------------------------------------------------------" << std::endl;
         os << "Department: " + department.name << std::endl;
-        os << "Manager: " + department.manager.getFirstName() + " " + department.manager.getLastMidName() << std::endl;
+        os << "Manager: " + department.manager->getFirstName() + " " + department.manager->getLastMidName() << std::endl;
         os << "Deputy Managers: ";
         for (auto current = department.deputy_manager_list.begin(); current != department.deputy_manager_list.end(); ++current)
         {
@@ -97,7 +97,7 @@ Department::Department()
 {
 }
 
-Department::Department(std::string name, Manager manager, const std::map<int, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list)
+Department::Department(std::string name, Manager* manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list)
 {
     this->name = name;
     this->manager = manager;

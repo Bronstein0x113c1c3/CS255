@@ -6,17 +6,17 @@
 using namespace std;
 bool validateThroughLib(string date);
 bool validateWithStream(string date);
-bool validate(int a, int b, int c);
+bool validate(unsigned short a, unsigned short b, unsigned short c);
 class Date
 {
 private:
-    int day = 0;
-    int month = 0;
-    int year = 9999;
+    unsigned short day = 0;
+    unsigned short month = 0;
+    unsigned short year = 9999;
 
 public:
     // CONSTRUCTTORS
-    Date(const int day = 0, const int month = 0, const int year = 9999)
+    Date(const unsigned short day = 0, const unsigned short month = 0, const unsigned short year = 9999)
     {
         if (validate(day, month, year))
         {
@@ -36,7 +36,7 @@ public:
 
     Date(const std::string date)
     {
-        int day = 0, month = 0, year = 9999;
+        unsigned day = 0, month = 0, year = 9999;
         if (validateThroughLib(date) && validateWithStream(date))
         {
             std::stringstream ss(date);
@@ -100,7 +100,7 @@ bool validateThroughLib(const string date)
 bool validateWithStream(const string date)
 {
     stringstream ss(date);
-    int day, month, year;
+    unsigned short day, month, year;
     char delimiter;
     ss >> day >> delimiter >> month >> delimiter >> year;
     if ((month == 2) && (day >= 30))
@@ -109,7 +109,7 @@ bool validateWithStream(const string date)
     }
     return true;
 }
-bool validate(const int a, const int b, const int c)
+bool validate(const unsigned short a, const unsigned short b, const unsigned short c)
 {
     if (a < 0 || b < 0 || c < 0 || a >= 32 || b >= 13)
     {
