@@ -8,10 +8,10 @@ class Company
 private:
     std::string name;
     // Director: Human
-    Director* director;
+    Director *director;
     // ViceDirector: Human
-    Queue<ViceDirector *> vice_director;
-    std::map<std::string, Department *> department_list;
+    Queue<ViceDirector *> vice_director = Queue<ViceDirector *>();
+    std::map<std::string, Department *> department_list = std::map<std::string, Department *>();
 
 public:
     Company(){};

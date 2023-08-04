@@ -10,14 +10,14 @@ class Corporation
 {
 private:
     std::string name;
-    President* president;
-    Queue<VicePresident *> vice_president;
-    std::map<std::string, Company *> company_list;
+    President *president;
+    Queue<VicePresident *> vice_president = Queue<VicePresident*>();
+    std::map<std::string, Company *> company_list = std::map<std::string, Company *>();
 
 public:
     // CONSTRUCTORS
     Corporation(){};
-    Corporation(std::string name, President* president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company);
+    Corporation(std::string name, President *president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company);
     ~Corporation();
 
     // OPERATORS
@@ -84,7 +84,7 @@ public:
     };
 };
 
-Corporation::Corporation(std::string name, President* president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company)
+Corporation::Corporation(std::string name, President *president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company)
 {
     this->name = name;
     this->president = president;

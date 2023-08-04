@@ -20,7 +20,7 @@ protected:
     std::string email = "";
     std::string phone_num = "";
     Date *first_day_at_work;
-    Queue<Record *> days_work;
+    Queue<Record *> days_work = Queue<Record *>();
 
 public:
     Human()

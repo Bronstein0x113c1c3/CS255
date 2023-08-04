@@ -8,15 +8,15 @@ class Department
 private:
     std::string name = "ITDepartment";
     // Manager: Human
-    Manager* manager;
+    Manager *manager;
     // Employee: Human
-    std::map<unsigned short, Employee *> employee_list;
-    Queue<DeputyManager *> deputy_manager_list;
+    std::map<unsigned short, Employee *> employee_list = std::map<unsigned short, Employee *>();
+    Queue<DeputyManager *> deputy_manager_list = Queue<DeputyManager *>();
 
 public:
     Department();
     ~Department();
-    Department(std::string name, Manager* manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list);
+    Department(std::string name, Manager *manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list);
 
     // PROPERTIES
     unsigned short getMemberNums() const
@@ -97,7 +97,7 @@ Department::Department()
 {
 }
 
-Department::Department(std::string name, Manager* manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list)
+Department::Department(std::string name, Manager *manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list)
 {
     this->name = name;
     this->manager = manager;
