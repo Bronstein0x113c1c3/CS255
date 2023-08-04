@@ -26,11 +26,11 @@ void displayUnitInfo(Company *company);
 void displayUnitInfo(Department *department);
 
 // SEARCH FUNCTIONS USE CONCURRENCY - PARRALELISM
-Stack<Human*> *searchByName(Corporation *corporation, const std::string name_input);
-Human *searchByID(Corporation *corporation, const int ID);
+Stack<Human> *searchByName(Corporation *corporation, const std::string name_input);
+Human *searchByID(Corporation* corporation, const int ID);
 
 // ADJUST FUNCTIONS USING TERMINAL
-void addAndUpdateHuman(Corporation *corporation); //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
+void addAndUpdateHuman(Corporation *corporation);        //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
 void addDaysWorked(Human *human);
 
 // WRITE TO FILE
@@ -61,9 +61,9 @@ Corporation *makeCorporation(std::string file_path)
     }
     else // DO THE TERMINAL PART
     {
-        corporation = makeCorporationFromTerminal();
+    corporation = makeCorporationFromTerminal();
     }
-
+    
     return corporation;
 }
 
@@ -74,15 +74,16 @@ void displayCorporationInfo(Corporation *corporation)
     cout << "President: " << corporation->getPresident() << endl;
     cout << "Vice Presidents: ";
     for (auto current = corporation->getVicePresidentList().begin(); current != corporation->getVicePresidentList().end(); ++current)
-    {
-        VicePresident *vice_president = (*current).getValue();
-        cout << *vice_president << ", ";
-    }
-    cout << std::endl;
+        {
+            VicePresident *vice_president = (*current).getValue();
+            cout << *vice_president << ", ";
+        }
+        cout << std::endl;
 }
 
 void displayHumanInfo(const int ID) //! USE searchByID()
 {
+
 }
 
 void displayUnitInfo(Company *company)
@@ -90,12 +91,13 @@ void displayUnitInfo(Company *company)
     cout << "Company: " << company->getName() << endl;
     cout << "Director: " << company->getDirector() << endl;
     cout << "Vice Directors: ";
-    for (auto current = company->getViceDirectorList().begin(); current != company->getViceDirectorList().end(); ++current)
-    {
-        ViceDirector *vice_director = (*current).getValue();
-        cout << *vice_director << ", ";
-    }
-    cout << std::endl;
+        for (auto current = company->getViceDirectorList().begin(); current != company->getViceDirectorList().end(); ++current)
+        {
+            ViceDirector *vice_director = (*current).getValue();
+            cout << *vice_director << ", ";
+        }
+        cout << std::endl;
+
 }
 
 void displayUnitInfo(Department *department)
@@ -104,11 +106,11 @@ void displayUnitInfo(Department *department)
     cout << "Manager: " << department->getManager() << endl;
     cout << "Depute Managers: ";
     for (auto current = department->getDeputyManagerList().begin(); current != department->getDeputyManagerList().end(); ++current)
-    {
-        DeputyManager *deputy_manager = (*current).getValue();
-        cout << *deputy_manager << ", ";
-    }
-    cout << std::endl;
+        {
+            DeputyManager *deputy_manager = (*current).getValue();
+            cout << *deputy_manager << ", ";
+        }
+        cout << std::endl;
 }
 
 // EXIT FUNCTION

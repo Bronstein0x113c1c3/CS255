@@ -113,36 +113,9 @@ int main(int argc, char *argv[])
     // Corporation corp = makeCorporationFromFile("employees.txt");
 
     // Corporation *corpTerm = makeCorporation();
-    // addAndUpdateHuman(corpTerm);
+    // addHuman(corpTerm);
     // std::cout << corpTerm << std::endl;
 
-    std::string name = "Duy Tran Corp";
-    President* president = new President();
-    president->setFirstName("Tran");
-    president->setLastMidName("Duy");
-
-    VicePresident* vice_president = new VicePresident();
-    vice_president->setFirstName("Nguyen");
-    vice_president->setLastMidName("Trung Son");
-
-    Company* company = new Company();
-    company->setName("Duy Tran Comp");
-
-    Department* department = new Department();
-    department->setName("Duy Tran Dept");
-
-    company->addDepartment(department);
-
-    Corporation* corporation =  new Corporation();
-    corporation->setName(name);
-    corporation->setPresident(president);
-    corporation->addVicePresident(vice_president);
-    corporation->addCompany(company);
-
-
-    // std::cout << corporation << std::endl;
-    searchByName(corporation, "Nguyen");
-    // Company company = Company();
     // Corporation corporation = Corporation();
     // std::map<std::string, Company> company_list = corporation.getCompanyList();
 
@@ -152,13 +125,13 @@ int main(int argc, char *argv[])
     // HashMap<std::string, int> name_age_map_2(name_age_map);
     // cout << name_age_map_2 << std::endl;
     
-    // Corporation* corporation = new Corporation("BKCorporation", President(), Queue<VicePresident *>(), map<string, Company *>());
-    // Company* company = new Company("BKComp");
-    // Department* department = new Department("BKDepart", Manager(), map<int, Employee *>(), Queue<DeputyManager *>());
+    Corporation* corporation = new Corporation("BKCorporation", President(), Queue<VicePresident *>(), map<string, Company *>());
+    Company* company = new Company("BKComp");
+    Department* department = new Department("BKDepart", Manager(), map<int, Employee *>(), Queue<DeputyManager *>());
 
-    // displayCorporationInfo(corporation);
-    // displayUnitInfo(company);
-    // displayUnitInfo(department);
+    displayCorporationInfo(corporation);
+    displayUnitInfo(company);
+    displayUnitInfo(department);
 
 
 

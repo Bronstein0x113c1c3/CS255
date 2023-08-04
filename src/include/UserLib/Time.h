@@ -29,12 +29,6 @@ public:
         os << time.hours.count() << ':' << time.minutes.count();
         return os;
     }
-    
-    friend std::ostream &operator<<(std::ostream &os, const Time* time)
-    {
-        os << time->hours.count() << ':' << time->minutes.count();
-        return os;
-    }
 
     Time operator-(const Time &anotherTime) const;
     Time operator+(const Time &anotherTime) const;

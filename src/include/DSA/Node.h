@@ -68,7 +68,6 @@ Node<Value> *Node<Value>::getNextNode() const
 template <typename Value>
 void Node<Value>::setNextNode(const Value new_value)
 {
-    delete this->next_node;     // Delete the existing next_node
     Node<Value> *new_next_node = new Node(new_value);
     this->next_node = new_next_node;
 }
@@ -81,14 +80,20 @@ void Node<Value>::setNextNode(Node *new_next_node)
 
 // OPERATORS
 template <typename Value>
-Node<Value>& Node<Value>::operator=(const Node& otherNode)  
+Node<Value>& Node<Value>::operator=(const Node& otherNode) 
 {   
-    this->value = otherNode.value;
-    this->next_node = nullptr;
-    // To Make Sure next_node is not nullptr
-    if (otherNode.next_node != nullptr)
+    // To Make Sure they are not the same Memory Address
+    if (this != &otherNode)
     {
-        this->next_node = new Node<Value>(*otherNode.next_node);
+        this->value = otherNode.getValue();
+        delete this->next_node;
+        next_node = nullptr;
+
+        if (otherNode.getNextNode() != nullptr)
+        {
+            Value next_value = otherNode.getValue();
+            this->next_node = new Node<Value>(next_value);
+        }
     }
     return *this;
 }

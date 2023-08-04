@@ -8,7 +8,7 @@ class Department
 private:
     std::string name = "ITDepartment";
     // Manager: Human
-    Manager *manager = nullptr;
+    Manager* manager;
     // Employee: Human
     std::map<unsigned short, Employee *> employee_list;
     Queue<DeputyManager *> deputy_manager_list;
@@ -16,7 +16,7 @@ private:
 public:
     Department();
     ~Department();
-    Department(std::string name, Manager *manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list);
+    Department(std::string name, Manager* manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list);
 
     // PROPERTIES
     unsigned short getMemberNums() const
@@ -28,10 +28,7 @@ public:
     {
         return this->employee_list;
     };
-    Manager *getManager()
-    {
-        return this->manager;
-    };
+    Manager getManager() const { return *(this->manager); };
     std::string getName() const { return this->name; };
 
     std::map<unsigned short, Employee *> *getPointerOfEmployeeList()
@@ -76,42 +73,6 @@ public:
         return os;
     };
 
-    friend std::ostream &operator<<(std::ostream &os, const Department *department)
-    {
-        os << "-----------------------------------------------------------" << std::endl;
-        os << "Department: " + department->name << std::endl;
-        if (department->manager != nullptr)
-        {
-            os << "Manager: " + department->manager->getFirstName() + " " + department->manager->getLastMidName() << std::endl;
-        }
-        else
-            os << "Manager: ";
-
-        os << "Deputy Managers: ";
-        for (auto current = department->deputy_manager_list.begin(); current != department->deputy_manager_list.end(); ++current)
-        {
-            DeputyManager *deputy_manager = (*current).getValue();
-            if (deputy_manager != nullptr)
-            {
-                os << *deputy_manager << ", ";
-            }
-        }
-        os << std::endl;
-
-        os << "Employees: ";
-        for (auto current = department->employee_list.begin(); current != department->employee_list.end(); ++current)
-        {
-            if (current->second != nullptr)
-            {
-                os << current->first << ": " << current->second << ", ";
-            }
-        }
-        os << std::endl;
-        os << "-----------------------------------------------------------" << std::endl;
-
-        return os;
-    };
-
     bool operator==(const Department &otherDepartment)
     {
         return this->name == otherDepartment.name;
@@ -136,7 +97,7 @@ Department::Department()
 {
 }
 
-Department::Department(std::string name, Manager *manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list)
+Department::Department(std::string name, Manager* manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list)
 {
     this->name = name;
     this->manager = manager;

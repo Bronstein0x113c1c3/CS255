@@ -9,24 +9,20 @@
 //! SET STOP FLAG
 std::atomic<bool> isContinueSearching = true;
 
-bool isIDMatch(const unsigned short human_ID, const unsigned short ID_to_find)
+bool isIDMatch(const int human_ID, const int ID_to_find)
 {
     return human_ID == ID_to_find;
 }
 
-void searchIDInDepartment(Department *department_to_search, Human *human_to_find, const int ID_to_find)
+void searchIDInDepartment(Department* department_to_search, Human* human_to_find, const int ID_to_find)
 {
     //? CHECK MANAGER
-    Manager *manager = department_to_search->getManager();
-    if (manager != nullptr)
+    Manager manager = department_to_search->getManager();
+    if (isIDMatch(manager.getID(), ID_to_find))
     {
-        if (isIDMatch(manager->getID(), ID_to_find))
-        {
-            isContinueSearching = false;
-            delete human_to_find;
-            human_to_find = manager;
-            return;
-        }
+        isContinueSearching = false;
+        human_to_find = &manager;
+        return;
     }
 
     //? CHECK DEPUTY MANAGER
@@ -34,15 +30,11 @@ void searchIDInDepartment(Department *department_to_search, Human *human_to_find
     for (auto iter = deputy_manager_list.begin(); iter != deputy_manager_list.end(); ++iter)
     {
         DeputyManager *deputy_manager = (*iter).getValue();
-        if (deputy_manager != nullptr)
+        if (isIDMatch(deputy_manager->getID(), ID_to_find))
         {
-            if (isIDMatch(deputy_manager->getID(), ID_to_find))
-            {
-                isContinueSearching = false;
-                delete human_to_find;
-                human_to_find = deputy_manager;
-                return;
-            }
+            isContinueSearching = false;
+            human_to_find = deputy_manager;
+            return;
         }
     }
 
@@ -55,32 +47,24 @@ void searchIDInDepartment(Department *department_to_search, Human *human_to_find
         Employee *employee_to_search = iter->second;
 
         // CHECKING EACH EMPLOYEE
-        if (employee_to_search != nullptr)
+        if (isIDMatch(employee_to_search->getID(), ID_to_find))
         {
-            if (isIDMatch(employee_to_search->getID(), ID_to_find))
-            {
-                isContinueSearching = false;
-                delete human_to_find;
-                human_to_find = employee_to_search;
-                return;
-            }
+            isContinueSearching = false;
+            human_to_find = employee_to_search;
+            return;
         }
     }
 }
 
-void searchIDInCompany(Company *company_to_search, Human *human_to_find, const unsigned short ID_to_find)
+void searchIDInCompany(Company *company_to_search, Human *human_to_find, const int ID_to_find)
 {
     //? CHECK DIRECTOR
-    Director *director = company_to_search->getDirector();
-    if (director != nullptr)
+    Director director = company_to_search->getDirector();
+    if (isIDMatch(director.getID(), ID_to_find))
     {
-        if (isIDMatch(director->getID(), ID_to_find))
-        {
-            isContinueSearching = false;
-            delete human_to_find;
-            human_to_find = director;
-            return;
-        }
+        isContinueSearching = false;
+        human_to_find = &director;
+        return;
     }
 
     //? CHECK VICE DIRECTOR
@@ -88,15 +72,11 @@ void searchIDInCompany(Company *company_to_search, Human *human_to_find, const u
     for (auto iter = vice_director_list.begin(); iter != vice_director_list.end(); ++iter)
     {
         ViceDirector *vice_director = (*iter).getValue();
-        if (vice_director != nullptr)
+        if (isIDMatch(vice_director->getID(), ID_to_find))
         {
-            if (isIDMatch(vice_director->getID(), ID_to_find))
-            {
-                isContinueSearching = false;
-                delete human_to_find;
-                human_to_find = vice_director;
-                return;
-            }
+            isContinueSearching = false;
+            human_to_find = vice_director;
+            return;
         }
     }
 
@@ -110,7 +90,7 @@ void searchIDInCompany(Company *company_to_search, Human *human_to_find, const u
     for (iter = department_list.begin(); iter != department_list.end(); ++iter)
     {
         //? RUN MULTITHREADING IN EACH DEPARTMENT
-        if (isContinueSearching) //? IF STILL DIDN'T FIND THAT VALUE -> CONTINUE SEARCHING
+        if (isContinueSearching)    //? IF STILL DIDN'T FIND THAT VALUE -> CONTINUE SEARCHING
         {
             all_department_thread.push(std::thread(searchIDInDepartment, iter->second, human_to_find, ID_to_find));
         }
@@ -126,19 +106,15 @@ void searchIDInCompany(Company *company_to_search, Human *human_to_find, const u
 
 Human *searchByID(Corporation *corporation, const int ID_to_find)
 {
-    Human *human_to_find = new Human();
+    Human *human_to_find;
 
     //? CHECK PRESIDENT
-    President *president = corporation->getPresident();
-    if (president != nullptr)
+    President president = corporation->getPresident();
+    if (isIDMatch(president.getID(), ID_to_find))
     {
-        if (isIDMatch(president->getID(), ID_to_find))
-        {
-            isContinueSearching = false;
-            delete human_to_find;
-            human_to_find = president;
-            return human_to_find;
-        }
+        isContinueSearching = false;
+        human_to_find = &president;
+        return human_to_find;
     }
 
     //? CHECK VICE PRESIDENT
@@ -146,15 +122,11 @@ Human *searchByID(Corporation *corporation, const int ID_to_find)
     for (auto current = vice_president_list.begin(); current != vice_president_list.end(); ++current)
     {
         VicePresident *vice_president = (*current).getValue();
-        if (vice_president != nullptr)
+        if (isIDMatch(vice_president->getID(), ID_to_find))
         {
-            if (isIDMatch(vice_president->getID(), ID_to_find))
-            {
-                isContinueSearching = false;
-                delete human_to_find;
-                human_to_find = vice_president;
-                return human_to_find;
-            }
+            isContinueSearching = false;
+            human_to_find = vice_president;
+            return human_to_find;
         }
     }
 

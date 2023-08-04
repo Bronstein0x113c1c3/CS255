@@ -65,8 +65,7 @@ void addAndUpdateHuman(Corporation *corporation)
 
     //! DO SOME INTEGER VALIDATIONS
     string_ID = getValueAfterValidate(string_ID, validateNum);
-    std::stringstream ss(string_ID);
-    ss >> ID;
+    ID = stoi(string_ID);
 
     //!! VALIDATE ID ??
     Human *human_same_ID = searchByID(corporation, ID);
@@ -83,7 +82,6 @@ void addAndUpdateHuman(Corporation *corporation)
             return; // STOP THE PROGRAM
         }
     }
-    delete human_same_ID;
     //! UPDATE TO NEW ONE
 
     //? Name
