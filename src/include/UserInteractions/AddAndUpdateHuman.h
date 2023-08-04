@@ -98,12 +98,6 @@ void addAndUpdateHuman(Corporation *corporation)
     first_name = std::get<0>(name_extracted);
     last_mid_name = std::get<1>(name_extracted);
 
-    //? WORK PLACE
-    //? WORK PLACE + POSITION -> ASSIGN TO THE EQUIVALENT CORPORATION position
-    std::cout << "Enter WORK PLACE" << std::endl;
-    std::cout << "Corporation or Company or Department: ";
-    std::getline(std::cin, work_place);
-
     // IGNORE THE NEW LINE CHARACTER
     // std::cin.ignore();
 
@@ -148,6 +142,12 @@ void addAndUpdateHuman(Corporation *corporation)
     std::getline(std::cin, first_day_at_work);
 
     first_day_at_work = getValueAfterValidate(first_day_at_work, validateDate);
+
+    //? WORK PLACE
+    //? WORK PLACE + POSITION -> ASSIGN TO THE EQUIVALENT CORPORATION position
+    std::cout << "Enter WORK PLACE" << std::endl;
+    std::cout << "Corporation or Company or Department: ";
+    std::getline(std::cin, work_place);
 
     //! DO SOME STRING VALIDATIONS
     // IF THE USER TYPE UNVAILABLE
