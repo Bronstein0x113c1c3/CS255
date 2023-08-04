@@ -43,58 +43,60 @@ Corporation *makeCorporationFromFile(std::string file_path)
 
             if (validateCorporationNameFromFile(list_of_field[3]))
             {
-
+                cout << "Corporation mode: " << endl;
                 // Set the name for corporation:
                 std::tuple<std::string> result = extractCorporationFromFile(list_of_field[3]);
                 std::string corporation_name;
                 std::tie(corporation_name) = result;
                 corp->setName(corporation_name);
                 // add the human with the work place
-                Human h = Human(stoi(list_of_field[1]),
-                                last_mid_name,
-                                first_name,
-                                corporation_name,
-                                list_of_field[4],
-                                list_of_field[5],
-                                list_of_field[6],
-                                list_of_field[7],
-                                list_of_field[8],
-                                list_of_field[9]);
+                // Human h = Human(stoi(list_of_field[1]),
+                //                 last_mid_name,
+                //                 first_name,
+                //                 corporation_name,
+                //                 list_of_field[4],
+                //                 list_of_field[5],
+                //                 list_of_field[6],
+                //                 list_of_field[7],
+                //                 list_of_field[8],
+                //                 list_of_field[9]);
 
                 // Add the people based on position
-                if (h.getPosition() == "President")
-                {
-                    President *p = new President(
-                        h.getID(),
-                        h.getLastMidName(),
-                        h.getFirstName(),
-                        h.getWorkPlace(),
-                        h.getPosition(),
-                        list_of_field[5],
-                        h.getBirthPlace(),
-                        h.getEmail(),
-                        h.getPhoneNum(),
-                        list_of_field[9]);
-                    corp->setPresident(p);
-                }
-                else if (h.getPosition() == "Vice President")
-                {
-                    VicePresident *vp = new VicePresident(
-                        h.getID(),
-                        h.getLastMidName(),
-                        h.getFirstName(),
-                        h.getWorkPlace(),
-                        h.getPosition(),
-                        list_of_field[5],
-                        h.getBirthPlace(),
-                        h.getEmail(),
-                        h.getPhoneNum(),
-                        list_of_field[9]);
-                    corp->addVicePresident(vp);
-                }
+                // if (h.getPosition() == "President")
+                // {
+                //     President *p = new President(
+                //         h.getID(),
+                //         h.getLastMidName(),
+                //         h.getFirstName(),
+                //         h.getWorkPlace(),
+                //         h.getPosition(),
+                //         list_of_field[5],
+                //         h.getBirthPlace(),
+                //         h.getEmail(),
+                //         h.getPhoneNum(),
+                //         list_of_field[9]);
+                //     corp->setPresident(p);
+                // }
+                // else if (h.getPosition() == "Vice President")
+                // {
+                //     VicePresident *vp = new VicePresident(
+                //         h.getID(),
+                //         h.getLastMidName(),
+                //         h.getFirstName(),
+                //         h.getWorkPlace(),
+                //         h.getPosition(),
+                //         list_of_field[5],
+                //         h.getBirthPlace(),
+                //         h.getEmail(),
+                //         h.getPhoneNum(),
+                //         list_of_field[9]);
+                //     corp->addVicePresident(vp);
+                // }
+                cout << "Name of corporation: " << corp->getName() << endl;
             }
             else if (validateCompanyNameFromFile(list_of_field[3]))
             {
+                cout << "Company mode: " << endl;
                 // std::cout << "" << std::endl;
                 // Add the human, but need to split this shit: workplace
                 std::string corporation_name, company_name;
@@ -102,16 +104,16 @@ Corporation *makeCorporationFromFile(std::string file_path)
                 std::tie(corporation_name, company_name) = result;
                 corp->setName(corporation_name);
                 // add human
-                Human h = Human(stoi(list_of_field[1]),
-                                last_mid_name,
-                                first_name,
-                                company_name,
-                                list_of_field[4],
-                                list_of_field[5],
-                                list_of_field[6],
-                                list_of_field[7],
-                                list_of_field[8],
-                                list_of_field[9]);
+                // Human h = Human(stoi(list_of_field[1]),
+                //                 last_mid_name,
+                //                 first_name,
+                //                 company_name,
+                //                 list_of_field[4],
+                //                 list_of_field[5],
+                //                 list_of_field[6],
+                //                 list_of_field[7],
+                //                 list_of_field[8],
+                //                 list_of_field[9]);
                 // this shit started!
                 if (!corp->getCompanyList().count(company_name))
                 {
@@ -120,47 +122,69 @@ Corporation *makeCorporationFromFile(std::string file_path)
                     corp->addCompany(&cp);
                 }
                 // let add something....
+                cout << "Name of corporation: " << corp->getName() << endl;
+                cout << "Name of company: " << (*(corp->getPointerofCompanyList()))[company_name]->getName() << endl;
+                // ViceDirector vd = ViceDirector();
+                // if (h.getPosition() == "Director")
+                // {
 
-                ViceDirector vd = ViceDirector();
-                if (h.getPosition() == "Director")
-                {
+                //     Director *d = new Director(
+                //         h.getID(),
+                //         h.getLastMidName(),
+                //         h.getFirstName(),
+                //         h.getWorkPlace(),
+                //         h.getPosition(),
+                //         list_of_field[5],
+                //         h.getBirthPlace(),
+                //         h.getEmail(),
+                //         h.getPhoneNum(),
+                //         list_of_field[9]);
 
-                    Director *d = new Director(
-                        h.getID(),
-                        h.getLastMidName(),
-                        h.getFirstName(),
-                        h.getWorkPlace(),
-                        h.getPosition(),
-                        list_of_field[5],
-                        h.getBirthPlace(),
-                        h.getEmail(),
-                        h.getPhoneNum(),
-                        list_of_field[9]);
-
-                    (*(corp->getPointerofCompanyList()))[company_name]->setDirector(d);
-                }
-                else if (h.getPosition() == "Vice Director")
-                {
-                    ViceDirector *vd = new ViceDirector(
-                        h.getID(),
-                        h.getLastMidName(),
-                        h.getFirstName(),
-                        h.getWorkPlace(),
-                        h.getPosition(),
-                        list_of_field[5],
-                        h.getBirthPlace(),
-                        h.getEmail(),
-                        h.getPhoneNum(),
-                        list_of_field[9]);
-                    (*(corp->getPointerofCompanyList()))[company_name]->addViceDirector(vd);
-                }
+                //     (*(corp->getPointerofCompanyList()))[company_name]->setDirector(d);
+                // }
+                // else if (h.getPosition() == "Vice Director")
+                // {
+                //     ViceDirector *vd = new ViceDirector(
+                //         h.getID(),
+                //         h.getLastMidName(),
+                //         h.getFirstName(),
+                //         h.getWorkPlace(),
+                //         h.getPosition(),
+                //         list_of_field[5],
+                //         h.getBirthPlace(),
+                //         h.getEmail(),
+                //         h.getPhoneNum(),
+                //         list_of_field[9]);
+                //     (*(corp->getPointerofCompanyList()))[company_name]->addViceDirector(vd);
+                // }
             }
             else if (validateDepartmentNameFromFile(list_of_field[3]))
             {
+                cout << "Department mode: " << endl;
                 // std::cout << std::endl;
                 std::string corporation_name, company_name, department_name;
                 std::tuple<std::string, std::string, std::string> result = extractDepartmentFromFile(list_of_field[3]);
                 std::tie(corporation_name, company_name, department_name) = result;
+                if (!corp->getCompanyList().count(company_name))
+                {
+                    Department d = Department();
+                    d.setName(department_name);
+                    Company cp = Company();
+                    cp.setName(company_name);
+                    cp.addDepartment(&d);
+                    corp->addCompany(&cp);
+                }
+                else
+                {
+                    if (!((*(corp->getPointerofCompanyList()))[company_name]->getDepartmentList().count(department_name)))
+                    {
+                        Department d = Department();
+                        d.setName(department_name);
+                        (*(corp->getPointerofCompanyList()))[company_name]->addDepartment(&d);
+                    }
+                }
+                cout << "Company name: " << (*(corp->getPointerofCompanyList()))[company_name]->getName() << endl;
+                cout << "Department name: " << ((*(corp->getPointerofCompanyList()))[company_name]->getDepartmentList())[department_name]->getName() << endl;
             }
         }
     }
