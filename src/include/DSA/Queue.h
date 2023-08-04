@@ -11,6 +11,7 @@ private:
     Node<Value> *tail = nullptr;
     int size = 0;
 
+    void copyNodes(const Queue<Value> &otherQueue);
 public:
     // Constructors
     Queue() : head{nullptr}, tail{nullptr} {};
@@ -290,15 +291,14 @@ void Queue<Value>::Clear()
     }
 }
 
-// OPERATORS
 template <typename Value>
-Queue<Value> &Queue<Value>::operator=(const Queue<Value> &otherQueue)
+void Queue<Value>::copyNodes(const Queue<Value> &otherQueue)
 {
     if (otherQueue.size == 0)
     {
         this->head = nullptr;
         this->tail = nullptr;
-        return *this;
+        return;
     }
 
     this->head = new Node<Value>(otherQueue.head->getValue());
@@ -313,7 +313,17 @@ Queue<Value> &Queue<Value>::operator=(const Queue<Value> &otherQueue)
     }
 
     this->tail = current;
+}
 
+// OPERATORS
+template <typename Value>
+Queue<Value> &Queue<Value>::operator=(const Queue<Value> &otherQueue)
+{
+    if (this != &otherQueue)
+    {
+        Clear(); // Clear existing nodes
+        copyNodes(otherQueue);
+    }
     return *this;
 }
 

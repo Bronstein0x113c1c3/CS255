@@ -13,13 +13,16 @@ bool isNameMatch(std::string name, std::string search_string)
     return found != std::string::npos;
 }
 
-void searchNameInDepartment(Department *department_to_search, Stack<Human> *search_basket, std::string search_string)
+void searchNameInDepartment(Department *department_to_search, Stack<Human *> *search_basket, std::string search_string)
 {
     // CHECK MANAGER
-    Manager manager = department_to_search->getManager();
-    if (isNameMatch(manager.getFullName(), search_string))
+    Manager *manager = department_to_search->getManager();
+    if (manager != nullptr)
     {
-        search_basket->Push(manager);
+        if (isNameMatch(manager->getFullName(), search_string))
+        {
+            search_basket->Push(manager);
+        }
     }
 
     // CHECK DEPUTY MANAGER
@@ -27,9 +30,12 @@ void searchNameInDepartment(Department *department_to_search, Stack<Human> *sear
     for (auto iter = deputy_manager_list.begin(); iter != deputy_manager_list.end(); ++iter)
     {
         DeputyManager *deputy_manager = (*iter).getValue();
-        if (isNameMatch(deputy_manager->getFullName(), search_string))
+        if (deputy_manager != nullptr)
         {
-            search_basket->Push(*deputy_manager);
+            if (isNameMatch(deputy_manager->getFullName(), search_string))
+            {
+                search_basket->Push(deputy_manager);
+            }
         }
     }
 
@@ -40,23 +46,27 @@ void searchNameInDepartment(Department *department_to_search, Stack<Human> *sear
     for (iter = employees_list.begin(); iter != employees_list.end(); ++iter)
     {
         Employee *employee_to_search = iter->second;
-
-        // CHECKING EACH EMPLOYEE
-        if (isNameMatch(employee_to_search->getFullName(), search_string))
+        if (employee_to_search != nullptr)
         {
-            search_basket->Push(*employee_to_search);
+            // CHECKING EACH EMPLOYEE
+            if (isNameMatch(employee_to_search->getFullName(), search_string))
+            {
+                search_basket->Push(employee_to_search);
+            }
         }
     }
 }
 
-void searchNameInCompany(Company *company_to_search, Stack<Human> *search_basket, std::string search_string)
+void searchNameInCompany(Company *company_to_search, Stack<Human *> *search_basket, std::string search_string)
 {
     //? CHECK DIRECTOR
-    Director director = company_to_search->getDirector();
-    if (isNameMatch(director.getFullName(), search_string))
-        ;
+    Director *director = company_to_search->getDirector();
+    if (director != nullptr)
     {
-        search_basket->Push(director);
+        if (isNameMatch(director->getFullName(), search_string))
+        {
+            search_basket->Push(director);
+        }
     }
 
     //? CHECK VICE DIRECTOR
@@ -64,9 +74,12 @@ void searchNameInCompany(Company *company_to_search, Stack<Human> *search_basket
     for (auto iter = vice_director_list.begin(); iter != vice_director_list.end(); ++iter)
     {
         ViceDirector *vice_director = (*iter).getValue();
-        if (isNameMatch(vice_director->getFullName(), search_string))
+        if (vice_director != nullptr)
         {
-            search_basket->Push(*vice_director);
+            if (isNameMatch(vice_director->getFullName(), search_string))
+            {
+                search_basket->Push(vice_director);
+            }
         }
     }
 
@@ -80,7 +93,7 @@ void searchNameInCompany(Company *company_to_search, Stack<Human> *search_basket
     for (iter = department_list.begin(); iter != department_list.end(); ++iter)
     {
         //? RUN MULTITHREADING IN EACH DEPARTMENT
-        all_department_thread.push(std::thread (searchNameInDepartment, iter->second, search_basket, search_string));
+        all_department_thread.push(std::thread(searchNameInDepartment, iter->second, search_basket, search_string));
     }
 
     //! JOIN ALL THE THREAD BEFORE RETURN
@@ -91,16 +104,19 @@ void searchNameInCompany(Company *company_to_search, Stack<Human> *search_basket
     }
 }
 
-Stack<Human> *searchByName(Corporation *corporation, const std::string search_string)
+Stack<Human *> *searchByName(Corporation *corporation, const std::string search_string)
 {
     //! INSTANTIATE MAIN THREAD as the FUNCTION to search CORPORATION
-    Stack<Human> *search_basket = new Stack<Human>();
+    Stack<Human *> *search_basket = new Stack<Human *>();
 
     //? CHECK PRESIDENT
-    President president = corporation->getPresident();
-    if (isNameMatch(president.getFullName(), search_string))
+    President *president = corporation->getPresident();
+    if (president != nullptr)
     {
-        search_basket->Push(president);
+        if (isNameMatch(president->getFullName(), search_string))
+        {
+            search_basket->Push(president);
+        }
     }
 
     //? CHECK VICE PRESIDENT
@@ -108,9 +124,12 @@ Stack<Human> *searchByName(Corporation *corporation, const std::string search_st
     for (auto current = vice_president_list.begin(); current != vice_president_list.end(); ++current)
     {
         VicePresident *vice_president = (*current).getValue();
-        if (isNameMatch(vice_president->getFullName(), search_string))
+        if (vice_president != nullptr)
         {
-            search_basket->Push(*vice_president);
+            if (isNameMatch(vice_president->getFullName(), search_string))
+            {
+                search_basket->Push(vice_president);
+            }
         }
     }
 
@@ -123,7 +142,7 @@ Stack<Human> *searchByName(Corporation *corporation, const std::string search_st
     for (iter = company_list.begin(); iter != company_list.end(); ++iter)
     {
         //? RUN MULTITHREADING IN EACH COMPANY
-        all_company_thread.push(std::thread (searchNameInCompany, iter->second, search_basket, search_string));
+        all_company_thread.push(std::thread(searchNameInCompany, iter->second, search_basket, search_string));
     }
 
     //! JOIN ALL THE THREAD BEFORE RETURN
@@ -132,9 +151,6 @@ Stack<Human> *searchByName(Corporation *corporation, const std::string search_st
         all_company_thread.front().join();
         all_company_thread.pop();
     }
-
-    // BEFORE RETURN POP THE BEGINNING
-    search_basket->Pop();
 
     //! RETURN THE SEARCH BASKET
     return search_basket;
