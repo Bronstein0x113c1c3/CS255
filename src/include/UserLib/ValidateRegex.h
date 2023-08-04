@@ -161,7 +161,7 @@ std::tuple<std::string, std::string> extractName(std::string full_name)
     {
         return {list_of_data[1], list_of_data[2]}; 
     }
-    
+    return {"Unknown", "Unknown"};
 }
 
 // * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM TERMINAL
