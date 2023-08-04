@@ -29,8 +29,8 @@ public:
         os << "Vice Presidents: ";
         for (auto current = corporation.vice_president.begin(); current != corporation.vice_president.end(); ++current)
         {
-            VicePresident *vp = (*current).getValue();
-            os << *vp << ", ";
+            VicePresident *vice_president = (*current).getValue();
+            os << *vice_president << ", ";
         }
         os << std::endl;
 

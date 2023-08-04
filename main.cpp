@@ -112,9 +112,9 @@ int main(int argc, char *argv[])
     // std::cout << std::boolalpha << validatePhoneNum("090756822") << std::endl;
     // Corporation corp = makeCorporationFromFile("employees.txt");
 
-    Corporation *corpTerm = makeCorporation();
-    addHuman(corpTerm);
-    std::cout << corpTerm << std::endl;
+    // Corporation *corpTerm = makeCorporation();
+    // addHuman(corpTerm);
+    // std::cout << corpTerm << std::endl;
 
     // Corporation corporation = Corporation();
     // std::map<std::string, Company> company_list = corporation.getCompanyList();
@@ -124,5 +124,16 @@ int main(int argc, char *argv[])
     // // std::cout << name_age_map["Alex"] << std::endl;
     // HashMap<std::string, int> name_age_map_2(name_age_map);
     // cout << name_age_map_2 << std::endl;
-    return 0;
+    
+    Corporation* corporation = new Corporation("BKCorporation", President(), Queue<VicePresident *>(), map<string, Company *>());
+    Company* company = new Company("BKComp");
+    Department* department = new Department("BKDepart", Manager(), map<int, Employee *>(), Queue<DeputyManager *>());
+
+    displayCorporationInfo(corporation);
+    displayUnitInfo(company);
+    displayUnitInfo(department);
+
+
+
 }
+
