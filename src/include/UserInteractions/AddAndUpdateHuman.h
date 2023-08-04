@@ -8,8 +8,35 @@
 #include "SearchByID.h"
 #include "ValidateNumAndName.h"
 
+std::string askUpdateOrStop(std::string userInput)
+{
+    std::cout << "THERE IS CURRENTLY THERE IS 1 PERSON with the SAME ID in the CORPORATION" << std::endl;
+    std::cout << "Do you want to UPDATE to new one or STOP: " << std::endl;
+    std::cout << "UPDATE or STOP: ";
+
+    std::getline(std::cin, userInput);
+    while (true)
+    {
+        if (userInput == "STOP")
+        {
+            return "STOP";
+        }
+        else if (userInput == "UPDATE")
+        {
+            return "UPDATE";
+        }
+        else
+        {
+            std::cout << "Invalid Input!!!" << std::endl;
+            std::cout << "Please enter STOP or UPDATE: ";
+            std::getline(std::cin, userInput);
+        }
+    }
+    return "UPDATE"; // DEFAULT VALUE
+}
+
 // ADD HUMAN will get Input from TERMINAL to MAKE HUMAN
-void addAndUpdateHuman(Corporation *corporation)  
+void addAndUpdateHuman(Corporation *corporation)
 {
     //* HUMAN ATTRIBUTES
     int ID = 0;
@@ -52,7 +79,7 @@ void addAndUpdateHuman(Corporation *corporation)
 
         if (userInput == "STOP")
         {
-            return;     // STOP THE PROGRAM
+            return; // STOP THE PROGRAM
         }
     }
     //! UPDATE TO NEW ONE
@@ -276,33 +303,6 @@ void addAndUpdateHuman(Corporation *corporation)
     }
     // IGNORE THE NEW LINE CHARACTER
     std::fflush(stdin);
-}
-
-std::string askUpdateOrStop(std::string userInput)
-{
-    std::cout << "THERE IS CURRENTLY THERE IS 1 PERSON with the SAME ID in the CORPORATION" << std::endl;
-    std::cout << "Do you want to UPDATE to new one or STOP: " << std::endl;
-    std::cout << "UPDATE or STOP: ";
-
-    std::getline(std::cin, userInput);
-    while (true)
-    {
-        if (userInput == "STOP")
-        {
-            return "STOP";
-        }
-        else if (userInput == "UPDATE")
-        {
-            return "UPDATE";
-        }
-        else
-        {
-            std::cout << "Invalid Input!!!" << std::endl;
-            std::cout << "Please enter STOP or UPDATE: ";
-            std::getline(std::cin, userInput);
-        }
-    }
-    return "UPDATE";    // DEFAULT VALUE
 }
 
 #endif

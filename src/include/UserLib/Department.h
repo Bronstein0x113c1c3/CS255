@@ -65,7 +65,7 @@ public:
         os << "Employees: ";
         for (auto current = department.employee_list.begin(); current != department.employee_list.end(); ++current)
         {
-            os << current->first << ": " << current->second << ", ";
+            os << current->first << ": " << *(current->second) << ", ";
         }
         os << std::endl;
         os << "-----------------------------------------------------------" << std::endl;

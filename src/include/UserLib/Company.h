@@ -78,7 +78,7 @@ public:
         os << "Departments: ";
         for (auto current = company.department_list.begin(); current != company.department_list.end(); ++current)
         {
-            os << current->first << ": " << current->second << ", ";
+            os << current->first << ": " << *(current->second) << ", ";
         }
         os << std::endl;
         os << "-----------------------------------------------------------" << std::endl;

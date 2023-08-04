@@ -37,7 +37,7 @@ public:
         os << "Companies: ";
         for (auto current = corporation.company_list.begin(); current != corporation.company_list.end(); ++current)
         {
-            os << current->second << ", ";
+            os << *(current->second) << ", ";
         }
         os << std::endl;
         os << "-----------------------------------------------------------" << std::endl;
