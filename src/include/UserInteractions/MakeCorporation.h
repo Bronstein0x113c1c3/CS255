@@ -2,100 +2,170 @@
 #define MAKECORPORATION_H
 
 #include "../UserLib/Corporation.h"
+#include "../UserLib/Human.h"
 #include "ValidateNumAndName.h"
 
 // MAKE CORPRATION
 // Corporation *makeCorporationFromFile(std::string file_path);
 Corporation *makeCorporationFromTerminal();
+Corporation *makeCorporationFromFile(std::string file_path)
+{
+    // Instantiate the corporation, new corporation
+    Corporation *corp = new Corporation();
+    std::ifstream fs(file_path);
+    std::string line;
 
-// Corporation *makeCorporationFromFile(std::string file_path)
-// {
-//     Corporation* corporation = new Corporation();
-//     std::ifstream fs(file_path);
-//     std::string line;
-//     // std::cout << "HELLO" << std::endl;
-//     while (getline(fs, line))
-//     {
-//         std::regex pattern("(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+){0,1};\\s");
-//         smatch list_of_data;
-//         if (std::regex_search(line, list_of_data, pattern))
-//         {
-//             // if (validateCompanyNameFromFile(list_of_data[3]))
-//             // {
-//             //     std::regex pattern("([A-Z]{3}[a-z]+)");
-//             //     std::smatch company;
-//             //     if (std::regex_search(list_of_data[3], company, pattern))
-//             //     {
-//             //         std::cout << "Corporation: " << company[1] << endl;
-//             //     }
-//             // }
-//             if (validateCorporationNameFromFile(list_of_data[3]))
-//             {
-//                 std::cout << "Corporation mode: " << list_of_data[3] << std::endl;
-//                 std::tuple<std::string> result = extractCorporationFromFile(list_of_data[3]);
-//                 std::string corporation_name;
-//                 std::tie(corporation_name) = result;
-//                 std::cout << corporation_name << std::endl;
-//                 // CREATE CORPORATION
-//                 // corporation.setName(corporation_name);
-//             }
-//             else if (validateCompanyNameFromFile(list_of_data[3]))
-//             {
-//                 std::cout << "Company mode: " << list_of_data[3] << std::endl;
-//                 std::tuple<std::string, std::string> result = extractCompanyFromFile(list_of_data[3]);
-//                 std::string corporation_name;
-//                 std::string company_name;
-//                 std::tie(corporation_name, company_name) = result;
-//                 std::cout << corporation_name << std::endl;
-//                 std::cout << company_name << std::endl;
-//                 // CREATE CORPORATION
-//                 // corporation.setName(corporation_name);
+    /*
+    The real shit comes here!
+    */
+    while (getline(fs, line))
+    {
+        std::regex pattern("(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+);\\s(.[^;]+){0,1};\\s");
+        std::smatch list_of_field;
+        if (std::regex_search(line, list_of_field, pattern))
+        {
 
-//                 // // CREATE COMPANY
-//                 // Company company = Company();
-//                 // company.setName(company_name);
+            /*
+            3 cases with 3 difficulties:
+                - Corporation: Vice President, President
+                - Company:
+                    + Director
+                    + Vice Director
+                    + Add to Corporation
+                -Department
+                    +Manager
+                    +Deputy Manager
+                    +Employee
+                    +Add to Company
+            */
+            std::string last_mid_name, first_name;
+            std::tie(last_mid_name, first_name) = extractName(list_of_field[2]);
 
-//                 // // BEFORE ASSIGN COMPANY -> CHECK AVAILABLE COMPANY && CHECK SIZE
-//                 // corporation.addCompany(company);
-//             }
-//             else if (validateDepartmentNameFromFile(list_of_data[3]))
-//             {
-//                 std::cout << "Department mode: " << list_of_data[3] << std::endl;
-//                 std::tuple<std::string, std::string, std::string> result = extractDepartmentFromFile(list_of_data[3]);
-//                 std::string corporation_name;
-//                 std::string company_name;
-//                 std::string department_name;
+            if (validateCorporationNameFromFile(list_of_field[3]))
+            {
 
-//                 std::tie(corporation_name, company_name, department_name) = result;
-//                 std::cout << corporation_name << std::endl;
-//                 std::cout << company_name << std::endl;
-//                 std::cout << department_name << std::endl;
+                // Set the name for corporation:
+                std::tuple<std::string> result = extractCorporationFromFile(list_of_field[3]);
+                std::string corporation_name;
+                std::tie(corporation_name) = result;
+                corp->setName(corporation_name);
+                // add the human with the work place
+                Human h = Human(stoi(list_of_field[1]),
+                                last_mid_name,
+                                first_name,
+                                corporation_name,
+                                list_of_field[4],
+                                list_of_field[5],
+                                list_of_field[6],
+                                list_of_field[7],
+                                list_of_field[8],
+                                list_of_field[9]);
 
-//                 // CREATE CORPORATION
-//                 corporation->setName(corporation_name);
+                // Add the people based on position
+                if (h.getPosition() == "President")
+                {
+                    President *p = new President(
+                        h.getID(),
+                        h.getLastMidName(),
+                        h.getFirstName(),
+                        h.getWorkPlace(),
+                        h.getPosition(),
+                        list_of_field[5],
+                        h.getBirthPlace(),
+                        h.getEmail(),
+                        h.getPhoneNum(),
+                        list_of_field[9]);
+                    corp->setPresident(p);
+                }
+                else if (h.getPosition() == "Vice President")
+                {
+                    VicePresident *vp = new VicePresident(
+                        h.getID(),
+                        h.getLastMidName(),
+                        h.getFirstName(),
+                        h.getWorkPlace(),
+                        h.getPosition(),
+                        list_of_field[5],
+                        h.getBirthPlace(),
+                        h.getEmail(),
+                        h.getPhoneNum(),
+                        list_of_field[9]);
+                    corp->addVicePresident(vp);
+                }
+            }
+            else if (validateCompanyNameFromFile(list_of_field[3]))
+            {
+                // std::cout << "" << std::endl;
+                // Add the human, but need to split this shit: workplace
+                std::string corporation_name, company_name;
+                std::tuple<std::string, std::string> result = extractCompanyFromFile(list_of_field[3]);
+                std::tie(corporation_name, company_name) = result;
+                corp->setName(corporation_name);
+                // add human
+                Human h = Human(stoi(list_of_field[1]),
+                                last_mid_name,
+                                first_name,
+                                company_name,
+                                list_of_field[4],
+                                list_of_field[5],
+                                list_of_field[6],
+                                list_of_field[7],
+                                list_of_field[8],
+                                list_of_field[9]);
+                // this shit started!
+                if (!corp->getCompanyList().count(company_name))
+                {
+                    Company cp = Company();
+                    cp.setName(company_name);
+                    corp->addCompany(&cp);
+                }
+                // let add something....
 
-//                 // CREATE COMPANY
-//                 Company company = Company();
-//                 company.setName(company_name);
+                ViceDirector vd = ViceDirector();
+                if (h.getPosition() == "Director")
+                {
 
-//                 // BEFORE ASSIGN COMPANY -> CHECK AVAILABLE COMPANY && CHECK SIZE
-//                 // IF SIZE == 0 -> ASSIGN
-//                 // IF CHECK NOT AVAILABLE -> ASSIGN TO LIST
+                    Director *d = new Director(
+                        h.getID(),
+                        h.getLastMidName(),
+                        h.getFirstName(),
+                        h.getWorkPlace(),
+                        h.getPosition(),
+                        list_of_field[5],
+                        h.getBirthPlace(),
+                        h.getEmail(),
+                        h.getPhoneNum(),
+                        list_of_field[9]);
 
-//                 // CREATE DEPARTMENT
-//                 Department department = Department();
-//                 department.setName(department_name);
-
-//                 // BEFORE ASSIGN COMPANY -> CHECK AVAILABLE DEPARTMENT && CHECK SIZE
-//                 // IF SIZE == 0 -> ASSIGN
-//                 company.addDepartment(department);
-//                 corporation->addCompany(company);
-//                 // IF CHECK NOT AVAILABLE -> ASSIGN TO LIST
-//             }
-//         }
-//     }
-//     return corporation;
-// }
+                    (*(corp->getPointerofCompanyList()))[company_name]->setDirector(d);
+                }
+                else if (h.getPosition() == "Vice Director")
+                {
+                    ViceDirector *vd = new ViceDirector(
+                        h.getID(),
+                        h.getLastMidName(),
+                        h.getFirstName(),
+                        h.getWorkPlace(),
+                        h.getPosition(),
+                        list_of_field[5],
+                        h.getBirthPlace(),
+                        h.getEmail(),
+                        h.getPhoneNum(),
+                        list_of_field[9]);
+                    (*(corp->getPointerofCompanyList()))[company_name]->addViceDirector(vd);
+                }
+            }
+            else if (validateDepartmentNameFromFile(list_of_field[3]))
+            {
+                // std::cout << std::endl;
+                std::string corporation_name, company_name, department_name;
+                std::tuple<std::string, std::string, std::string> result = extractDepartmentFromFile(list_of_field[3]);
+                std::tie(corporation_name, company_name, department_name) = result;
+            }
+        }
+    }
+    return corp;
+}
 
 Corporation *makeCorporationFromTerminal()
 {
