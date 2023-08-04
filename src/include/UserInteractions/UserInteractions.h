@@ -11,6 +11,7 @@
 #include "ValidateNumAndName.h"
 #include "MakeCorporation.h"
 #include "AddHuman.h"
+#include "SearchByName.h"
 
 // ALL THE REQUIREMENTS FUNCTION
 
@@ -24,10 +25,10 @@ void displayUnitInfo(Company *company);
 void displayUnitInfo(Department *department);
 
 // SEARCH FUNCTIONS USE CONCURRENCY - PARRALELISM
-Stack<Human> searchByName(const std::string name_input);
-Human searchByID(const int ID);
+Stack<Human> *searchByName(Corporation *corporation, const std::string name_input);
+Human *searchByID(const int ID);
 
-// CHECKING FUNCTION
+// CHECKING FUNCTION USE CONCURRENCY - PARRALLELISM
 bool isHumanExist(const Human *human); //! USE searchByID() to return True or False
 
 // ADJUST FUNCTIONS USING TERMINAL
@@ -57,15 +58,15 @@ Corporation *makeCorporation(std::string file_path)
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
     Corporation *corporation;
-    // if (file_path != "" && validateFileTxt(file_path))
-    // {
-    //     corporation = makeCorporationFromFile(file_path);
-    // }
-    // else // DO THE TERMINAL PART
-    // {
+    if (file_path != "" && validateFileTxt(file_path))
+    {
+        corporation = makeCorporationFromFile(file_path);
+    }
+    else // DO THE TERMINAL PART
+    {
     corporation = makeCorporationFromTerminal();
-    // }
-    // std::cout << corporation << std::endl;
+    }
+    
     return corporation;
 }
 
