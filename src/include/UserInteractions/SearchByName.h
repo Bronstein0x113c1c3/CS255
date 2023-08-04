@@ -51,7 +51,7 @@ void searchNameInDepartment(Department *department_to_search, Stack<Human> *sear
 
 void searchNameInCompany(Company *company_to_search, Stack<Human> *search_basket, std::string search_string)
 {
-    // CHECK DIRECTOR
+    //? CHECK DIRECTOR
     Director director = company_to_search->getDirector();
     if (isNameMatch(director.getFullName(), search_string))
         ;
@@ -59,7 +59,7 @@ void searchNameInCompany(Company *company_to_search, Stack<Human> *search_basket
         search_basket->Push(director);
     }
 
-    // CHECK VICE DIRECTOR
+    //? CHECK VICE DIRECTOR
     Queue<ViceDirector *> vice_director_list = company_to_search->getViceDirectorList();
     for (auto iter = vice_director_list.begin(); iter != vice_director_list.end(); ++iter)
     {
@@ -72,23 +72,22 @@ void searchNameInCompany(Company *company_to_search, Stack<Human> *search_basket
 
     //! DIVIDE THREAD BASED ON THE LENGTH OF THE MAP<DEPARTMENT>
     // TO GROUP ALL THE COMPANY THREAD
-    std::vector<std::thread> all_department_thread;
+    std::queue<std::thread> all_department_thread;
 
     std::map<std::string, Department *> department_list = company_to_search->getDepartmentList();
     std::map<std::string, Department *>::const_iterator iter;
 
     for (iter = department_list.begin(); iter != department_list.end(); ++iter)
     {
-        Department *company_to_search = iter->second;
-
         //? RUN MULTITHREADING IN EACH DEPARTMENT
-        all_department_thread.push_back(std::thread (searchNameInDepartment, iter->second, search_basket, search_string));
+        all_department_thread.push(std::thread (searchNameInDepartment, iter->second, search_basket, search_string));
     }
 
     //! JOIN ALL THE THREAD BEFORE RETURN
-    for (auto iter = all_department_thread.begin(); iter != all_department_thread.end(); ++iter)
+    while (!all_department_thread.empty())
     {
-        iter->join();
+        all_department_thread.front().join();
+        all_department_thread.pop();
     }
 }
 
@@ -116,24 +115,24 @@ Stack<Human> *searchByName(Corporation *corporation, const std::string search_st
     }
 
     //! DIVIDE THREAD BASED ON THE LENGTH OF THE MAP<COMPANY>
-    std::vector<std::thread> all_company_thread;
+    std::queue<std::thread> all_company_thread;
 
     std::map<std::string, Company *> company_list = corporation->getCompanyList();
     std::map<std::string, Company *>::const_iterator iter;
 
     for (iter = company_list.begin(); iter != company_list.end(); ++iter)
     {
-        Company *company_to_search = iter->second;
-
         //? RUN MULTITHREADING IN EACH COMPANY
-        all_company_thread.push_back(std::thread (searchNameInCompany, iter->second, search_basket, search_string));
+        all_company_thread.push(std::thread (searchNameInCompany, iter->second, search_basket, search_string));
     }
 
     //! JOIN ALL THE THREAD BEFORE RETURN
-    for (auto iter = all_company_thread.begin(); iter != all_company_thread.end(); ++iter)
+    while (!all_company_thread.empty())
     {
-        iter->join();
+        all_company_thread.front().join();
+        all_company_thread.pop();
     }
+    
 
     //! RETURN THE SEARCH BASKET
     return search_basket;

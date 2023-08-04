@@ -10,8 +10,9 @@
 #include "../UserLib/ValidateRegex.h"
 #include "ValidateNumAndName.h"
 #include "MakeCorporation.h"
-#include "AddHuman.h"
+#include "AddAndUpdateHuman.h"
 #include "SearchByName.h"
+#include "AddDaysWorked.h"
 
 // ALL THE REQUIREMENTS FUNCTION
 
@@ -26,14 +27,10 @@ void displayUnitInfo(Department *department);
 
 // SEARCH FUNCTIONS USE CONCURRENCY - PARRALELISM
 Stack<Human> *searchByName(Corporation *corporation, const std::string name_input);
-Human *searchByID(const int ID);
-
-// CHECKING FUNCTION USE CONCURRENCY - PARRALLELISM
-bool isHumanExist(const Human *human); //! USE searchByID() to return True or False
+Human *searchByID(Corporation* corporation, const int ID);
 
 // ADJUST FUNCTIONS USING TERMINAL
-void addHuman(Corporation *corporation);        //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
-void updateHumanInfo(Corporation *corporation); //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
+void addAndUpdateHuman(Corporation *corporation);        //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
 void addDaysWorked(Human *human);
 
 // WRITE TO FILE
@@ -68,6 +65,33 @@ Corporation *makeCorporation(std::string file_path)
     }
     
     return corporation;
+}
+
+// DISPLAY FUNCTIONS
+void displayCorporationInfo(Corporation *orporation)
+{
+
+}
+
+void displayHumanInfo(const int ID) //! USE searchByID()
+{
+
+}
+
+void displayUnitInfo(Company *company)
+{
+
+}
+
+void displayUnitInfo(Department *department)
+{
+
+}
+
+// EXIT FUNCTION
+void exitProgram()
+{
+    
 }
 
 #endif

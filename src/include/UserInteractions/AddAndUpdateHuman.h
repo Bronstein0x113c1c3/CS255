@@ -1,13 +1,15 @@
-#ifndef ADDHUMAN_H
-#define ADDHUMAN_H
+#ifndef ADDANDHUMAN_H
+#define ADDANDHUMAN_H
 
+#include <string>
 #include "../UserLib/Corporation.h"
 #include "../UserLib/Human.h"
 #include "../UserLib/ValidateRegex.h"
+#include "SearchByID.h"
 #include "ValidateNumAndName.h"
 
 // ADD HUMAN will get Input from TERMINAL to MAKE HUMAN
-void addHuman(Corporation* corporation)
+void addAndUpdateHuman(Corporation *corporation)  
 {
     //* HUMAN ATTRIBUTES
     int ID = 0;
@@ -39,6 +41,21 @@ void addHuman(Corporation* corporation)
     ID = stoi(string_ID);
 
     //!! VALIDATE ID ??
+    Human *human_same_ID = searchByID(corporation, ID);
+    if (human_same_ID->getID() == ID)
+    {
+        // THEY BOTH HAVE THE SAME ID ->
+        // CASE 1: Stop Add
+        // Case 2: UPDATE TO THE NEW ONE
+        std::string userInput = "";
+        userInput = askUpdateOrStop(userInput);
+
+        if (userInput == "STOP")
+        {
+            return;     // STOP THE PROGRAM
+        }
+    }
+    //! UPDATE TO NEW ONE
 
     //? Name
     std::cout << "Enter NAME: ";
@@ -132,12 +149,12 @@ void addHuman(Corporation* corporation)
 
         if (position == "President")
         {
-            President* new_president = new President(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
+            President *new_president = new President(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             corporation->setPresident(new_president);
         }
         else if (position == "Vice President")
         {
-            VicePresident* new_vice_president = new VicePresident(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
+            VicePresident *new_vice_president = new VicePresident(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             corporation->addVicePresident(new_vice_president);
         }
     }
@@ -150,7 +167,7 @@ void addHuman(Corporation* corporation)
 
         // DISPLAY ALL THE AVAILABLE COMPANY
         std::cout << "Available Company in " + corporation->getName() + ": ";
-        std::map<std::string, Company*> company_list = corporation->getCompanyList();
+        std::map<std::string, Company *> company_list = corporation->getCompanyList();
         for (auto current = company_list.begin(); current != company_list.end(); ++current)
         {
             std::cout << current->first << " | ";
@@ -177,13 +194,13 @@ void addHuman(Corporation* corporation)
         if (position == "Director")
         {
             // ADD NEW DIRECTOR
-            Director* new_director = new Director(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
+            Director *new_director = new Director(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             company_list[input_company_name]->setDirector(new_director);
         }
         else if (position == "Vice Director")
         {
             // ADD NEW VICE DIRECTOR
-            ViceDirector* new_vice_director = new ViceDirector(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
+            ViceDirector *new_vice_director = new ViceDirector(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             company_list[input_company_name]->addViceDirector(new_vice_director);
         }
     }
@@ -196,7 +213,7 @@ void addHuman(Corporation* corporation)
 
         // DISPLAY ALL THE AVAILABLE COMPANY
         std::cout << "Available Company in " + corporation->getName() + ": ";
-        std::map<std::string, Company*> company_list = corporation->getCompanyList();
+        std::map<std::string, Company *> company_list = corporation->getCompanyList();
         for (auto current = company_list.begin(); current != company_list.end(); ++current)
         {
             std::cout << current->first << " | ";
@@ -220,8 +237,8 @@ void addHuman(Corporation* corporation)
             // std::cin.ignore();
         }
 
-        Company* company_to_add = company_list[input_company_name];
-        std::map<std::string, Department*> department_list = company_to_add->getDepartmentList();
+        Company *company_to_add = company_list[input_company_name];
+        std::map<std::string, Department *> department_list = company_to_add->getDepartmentList();
         // DISPLAY ALL AVAILABLE DEPARTMENT NAME
         std::cout << "Available Departments in " + company_to_add->getName() + ": ";
         for (auto current = department_list.begin(); current != department_list.end(); ++current)
@@ -243,22 +260,49 @@ void addHuman(Corporation* corporation)
 
         if (position == "Manager")
         {
-            Manager* new_manager = new Manager(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
+            Manager *new_manager = new Manager(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             department_list[input_department_name]->setManager(new_manager);
         }
         else if (position == "Deputy Manager")
         {
-            DeputyManager* new_deputy_manager = new DeputyManager(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
+            DeputyManager *new_deputy_manager = new DeputyManager(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             department_list[input_department_name]->addDeputyManager(new_deputy_manager);
         }
         else if (position == "Employee")
         {
-            Employee* new_employee = new Employee(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
+            Employee *new_employee = new Employee(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             department_list[input_department_name]->addEmployee(new_employee);
         }
     }
     // IGNORE THE NEW LINE CHARACTER
     std::fflush(stdin);
+}
+
+std::string askUpdateOrStop(std::string userInput)
+{
+    std::cout << "THERE IS CURRENTLY THERE IS 1 PERSON with the SAME ID in the CORPORATION" << std::endl;
+    std::cout << "Do you want to UPDATE to new one or STOP: " << std::endl;
+    std::cout << "UPDATE or STOP: ";
+
+    std::getline(std::cin, userInput);
+    while (true)
+    {
+        if (userInput == "STOP")
+        {
+            return "STOP";
+        }
+        else if (userInput == "UPDATE")
+        {
+            return "UPDATE";
+        }
+        else
+        {
+            std::cout << "Invalid Input!!!" << std::endl;
+            std::cout << "Please enter STOP or UPDATE: ";
+            std::getline(std::cin, userInput);
+        }
+    }
+    return "UPDATE";    // DEFAULT VALUE
 }
 
 #endif
