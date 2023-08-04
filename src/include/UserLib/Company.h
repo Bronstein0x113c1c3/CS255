@@ -71,7 +71,7 @@ public:
         for (auto current = company.vice_director.begin(); current != company.vice_director.end(); ++current)
         {
             ViceDirector *vice_director = (*current).getValue();
-            os << *current << ", ";
+            os << *vice_director << ", ";
         }
         os << std::endl;
 

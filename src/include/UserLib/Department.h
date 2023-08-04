@@ -57,8 +57,8 @@ public:
         os << "Deputy Managers: ";
         for (auto current = department.deputy_manager_list.begin(); current != department.deputy_manager_list.end(); ++current)
         {
-            DeputyManager *cur = (*current).getValue();
-            os << *cur << ", ";
+            DeputyManager *deputy_manager = (*current).getValue();
+            os << *deputy_manager << ", ";
         }
         os << std::endl;
 
