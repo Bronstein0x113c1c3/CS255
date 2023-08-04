@@ -10,14 +10,14 @@ class Corporation
 {
 private:
     std::string name;
-    President* president;
+    President *president = nullptr;
     Queue<VicePresident *> vice_president;
     std::map<std::string, Company *> company_list;
 
 public:
     // CONSTRUCTORS
     Corporation(){};
-    Corporation(std::string name, President* president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company);
+    Corporation(std::string name, President *president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company);
     ~Corporation();
 
     // OPERATORS
@@ -44,6 +44,42 @@ public:
 
         return os;
     }
+    friend ostream &operator<<(ostream &os, const Corporation* corporation)
+    {
+        os << "-----------------------------------------------------------" << std::endl;
+        os << "Corporation: " + corporation->name << std::endl;
+        if (corporation->president != nullptr)
+        {
+            os << "President: " + corporation->president->getFirstName() + " " + corporation->president->getLastMidName() << std::endl;
+        }
+        else
+            os << "President: " << std::endl;
+        
+        
+        os << "Vice Presidents: ";
+        for (auto current = corporation->vice_president.begin(); current != corporation->vice_president.end(); ++current)
+        {
+            VicePresident *vice_president = (*current).getValue();
+            if (vice_president != nullptr)
+            {
+                os << *vice_president << ", ";
+            }
+        }
+        os << std::endl;
+
+        os << "Companies: ";
+        for (auto current = corporation->company_list.begin(); current != corporation->company_list.end(); ++current)
+        {
+            if (current->second != nullptr)
+            {
+                os << current->second << ", ";
+            }   
+        }
+        os << std::endl;
+        os << "-----------------------------------------------------------" << std::endl;
+
+        return os;
+    }
     bool operator==(const Corporation &otherCorporation)
     {
         return this->name == otherCorporation.name;
@@ -54,7 +90,10 @@ public:
     }
     // PROPERTIES
     std::string getName() const { return this->name; };
-    President getPresident() { return *(this->president); };
+    President* getPresident() 
+    {   
+        return this->president;
+    };
     Queue<VicePresident *> getVicePresidentList() { return this->vice_president; };
     std::map<std::string, Company *> getCompanyList()
     {
@@ -84,7 +123,7 @@ public:
     };
 };
 
-Corporation::Corporation(std::string name, President* president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company)
+Corporation::Corporation(std::string name, President *president, Queue<VicePresident *> vice_president, std::map<std::string, Company *> company)
 {
     this->name = name;
     this->president = president;
