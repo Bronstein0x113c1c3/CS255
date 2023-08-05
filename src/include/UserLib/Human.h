@@ -51,7 +51,7 @@ public:
     };
 
     friend std::ostream &operator<<(std::ostream &os, const Human *human)
-    {    
+    {
         os << "----------------------------------------------------------" << std::endl;
         os << "ID: " << human->ID << "\n";
         os << "Last-mid name: " << human->last_mid_name << "\n";
@@ -65,11 +65,11 @@ public:
         }
         else
             os << "Date of birth: " << std::endl;
-        
+
         os << "Birth place: " << human->birth_place << "\n";
         os << "Email: " << human->email << "\n";
         os << "Phone number: " << human->phone_num << "\n";
-        
+
         if (human->first_day_at_work != nullptr)
         {
             os << "First day at work: " << human->first_day_at_work << "\n";
@@ -77,7 +77,7 @@ public:
         else
             os << "First day at work: " << std::endl;
 
-        os << "Days Worked: " << std::endl; 
+        os << "Days Worked: " << std::endl;
         for (auto current = human->days_work.begin(); current != human->days_work.end(); ++current)
         {
             Record *record = (*current).getValue();
@@ -89,7 +89,36 @@ public:
         os << "----------------------------------------------------------" << std::endl;
         return os;
     };
+    friend std::ostream &operator>>(const Human *human, std::ostream &os)
+    {
+        os << human->ID << "; ";
+        os << human->last_mid_name << "; ";
+        os << human->first_name << "; ";
+        os << human->work_place << "; ";
 
+        os << human->position << "; ";
+        if (human->date_of_birth != nullptr)
+        {
+            os << human->date_of_birth << "; ";
+        }
+        else
+        {
+            os << "; ";
+        }
+        os << human->birth_place << "; ";
+        os << human->email << "; ";
+        os << human->phone_num << "; ";
+        if (human->first_day_at_work != nullptr)
+        {
+            os << human->first_day_at_work << "; ";
+        }
+        else
+        {
+            os << "; ";
+        }
+
+        return os;
+    }
     void setRecord(const Queue<Record *> record);
     // PROPERTIES
     unsigned short getID() const { return this->ID; };
@@ -120,7 +149,6 @@ public:
     {
         this->days_work.Enqueue(record);
     };
-    
 
     // OPERATORS
     bool operator==(const Human &otherHuman)
