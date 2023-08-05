@@ -32,6 +32,7 @@ public:
     ~Human();
     friend std::ostream &operator<<(std::ostream &os, const Human &human)
     {
+        os << "----------------------------------------------------------" << std::endl;
         os << "ID: " << human.ID << "\n";
         os << "Last-mid name: " << human.last_mid_name << "\n";
         os << "First name: " << human.first_name << "\n";
@@ -47,45 +48,50 @@ public:
             Record *record = (*current).getValue();
             os << *record << std::endl;
         }
+        os << "----------------------------------------------------------" << std::endl;
         return os;
     };
 
     friend std::ostream &operator<<(std::ostream &os, const Human *human)
     {
         os << "----------------------------------------------------------" << std::endl;
-        os << "ID: " << human->ID << "\n";
-        os << "Last-mid name: " << human->last_mid_name << "\n";
-        os << "First name: " << human->first_name << "\n";
-        os << "Workplace: " << human->work_place << "\n";
-        os << "Position: " << human->position << "\n";
-
-        if (human->date_of_birth != nullptr)
+        if (human != nullptr)
         {
-            os << "Date of birth: " << human->date_of_birth << "\n";
-        }
-        else
-            os << "Date of birth: " << std::endl;
+            os << "ID: " << human->ID << "\n";
+            os << "Last-mid name: " << human->last_mid_name << "\n";
+            os << "First name: " << human->first_name << "\n";
+            os << "Workplace: " << human->work_place << "\n";
+            os << "Position: " << human->position << "\n";
 
-        os << "Birth place: " << human->birth_place << "\n";
-        os << "Email: " << human->email << "\n";
-        os << "Phone number: " << human->phone_num << "\n";
-
-        if (human->first_day_at_work != nullptr)
-        {
-            os << "First day at work: " << human->first_day_at_work << "\n";
-        }
-        else
-            os << "First day at work: " << std::endl;
-
-        os << "Days Worked: " << std::endl;
-        for (auto current = human->days_work.begin(); current != human->days_work.end(); ++current)
-        {
-            Record *record = (*current).getValue();
-            if (record != nullptr)
+            if (human->date_of_birth != nullptr)
             {
-                os << record << std::endl;
+                os << "Date of birth: " << human->date_of_birth << "\n";
+            }
+            else
+                os << "Date of birth: " << std::endl;
+
+            os << "Birth place: " << human->birth_place << "\n";
+            os << "Email: " << human->email << "\n";
+            os << "Phone number: " << human->phone_num << "\n";
+
+            if (human->first_day_at_work != nullptr)
+            {
+                os << "First day at work: " << human->first_day_at_work << "\n";
+            }
+            else
+                os << "First day at work: " << std::endl;
+
+            os << "Days Worked: " << std::endl;
+            for (auto current = human->days_work.begin(); current != human->days_work.end(); ++current)
+            {
+                Record *record = (*current).getValue();
+                if (record != nullptr)
+                {
+                    os << record << std::endl;
+                }
             }
         }
+        os << "Unknown Person" << std::endl;
         os << "----------------------------------------------------------" << std::endl;
         return os;
     };
@@ -127,7 +133,7 @@ public:
     std::string getFullName() const { return this->first_name + " " + this->last_mid_name; };
     std::string getWorkPlace() const { return this->work_place; };
     std::string getPosition() const { return this->position; };
-    Date* getDateOfBirth() const { return this->date_of_birth; };
+    Date *getDateOfBirth() const { return this->date_of_birth; };
     std::string getBirthPlace() const { return this->birth_place; };
     std::string getEmail() const { return this->email; };
     std::string getPhoneNum() const { return this->phone_num; };

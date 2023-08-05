@@ -126,7 +126,7 @@ void searchIDInCompany(Company *company_to_search, Human *human_to_find, const u
 
 Human *searchByID(Corporation *corporation, const int ID_to_find)
 {
-    Human *human_to_find = new Human();
+    Human *human_to_find = nullptr;
 
     //? CHECK PRESIDENT
     President *president = corporation->getPresident();
@@ -181,6 +181,11 @@ Human *searchByID(Corporation *corporation, const int ID_to_find)
     }
 
     //! RETURN THE SEARCH BASKET
+    if (human_to_find == nullptr)
+    {
+        std::cout << "Unable to Find that ID!!!" << std::endl;
+    }
+
     return human_to_find;
 }
 
