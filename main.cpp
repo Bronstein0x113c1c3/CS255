@@ -126,9 +126,12 @@ int main(int argc, char *argv[])
     // cout << name_age_map_2 << std::endl;
 
 
-    Corporation *corporation = makeCorporation();
-    displayCorporationInfo(corporation);
+    // Corporation *corporation = makeCorporation();
+    // displayCorporationInfo(corporation);
 
+    Corporation* corp = makeCorporation("employees.txt");
+    displayHumanInfo(corp, 001);
+    
     // std::string name = "Duy Tran Corp";
     // President *president = new President();
     // president->setFirstName("Nguyen");
