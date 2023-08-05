@@ -49,7 +49,7 @@ public:
     // OPERATORS
     friend std::ostream &operator<<(std::ostream &os, const Record &record)
     {
-        os << record.day_worked << "," << record.time_start_work << "," << record.time_go_home;
+        os << record.day_worked << ", " << record.time_start_work << "," << record.time_go_home;
         return os;
     }
 
@@ -57,7 +57,7 @@ public:
     {
         if (record->day_worked != nullptr)
         {
-            os << record->day_worked << ",";
+            os << record->day_worked << ", ";
         }
 
         if (record->time_start_work != nullptr)

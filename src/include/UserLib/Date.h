@@ -57,6 +57,22 @@ public:
         return os;
     }
 
+    // PROPERTIES
+    unsigned short getDay() const
+    {
+        return this->day;
+    }
+
+    unsigned short getMonth() const
+    {
+        return this->month;
+    }
+
+    unsigned short getYear() const
+    {
+        return this->year;
+    }
+
     friend std::ostream &operator<<(std::ostream &os, const Date *date)
     {
         if (date != nullptr)

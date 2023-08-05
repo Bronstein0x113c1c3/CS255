@@ -51,7 +51,8 @@ public:
     };
 
     friend std::ostream &operator<<(std::ostream &os, const Human *human)
-    {
+    {    
+        os << "----------------------------------------------------------" << std::endl;
         os << "ID: " << human->ID << "\n";
         os << "Last-mid name: " << human->last_mid_name << "\n";
         os << "First name: " << human->first_name << "\n";
@@ -64,18 +65,19 @@ public:
         }
         else
             os << "Date of birth: " << std::endl;
-
+        
         os << "Birth place: " << human->birth_place << "\n";
         os << "Email: " << human->email << "\n";
         os << "Phone number: " << human->phone_num << "\n";
-
-        if (human->date_of_birth != nullptr)
+        
+        if (human->first_day_at_work != nullptr)
         {
             os << "First day at work: " << human->first_day_at_work << "\n";
         }
         else
             os << "First day at work: " << std::endl;
 
+        os << "Days Worked: " << std::endl; 
         for (auto current = human->days_work.begin(); current != human->days_work.end(); ++current)
         {
             Record *record = (*current).getValue();
@@ -84,6 +86,7 @@ public:
                 os << record << std::endl;
             }
         }
+        os << "----------------------------------------------------------" << std::endl;
         return os;
     };
 
@@ -117,11 +120,7 @@ public:
     {
         this->days_work.Enqueue(record);
     };
-    // METHODS
-    void addDaysWork(Record *new_record)
-    {
-        this->days_work.Enqueue(new_record);
-    }
+    
 
     // OPERATORS
     bool operator==(const Human &otherHuman)
