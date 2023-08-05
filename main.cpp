@@ -124,16 +124,39 @@ int main(int argc, char *argv[])
     // // std::cout << name_age_map["Alex"] << std::endl;
     // HashMap<std::string, int> name_age_map_2(name_age_map);
     // cout << name_age_map_2 << std::endl;
-    
-    Corporation* corporation = new Corporation("BKCorp", President(), Queue<VicePresident *>(), map<std::string, Company *>());
-    Company* company = new Company("BKComp");
-    Department* department = new Department("BKDepart", Manager(), map<unsigned short, Employee *>(), Queue<DeputyManager *>());
 
+
+    Corporation *corporation = makeCorporation();
     displayCorporationInfo(corporation);
-    displayUnitInfo(company);
-    displayUnitInfo(department);
 
+    // std::string name = "Duy Tran Corp";
+    // President *president = new President();
+    // president->setFirstName("Nguyen");
+    // president->setLastMidName("Duy");
 
+    // VicePresident *vice_president = new VicePresident();
+    // vice_president->setFirstName("Nguyen");
+    // vice_president->setLastMidName("Trung Son");
+
+    // Company *company = new Company();
+    // company->setName("Duy Tran Comp");
+
+    // Department *department = new Department();
+    // department->setName("Duy Tran Dept");
+
+    // company->addDepartment(department);
+
+    // Corporation *corporation = new Corporation();
+    // corporation->setName(name);
+    // corporation->setPresident(president);
+    // corporation->addVicePresident(vice_president);
+    // corporation->addCompany(company);
+
+    // // std::cout << corporation << std::endl;
+    // // Stack<Human *> *result = searchByName(corporation, "y");
+    // Human* human = searchByID(corporation, 0);
+
+    // std::cout << *human << std::endl;
 
 }
 

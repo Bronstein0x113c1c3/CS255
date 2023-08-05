@@ -56,6 +56,35 @@ public:
         os << date.day << "/" << date.month << "/" << date.year;
         return os;
     }
+
+    // PROPERTIES
+    unsigned short getDay() const
+    {
+        return this->day;
+    }
+
+    unsigned short getMonth() const
+    {
+        return this->month;
+    }
+
+    unsigned short getYear() const
+    {
+        return this->year;
+    }
+
+    friend std::ostream &operator<<(std::ostream &os, const Date *date)
+    {
+        if (date != nullptr)
+        {
+            os << date->day << "/" << date->month << "/" << date->year;
+        }
+        else
+            os << "Unknown";
+        
+        
+        return os;
+    }
     // COPY CONSTRUCTOR
     Date(const Date &date)
     {

@@ -8,9 +8,9 @@ using namespace std;
 class Record
 {
 private:
-    Date *day_worked;
-    Time *time_start_work;
-    Time *time_go_home;
+    Date *day_worked = nullptr;
+    Time *time_start_work = nullptr;
+    Time *time_go_home = nullptr;
 
 public:
     // CONSTRUCTORS
@@ -29,14 +29,14 @@ public:
         stringstream ss(record);
         string day_worked, time_start_work, time_go_home;
         ss >> day_worked >> time_start_work >> time_go_home;
-        *(this->day_worked) = Date(day_worked);
-        *(this->time_start_work) = Time(time_start_work);
-        *(this->time_start_work) = Time(time_go_home);
+        this->day_worked = new Date(day_worked);
+        this->time_start_work = new Time(time_start_work);
+        this->time_start_work = new Time(time_go_home);
         return;
     }
 
     // COPY CONSTRUCTOR
-    Record(const Record* otherRecord)
+    Record(const Record *otherRecord)
     {
         if (this != otherRecord)
         {
@@ -49,10 +49,29 @@ public:
     // OPERATORS
     friend std::ostream &operator<<(std::ostream &os, const Record &record)
     {
-        os << record.day_worked << "," << record.time_start_work << "," << record.time_go_home;
+        os << record.day_worked << ", " << record.time_start_work << "," << record.time_go_home;
         return os;
     }
-    Record operator=(const Record* otherRecord)
+
+    friend std::ostream &operator<<(std::ostream &os, const Record *record)
+    {
+        if (record->day_worked != nullptr)
+        {
+            os << record->day_worked << ", ";
+        }
+
+        if (record->time_start_work != nullptr)
+        {
+            os << record->time_start_work << "; ";
+        }
+
+        if (record->time_go_home != nullptr)
+        {
+            os << record->time_go_home;
+        }
+        return os;
+    }
+    Record operator=(const Record *otherRecord)
     {
         if (this != otherRecord)
         {
@@ -74,9 +93,9 @@ public:
     Time getTimeStartWork() const { return *(this->time_start_work); };
     Time getTimeGoHome() const { return *(this->time_go_home); };
 
-    void setDayWorked(Date* day_worked) { this->day_worked = day_worked; };
-    void setTimeStartWork(Time* time_started) { this->time_start_work = time_started; };
-    void setTimeGoHome(Time* time_go_home) { this->time_go_home = time_go_home; };
+    void setDayWorked(Date *day_worked) { this->day_worked = day_worked; };
+    void setTimeStartWork(Time *time_started) { this->time_start_work = time_started; };
+    void setTimeGoHome(Time *time_go_home) { this->time_go_home = time_go_home; };
 
     // OPERATORS
     bool operator==(const Record &otherRecord)

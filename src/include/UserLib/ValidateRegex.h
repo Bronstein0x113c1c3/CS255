@@ -13,6 +13,7 @@ bool validateCorporationPosition(std::string position_name);
 bool validateCompanyPosition(std::string position_name);
 bool validateDepartmentPosition(std::string position_name);
 bool validateDate(std::string date);
+bool validateTime(std::string time);
 bool validatePlace(std::string birth_place);
 bool validateEmail(std::string email);
 bool validatePhoneNum(std::string phone_num);
@@ -56,6 +57,12 @@ bool validateDate(std::string date)
 {
     std::regex date_pattern("([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})");
     return std::regex_match(date, date_pattern);
+}
+
+bool validateTime(std::string time)
+{
+    std::regex time_pattern("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
+    return std::regex_match(time, time_pattern);
 }
 
 bool validatePlace(std::string place)
@@ -161,7 +168,7 @@ std::tuple<std::string, std::string> extractName(std::string full_name)
     {
         return {list_of_data[1], list_of_data[2]}; 
     }
-    
+    return {"Unknown", "Unknown"};
 }
 
 // * VALIDATE CORPORATION NAME, COMPANY NAME, DEPARTMENT NAME FROM TERMINAL

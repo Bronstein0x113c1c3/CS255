@@ -8,10 +8,10 @@ class Company
 private:
     std::string name;
     // Director: Human
-    Director* director;
+    Director *director = nullptr;
     // ViceDirector: Human
-    Queue<ViceDirector *> vice_director;
-    std::map<std::string, Department *> department_list;
+    Queue<ViceDirector *> vice_director = Queue<ViceDirector *>();
+    std::map<std::string, Department *> department_list = std::map<std::string, Department *>();
 
 public:
     Company(){};
@@ -22,7 +22,10 @@ public:
     ~Company(){};
 
     std::string getName() const { return this->name; };
-    Director getDirector() const { return *(this->director); };
+    Director *getDirector()
+    {
+        return this->director;
+    };
     Queue<ViceDirector *> &getViceDirectorList() { return this->vice_director; };
     std::map<std::string, Department *> getDepartmentList()
     {
@@ -84,9 +87,43 @@ public:
         os << "-----------------------------------------------------------" << std::endl;
         return os;
     }
+    friend std::ostream &operator<<(std::ostream &os, const Company *company)
+    {
+        os << "-----------------------------------------------------------" << std::endl;
+        os << "Company: " + company->name << std::endl;
+        if (company->director != nullptr)
+        {
+            os << "Director: " + company->director->getFirstName() + " " + company->director->getLastMidName() << endl;
+        }
+        else
+            os << "Director: ";
+
+        os << "Vice Directors: ";
+        for (auto current = company->vice_director.begin(); current != company->vice_director.end(); ++current)
+        {
+            ViceDirector *vice_director = (*current).getValue();
+            if (vice_director != nullptr)
+            {
+                os << *vice_director << ", ";
+            }
+        }
+        os << std::endl;
+
+        os << "Departments: ";
+        for (auto current = company->department_list.begin(); current != company->department_list.end(); ++current)
+        {
+            if (current->second != nullptr)
+            {
+                os << current->first << ": " << current->second << ", ";
+            }
+        }
+        os << std::endl;
+        os << "-----------------------------------------------------------" << std::endl;
+        return os;
+    }
     bool operator==(const Company &otherCompany)
     {
-        this->name == otherCompany.name;
+        return this->name == otherCompany.name;
     }
     bool operator!=(const Company &otherCompany)
     {
