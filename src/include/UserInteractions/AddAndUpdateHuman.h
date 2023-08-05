@@ -104,13 +104,23 @@ void addAndUpdateHuman(Corporation *corporation)
     // std::cin.ignore();
 
     //? DATE OF BIRTH
-    std::cout << "Enter DATE OF BIRTH: ";
+    std::cout << "Enter DATE OF BIRTH follow the format dd/mm/yyyy:: ";
     std::getline(std::cin, date_of_birth);
 
     // IGNORE THE NEW LINE CHARATER
     // std::cin.ignore();
-
+    //! VALIDATE DATE OF BIRTH
     date_of_birth = getValueAfterValidate(date_of_birth, validateDate);
+
+    while (!isSmallerOrEqualThanToday(date_of_birth))
+    {
+        //? GET DATE OF BIRTH AGAIN
+        std::cout << "Enter DATE OF BIRTH follow the format dd/mm/yyyy:: ";
+        std::getline(std::cin, date_of_birth);
+
+        //! VALIDATE DATE OF BIRTH
+        date_of_birth = getValueAfterValidate(date_of_birth, validateDate);
+    }
 
     //? BIRTH PLACE
     std::cout << "Enter BIRTH PLACE: ";
@@ -143,7 +153,20 @@ void addAndUpdateHuman(Corporation *corporation)
     std::cout << "Enter FIRST DAY AT WORK follow the format dd/mm/yyyy: ";
     std::getline(std::cin, first_day_at_work);
 
+    //! VALIDATE DATE OF WORK
     first_day_at_work = getValueAfterValidate(first_day_at_work, validateDate);
+
+    while (!(isBiggerThanDateOfBirth(first_day_at_work, date_of_birth) && isSmallerOrEqualThanToday(first_day_at_work)))
+    {
+        std::cout << "Type the date again: " << std::endl;
+        std::cout << "Enter the Day you have work as format dd/mm/yyyy: ";
+
+        // GET THE USER INPUT
+        std::getline(std::cin, first_day_at_work);
+
+        //! EVALUATE VALUE
+        first_day_at_work = getValueAfterValidate(first_day_at_work, validateDate);
+    }
 
     //? WORK PLACE
     //? WORK PLACE + POSITION -> ASSIGN TO THE EQUIVALENT CORPORATION position
