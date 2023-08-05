@@ -125,9 +125,9 @@ int main(int argc, char *argv[])
     // HashMap<std::string, int> name_age_map_2(name_age_map);
     // cout << name_age_map_2 << std::endl;
     
-    Corporation* corporation = new Corporation("BKCorporation", President(), Queue<VicePresident *>(), map<string, Company *>());
+    Corporation* corporation = new Corporation("BKCorp", President(), Queue<VicePresident *>(), map<std::string, Company *>());
     Company* company = new Company("BKComp");
-    Department* department = new Department("BKDepart", Manager(), map<int, Employee *>(), Queue<DeputyManager *>());
+    Department* department = new Department("BKDepart", Manager(), map<unsigned short, Employee *>(), Queue<DeputyManager *>());
 
     displayCorporationInfo(corporation);
     displayUnitInfo(company);
