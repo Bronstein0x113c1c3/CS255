@@ -1,39 +1,10 @@
 #ifndef ADDDAYSWORKED_H
 #define ADDDAYSWORKED_H
 
-#include <ctime>
 #include "../UserLib/Human.h"
 #include "../UserLib/Record.h"
 #include "../UserLib/ValidateRegex.h"
 #include "ValidateNumAndName.h"
-
-bool isLargerThanToday(Date *date_to_evaluate)
-{
-    // Get the current time
-    std::time_t currentTime = std::time(nullptr);
-
-    // Convert the current time to a tm struct
-    std::tm *now = std::localtime(&currentTime);
-
-    // Get today year, month, day
-    int today_year = now->tm_mday;
-    int today_month = (now->tm_mon + 1); // Month is 0-based
-    int today_day = (now->tm_year + 1900);
-
-    if (date_to_evaluate->getYear() > today_year) //? If large than today -> IMPOSSIBLE
-    {
-        return false;
-    }
-    else if (date_to_evaluate->getYear() == today_year && date_to_evaluate->getMonth() > today_month)
-    {
-        return false;
-    }
-    else if (date_to_evaluate->getYear() == today_year && date_to_evaluate->getMonth() == today_month && date_to_evaluate->getDay() > today_day)
-    {
-        return false;
-    }
-    return true;
-}
 
 void addDaysWorked(Human *human)
 {
@@ -73,22 +44,8 @@ void addDaysWorked(Human *human)
         day_work = getValueAfterValidate(day_work, validateDate);
         Date *date_day_work = new Date(day_work);
 
-        while (isLargerThanToday(date_day_work))
+        while (!(isBiggerThanDateOfBirth(date_day_work, human) && isSmallerOrEqualThanToday(date_day_work)))
         {
-            std::cout << "Impossible!!" << std::endl;
-
-            // Get the current time
-            std::time_t currentTime = std::time(nullptr);
-
-            // Convert the current time to a tm struct
-            std::tm *now = std::localtime(&currentTime);
-
-            std::cout << "Today is just only: ";
-            // Print the current date in the desired format
-            std::cout << std::setfill('0') << std::setw(2) << now->tm_mday << '/'
-                      << std::setw(2) << (now->tm_mon + 1) << '/' // Month is 0-based
-                      << (now->tm_year + 1900) << std::endl;
-
             std::cout << "Type the date again: " << std::endl;
             std::cout << "Enter the Day you have work as format dd/mm/yyyy: ";
             delete date_day_work; // PREVENT MEMORY LEAK

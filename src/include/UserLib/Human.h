@@ -127,7 +127,7 @@ public:
     std::string getFullName() const { return this->first_name + " " + this->last_mid_name; };
     std::string getWorkPlace() const { return this->work_place; };
     std::string getPosition() const { return this->position; };
-    Date getDateOfBirth() const { return *(this->date_of_birth); };
+    Date* getDateOfBirth() const { return this->date_of_birth; };
     std::string getBirthPlace() const { return this->birth_place; };
     std::string getEmail() const { return this->email; };
     std::string getPhoneNum() const { return this->phone_num; };

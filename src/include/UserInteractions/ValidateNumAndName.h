@@ -1,6 +1,7 @@
 #ifndef VALIDATENUMANDNAME_H
 #define VALIDATENUMANDNAME_H
 
+#include <ctime>
 #include <iostream>
 #include <tuple>
 #include "../UserLib/ValidateRegex.h"
@@ -38,6 +39,139 @@ std::string getNameAfterValidate(std::string place, std::string name)
 
         // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
+}
+
+//! FOR VALIDATE DAY DATE UPPER BOUND PURPOSE
+bool isSmallerOrEqualThanToday(Date *date_to_evaluate)
+{
+    // Get the current time
+    std::time_t currentTime = std::time(nullptr);
+
+    // Convert the current time to a tm struct
+    std::tm *now = std::localtime(&currentTime);
+
+    // Get today year, month, day
+    int today_day = now->tm_mday;
+    int today_month = (now->tm_mon + 1); // Month is 0-based
+    int today_year = (now->tm_year + 1900);
+
+    if (date_to_evaluate->getYear() < today_year) //? If large than today -> IMPOSSIBLE
+    {
+        return true;
+    }
+    else if (date_to_evaluate->getYear() == today_year && date_to_evaluate->getMonth() < today_month)
+    {
+        return true;
+    }
+    else if (date_to_evaluate->getYear() == today_year && date_to_evaluate->getMonth() == today_month && date_to_evaluate->getDay() <= today_day)
+    {
+        return true;
+    }
+    std::cout << "Impossible!!" << std::endl;
+    std::cout << "Today is just only: ";
+    // Print the current date in the desired format
+    std::cout << std::setfill('0') << std::setw(2) << now->tm_mday << '/'
+              << std::setw(2) << (now->tm_mon + 1) << '/' // Month is 0-based
+              << (now->tm_year + 1900) << std::endl;
+
+    return false;
+}
+
+//! FOR VALIDATE DAY DATE LOWER BOUND PURPOSE
+bool isBiggerThanDateOfBirth(Date *date_to_evaluate, Human *human)
+{
+    if (human->getDateOfBirth() != nullptr)
+    {
+        //! HUMAN DATE OF BIRTH
+        unsigned short day_birth = human->getDateOfBirth()->getDay();
+        unsigned short month_birth = human->getDateOfBirth()->getMonth();
+        unsigned short year_birth = human->getDateOfBirth()->getYear();
+
+        if (date_to_evaluate->getYear() > year_birth)
+        {
+            return true;
+        }
+        else if (date_to_evaluate->getYear() == year_birth && date_to_evaluate->getMonth() > month_birth)
+        {
+            return true;
+        }
+        else if (date_to_evaluate->getYear() == year_birth && date_to_evaluate->getMonth() == month_birth && date_to_evaluate->getDay() > day_birth)
+        {
+            return true;
+        }
+        std::cout << "Impossible!!" << std::endl;
+        std::cout << "He/She is only birth in " << human->getDateOfBirth() << std::endl;
+        return false;
+    }
+    return true;
+}
+
+//! FOR VALIDATE DAY STRING UPPER BOUND PURPOSE
+bool isSmallerOrEqualThanToday(std::string string_date_to_evaluate)
+{
+    //! DATE TO EVALUATE
+    Date date_to_evaluate(string_date_to_evaluate);
+
+    // Get the current time
+    std::time_t currentTime = std::time(nullptr);
+
+    // Convert the current time to a tm struct
+    std::tm *now = std::localtime(&currentTime);
+
+    // Get today year, month, day
+    int today_day = now->tm_mday;
+    int today_month = (now->tm_mon + 1); // Month is 0-based
+    int today_year = (now->tm_year + 1900);
+
+    if (date_to_evaluate.getYear() < today_year) //? If large than today -> IMPOSSIBLE
+    {
+        return true;
+    }
+    else if (date_to_evaluate.getYear() == today_year && date_to_evaluate.getMonth() < today_month)
+    {
+        return true;
+    }
+    else if (date_to_evaluate.getYear() == today_year && date_to_evaluate.getMonth() == today_month && date_to_evaluate.getDay() <= today_day)
+    {
+        return true;
+    }
+    std::cout << "Impossible!!" << std::endl;
+    std::cout << "Today is just only: ";
+    // Print the current date in the desired format
+    std::cout << std::setfill('0') << std::setw(2) << now->tm_mday << '/'
+              << std::setw(2) << (now->tm_mon + 1) << '/' // Month is 0-based
+              << (now->tm_year + 1900) << std::endl;
+
+    return false;
+}
+
+//! FOR VALIDATE DAY STRING PURPOSE
+bool isBiggerThanDateOfBirth(std::string string_date_to_evaluate, std::string birth_day)
+{
+    //! VALUATE TO VALIDATE
+    Date date_to_evaluate(string_date_to_evaluate);
+    Date date_birth_day(birth_day);
+
+    //! HUMAN DATE OF BIRTH
+    unsigned short day_birth = date_birth_day.getDay();
+    unsigned short month_birth = date_birth_day.getMonth();
+    unsigned short year_birth = date_birth_day.getYear();
+
+    if (date_to_evaluate.getYear() > year_birth)
+    {
+        return true;
+    }
+    else if (date_to_evaluate.getYear() == year_birth && date_to_evaluate.getMonth() > month_birth)
+    {
+        return true;
+    }
+    else if (date_to_evaluate.getYear() == year_birth && date_to_evaluate.getMonth() == month_birth && date_to_evaluate.getDay() > day_birth)
+    {
+        return true;
+    }
+    std::cout << "Impossible!!" << std::endl;
+    std::cout << "He/She is only birth in " << birth_day << std::endl;
+    return false;
 }
 
 // DO THE VALUE VALIDATION FUNCTION
