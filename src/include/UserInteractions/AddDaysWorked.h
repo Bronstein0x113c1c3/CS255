@@ -85,6 +85,21 @@ void addDaysWorked(Human *human)
         time_go_home = getValueAfterValidate(time_go_home, validateTime);
         Time *obj_time_go_home = new Time(time_go_home);
 
+        while (!isTimeGoHomeBiggerThanTimeStartWork(obj_time_go_home, obj_time_start_work))
+        {
+            std::cout << "Impossible!!!" << std::endl;
+            std::cout << "Time Go Home is larger than Time Start Work!!!" << std::endl;
+            delete obj_time_go_home; // Prevent Memory Leak
+
+            //? ASK USER INPUT THE TIME GO HOME
+            std::cout << "Enter the Time you go work as format HH:MM with 24-hour format: ";
+            std::getline(std::cin, time_go_home);
+
+            //! EVALUATE VALUE
+            time_go_home = getValueAfterValidate(time_go_home, validateTime);
+            obj_time_go_home = new Time(time_go_home);
+        }
+
         //? ASSIGN TO RECORD
         record_to_add->setTimeGoHome(obj_time_go_home);
 

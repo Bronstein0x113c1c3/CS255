@@ -174,6 +174,16 @@ bool isBiggerThanDateOfBirth(std::string string_date_to_evaluate, std::string bi
     return false;
 }
 
+//! FOR VALIDATE TIME TIME
+bool isTimeGoHomeBiggerThanTimeStartWork(Time *time_go_home, Time *time_start_work)
+{
+    if (time_go_home->getHours() == time_start_work->getHours())
+    {
+        return time_go_home->getMinutes() >= time_go_home->getMinutes();
+    }
+    return time_go_home->getHours() >= time_start_work->getHours();
+}
+
 // DO THE VALUE VALIDATION FUNCTION
 std::string getValueAfterValidate(std::string value, std::function<bool(std::string)> validateFunc)
 {

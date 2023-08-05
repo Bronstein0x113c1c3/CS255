@@ -109,8 +109,18 @@ void addAndUpdateHuman(Corporation *corporation)
 
     // IGNORE THE NEW LINE CHARATER
     // std::cin.ignore();
-
+    //! VALIDATE DATE OF BIRTH
     date_of_birth = getValueAfterValidate(date_of_birth, validateDate);
+
+    while (!isSmallerOrEqualThanToday(date_of_birth))
+    {
+        //? GET DATE OF BIRTH AGAIN
+        std::cout << "Enter DATE OF BIRTH follow the format dd/mm/yyyy:: ";
+        std::getline(std::cin, date_of_birth);
+
+        //! VALIDATE DATE OF BIRTH
+        date_of_birth = getValueAfterValidate(date_of_birth, validateDate);
+    }
 
     //? BIRTH PLACE
     std::cout << "Enter BIRTH PLACE: ";
@@ -145,7 +155,6 @@ void addAndUpdateHuman(Corporation *corporation)
 
     //! VALIDATE DATE OF WORK
     first_day_at_work = getValueAfterValidate(first_day_at_work, validateDate);
-
 
     while (!(isBiggerThanDateOfBirth(first_day_at_work, date_of_birth) && isSmallerOrEqualThanToday(first_day_at_work)))
     {
