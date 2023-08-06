@@ -93,6 +93,30 @@ public:
 
         return os;
     }
+
+    friend std::ostream &operator<<(std::ostream &os, const Stack<Value> *stack)
+    {
+        if (stack != nullptr)
+        {
+            if (!stack.isEmpty())
+            {
+                os << "Top: " << std::endl;
+                for (auto current = stack.begin(); current != stack.end(); ++current)
+                {
+                    os << *current << '\n';
+                }
+                os << "End";
+            }
+            else
+            {
+                os << "Empty Value!!!";
+            }
+        }
+        else
+            os << "Empty Stack!!!";
+
+        return os;
+    }
 };
 
 // CONSTRUCTORS

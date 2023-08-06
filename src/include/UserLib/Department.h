@@ -10,21 +10,21 @@ private:
     // Manager: Human
     Manager *manager = nullptr;
     // Employee: Human
-    std::map<unsigned short, Employee *> employee_list = std::map<unsigned short, Employee *>();
-    Queue<DeputyManager *> deputy_manager_list = Queue<DeputyManager *>();
+    std::map<unsigned short, Employee *> *employee_list = new std::map<unsigned short, Employee *>();
+    Queue<DeputyManager *> *deputy_manager_list = new Queue<DeputyManager *>();
 
 public:
     Department();
     ~Department();
-    Department(std::string name, Manager *manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list);
+    Department(std::string name, Manager *manager, Queue<DeputyManager *> *deputy_manager_list, std::map<unsigned short, Employee *> *employee_list);
 
     // PROPERTIES
     unsigned short getMemberNums() const
     {
-        return 1 + this->deputy_manager_list.getSize() + this->employee_list.size();
+        return 1 + this->deputy_manager_list->getSize() + this->employee_list->size();
     };
-    Queue<DeputyManager *> getDeputyManagerList() { return this->deputy_manager_list; };
-    std::map<unsigned short, Employee *> getEmployeeList()
+    Queue<DeputyManager *> *getDeputyManagerList() { return this->deputy_manager_list; };
+    std::map<unsigned short, Employee *> *getEmployeeList()
     {
         return this->employee_list;
     };
@@ -34,20 +34,25 @@ public:
     };
     std::string getName() const { return this->name; };
 
-    std::map<unsigned short, Employee *> *getPointerOfEmployeeList()
-    {
-        return &(this->employee_list);
-    }
-    Queue<DeputyManager *> *getPointerOfDeputyManagerList()
-    {
-        return &(this->deputy_manager_list);
-    };
     // SETTERS
     void setName(std::string name) { this->name = name; };
-    void setDeputyManagerList(const Queue<DeputyManager *> deputy_manager_list) { this->deputy_manager_list = deputy_manager_list; };
-    void setManager(Manager *manager) { this->manager = manager; };
-    void setEmployeeList(const std::map<unsigned short, Employee *> employee_list)
+    void setDeputyManagerList(Queue<DeputyManager *> *deputy_manager_list)
     {
+        //! PREVENT MEMORY LEAK
+        this->deputy_manager_list->Clear();
+        delete this->deputy_manager_list;
+
+        this->deputy_manager_list = deputy_manager_list;
+    };
+    void setManager(Manager *manager)
+    {
+        delete this->manager; //! PREVENT MEMORY LEAK
+        this->manager = manager;
+    };
+    void setEmployeeList(std::map<unsigned short, Employee *> *employee_list)
+    {
+        //! PREVENT MEMORY LEAK
+        delete this->employee_list;
         this->employee_list = employee_list;
     };
 
@@ -58,7 +63,7 @@ public:
         os << "Department: " + department.name << std::endl;
         os << "Manager: " + department.manager->getFirstName() + " " + department.manager->getLastMidName() << std::endl;
         os << "Deputy Managers: ";
-        for (auto current = department.deputy_manager_list.begin(); current != department.deputy_manager_list.end(); ++current)
+        for (auto current = department.deputy_manager_list->begin(); current != department.deputy_manager_list->end(); ++current)
         {
             DeputyManager *deputy_manager = (*current).getValue();
             os << *deputy_manager << ", ";
@@ -66,7 +71,7 @@ public:
         os << std::endl;
 
         os << "Employees: ";
-        for (auto current = department.employee_list.begin(); current != department.employee_list.end(); ++current)
+        for (auto current = department.employee_list->begin(); current != department.employee_list->end(); ++current)
         {
             os << current->first << ": " << *(current->second) << ", ";
         }
@@ -88,7 +93,7 @@ public:
             os << "Manager: ";
 
         os << "Deputy Managers: ";
-        for (auto current = department->deputy_manager_list.begin(); current != department->deputy_manager_list.end(); ++current)
+        for (auto current = department->deputy_manager_list->begin(); current != department->deputy_manager_list->end(); ++current)
         {
             DeputyManager *deputy_manager = (*current).getValue();
             if (deputy_manager != nullptr)
@@ -99,7 +104,7 @@ public:
         os << std::endl;
 
         os << "Employees: ";
-        for (auto current = department->employee_list.begin(); current != department->employee_list.end(); ++current)
+        for (auto current = department->employee_list->begin(); current != department->employee_list->end(); ++current)
         {
             if (current->second != nullptr)
             {
@@ -123,12 +128,12 @@ public:
     // Add some stuffs
     void addEmployee(Employee *employee)
     {
-        this->employee_list[employee->getID()] = employee;
+        this->employee_list->insert({employee->getID(), employee});
     };
     // DeputyManager: Human
     void addDeputyManager(DeputyManager *deputy_manager)
     {
-        this->deputy_manager_list.Enqueue(deputy_manager);
+        this->deputy_manager_list->Enqueue(deputy_manager);
     };
 };
 
@@ -136,12 +141,22 @@ Department::Department()
 {
 }
 
-Department::Department(std::string name, Manager *manager, const std::map<unsigned short, Employee *> employee_list, const Queue<DeputyManager *> deputy_manager_list)
+Department::Department(std::string name, Manager *manager, Queue<DeputyManager *> *deputy_manager_list, std::map<unsigned short, Employee *> *employee_list)
 {
     this->name = name;
+
+    //! PREVENT MEMORY LEAK
+    delete this->manager;
     this->manager = manager;
-    this->employee_list = employee_list;
+
+    //! PREVENT MEMORY LEAK
+    this->deputy_manager_list->Clear();
+    delete this->deputy_manager_list;
     this->deputy_manager_list = deputy_manager_list;
+
+    //! PREVENT MEMORY LEAK
+    delete this->employee_list;
+    this->employee_list = employee_list;
 };
 
 Department::~Department()

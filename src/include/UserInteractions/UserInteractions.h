@@ -73,7 +73,7 @@ void displayCorporationInfo(Corporation *corporation)
     cout << "Corporation: " << corporation->getName() << endl;
     cout << "President: " << corporation->getPresident()->getFullName() << endl;
     cout << "Vice Presidents: ";
-    for (auto current = corporation->getVicePresidentList().begin(); current != corporation->getVicePresidentList().end(); ++current)
+    for (auto current = corporation->getVicePresidentList()->begin(); current != corporation->getVicePresidentList()->end(); ++current)
     {
         VicePresident *vice_president = (*current).getValue();
         cout << (*vice_president).getFullName() << ", ";
@@ -95,7 +95,7 @@ void displayUnitInfo(Company *company)
     cout << "Company: " << company->getName() << endl;
     cout << "Director: " << company->getDirector()->getFullName() << endl;
     cout << "Vice Directors: ";
-    for (auto current = company->getViceDirectorList().begin(); current != company->getViceDirectorList().end(); ++current)
+    for (auto current = company->getViceDirectorList()->begin(); current != company->getViceDirectorList()->end(); ++current)
     {
         ViceDirector *vice_director = (*current).getValue();
         cout << (*vice_director).getFullName() << ", ";
@@ -108,7 +108,7 @@ void displayUnitInfo(Department *department)
     cout << "Department: " << department->getName() << endl;
     cout << "Manager: " << department->getManager()->getFullName() << endl;
     cout << "Depute Managers: ";
-    for (auto current = department->getDeputyManagerList().begin(); current != department->getDeputyManagerList().end(); ++current)
+    for (auto current = department->getDeputyManagerList()->begin(); current != department->getDeputyManagerList()->end(); ++current)
     {
         DeputyManager *deputy_manager = (*current).getValue();
         cout << (*deputy_manager).getFullName() << ", ";
