@@ -24,7 +24,6 @@ Corporation *buildCorporationFromFile(std::string file_path)
         std::smatch list_of_field;
         if (std::regex_search(line, list_of_field, pattern))
         {
-            cout << "Valid line: " << line << endl;
             std::string last_mid_name, first_name;
             std::tie(last_mid_name, first_name) = extractName(list_of_field[2]);
 
@@ -68,7 +67,7 @@ Corporation *buildCorporationFromFile(std::string file_path)
                     cp->setName(company_name);
                     pointer_of_company_list->insert({company_name, cp});
                 }
-                cout << pointer_of_company_list->at(company_name)->getName() << endl;
+
                 // let add something....
             }
             else if (validateDepartmentNameFromFile(list_of_field[3]))
@@ -110,8 +109,7 @@ Corporation *buildCorporationFromFile(std::string file_path)
                     dept->setName(department_name);
                     pointer_of_department_list->insert({department_name, dept});
                 }
-                cout << "Name of company: " << pointer_of_company_list->at(company_name)->getName() << endl;
-                cout << "Name of department: " << pointer_of_department_list->at(department_name)->getName() << endl;
+             
             }
         }
     }
@@ -122,7 +120,7 @@ Corporation *makeCorporationFromFile(std::string file_path)
 {
     // Instantiate the corporation, new corporation
     Corporation *corp = buildCorporationFromFile(file_path);
-    cout << corp->getName() << endl;
+
     std::ifstream fs(file_path);
     std::string line;
     /*
@@ -198,7 +196,7 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[9]);
                     considering_company->setDirector(d);
                 }
-                cout << "Director: " << corp->getPointerofCompanyList()->at(company_name)->getDirector()->getID() << endl;
+
                 if (list_of_field[4] == "Vice Director")
                 {
                     ViceDirector *vd = new ViceDirector(
