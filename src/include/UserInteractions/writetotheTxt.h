@@ -52,13 +52,13 @@ void writetotheFile(Corporation *corp, std::string file_path)
             Department *dept = cur_department->second;
             Manager *manager = dept->getManager();
             fs << manager->getID() << "; " << manager->getLastMidName() + " " + manager->getFirstName() << "; " << name_of_corp + "->" + company_name + "->" + department_name << "; " << manager->getPosition() << "; " << manager->getDateOfBirth() << "; " << manager->getBirthPlace() << "; " << manager->getEmail() << "; " << manager->getPhoneNum() << "; " << manager->getFirstDayAtWork() << "; " << endl;
-            Queue<DeputyManager *> *pointer_of_deputy_manager_list = dept->getPointerOfDeputyManagerList();
+            Queue<DeputyManager *> *pointer_of_deputy_manager_list = dept->getDeputyManagerList();
             for (auto cur_deputy_manager = pointer_of_deputy_manager_list->begin(); cur_deputy_manager != pointer_of_deputy_manager_list->end(); ++cur_deputy_manager)
             {
                 DeputyManager *dm = (*cur_deputy_manager).getValue();
                 fs << dm->getID() << "; " << dm->getLastMidName() + " " + dm->getFirstName() << "; " << name_of_corp + "->" + company_name + "->" + department_name << "; " << dm->getPosition() << "; " << dm->getDateOfBirth() << "; " << dm->getBirthPlace() << "; " << dm->getEmail() << "; " << dm->getPhoneNum() << "; " << dm->getFirstDayAtWork() << "; " << endl;
             }
-            std::map<unsigned short, Employee *> *pointer_of_employee_list = dept->getPointerOfEmployeeList();
+            std::map<unsigned short, Employee *> *pointer_of_employee_list = dept->getEmployeeList();
             for (auto cur_employee = pointer_of_employee_list->begin(); cur_employee != pointer_of_employee_list->end(); ++cur_employee)
             {
                 Employee *e = cur_employee->second;
