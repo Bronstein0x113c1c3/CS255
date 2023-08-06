@@ -21,12 +21,12 @@ Corporation *makeCorporation(std::string file_path = "");
 
 // DISPLAY FUNCTIONS
 void displayCorporationInfo(Corporation *corporation);
-void displayHumanInfo(Corporation* corporation_to_find, const int ID); //! USE searchByID()
+void displayHumanInfo(Corporation *corporation_to_find, const int ID); //! USE searchByID()
 void displayUnitInfo(Company *company);
 void displayUnitInfo(Department *department);
 
 // SEARCH FUNCTIONS USE CONCURRENCY - PARRALELISM
-Stack<Human*> *searchByName(Corporation *corporation, const std::string name_input);
+Stack<Human *> *searchByName(Corporation *corporation, const std::string name_input);
 Human *searchByID(Corporation *corporation, const int ID);
 
 // ADJUST FUNCTIONS USING TERMINAL
@@ -44,7 +44,7 @@ void exitProgram();
 // DISPLAY PURPOSE ONLY
 // Result: images\Output.png
 void displayCorporationInfo(Corporation *corporation);
-void displayHumanInfo(const int ID); //! USE searchByID()
+void displayHumanInfo(Human* human);
 void displayUnitInfo(const Company *company);
 void displayUnitInfo(const Department *department);
 
@@ -81,11 +81,16 @@ void displayCorporationInfo(Corporation *corporation)
     cout << std::endl;
 }
 
-void displayHumanInfo(Corporation* corporation_to_find, const int ID) //! USE searchByID()
+void displayHumanInfo(Human* human) //! USE searchByID()
 {
-    Human* human_to_find = searchByID(corporation_to_find, ID);
-    cout << "Here is person you find: " << '\n' << *human_to_find; 
-}void displayUnitInfo(Company *company)
+    if (human != nullptr)
+    {
+        std::cout << "Here is person you find: " << '\n'
+                  << human;
+    }
+}
+
+void displayUnitInfo(Company *company)
 {
     cout << "Company: " << company->getName() << endl;
     cout << "Director: " << company->getDirector()->getFullName() << endl;
