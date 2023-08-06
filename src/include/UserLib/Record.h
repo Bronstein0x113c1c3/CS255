@@ -29,8 +29,15 @@ public:
         stringstream ss(record);
         string day_worked, time_start_work, time_go_home;
         ss >> day_worked >> time_start_work >> time_go_home;
+
+        //! PREVENT MEMORY LEAK
+        delete this->day_worked;
         this->day_worked = new Date(day_worked);
+
+        delete this->time_start_work;
         this->time_start_work = new Time(time_start_work);
+
+        delete this->time_go_home;
         this->time_start_work = new Time(time_go_home);
         return;
     }
@@ -93,9 +100,23 @@ public:
     Time getTimeStartWork() const { return *(this->time_start_work); };
     Time getTimeGoHome() const { return *(this->time_go_home); };
 
-    void setDayWorked(Date *day_worked) { this->day_worked = day_worked; };
-    void setTimeStartWork(Time *time_started) { this->time_start_work = time_started; };
-    void setTimeGoHome(Time *time_go_home) { this->time_go_home = time_go_home; };
+    void setDayWorked(Date *day_worked) 
+    { 
+        delete this->day_worked;    //! PREVENT MEMORY LEAK
+        this->day_worked = day_worked; 
+    };
+    void setTimeStartWork(Time *time_started) 
+    { 
+        //! PREVENT MEMORY LEAK
+        delete this->time_start_work;
+        this->time_start_work = time_started; 
+    };
+    void setTimeGoHome(Time *time_go_home) 
+    { 
+        //! PREVENT MEMORY LEAK
+        delete this->time_go_home;
+        this->time_go_home = time_go_home; 
+    };
 
     // OPERATORS
     bool operator==(const Record &otherRecord)

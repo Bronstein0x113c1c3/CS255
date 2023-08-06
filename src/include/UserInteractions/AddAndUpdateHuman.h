@@ -219,8 +219,8 @@ void addAndUpdateHuman(Corporation *corporation)
 
         // DISPLAY ALL THE AVAILABLE COMPANY
         std::cout << "Available Company in " + corporation->getName() + ": ";
-        std::map<std::string, Company *> company_list = corporation->getCompanyList();
-        for (auto current = company_list.begin(); current != company_list.end(); ++current)
+        std::map<std::string, Company *> *company_list = corporation->getCompanyList();
+        for (auto current = company_list->begin(); current != company_list->end(); ++current)
         {
             std::cout << current->first << " | ";
         }
@@ -235,7 +235,7 @@ void addAndUpdateHuman(Corporation *corporation)
         // std::cin.ignore();
 
         // IF DON'T EXIST -> LOOP
-        while (!company_list.count(input_company_name))
+        while (!company_list->count(input_company_name))
         {
             std::cout << "Enter the Company Name again: ";
             std::getline(std::cin, input_company_name);
@@ -247,13 +247,13 @@ void addAndUpdateHuman(Corporation *corporation)
         {
             // ADD NEW DIRECTOR
             Director *new_director = new Director(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
-            company_list[input_company_name]->setDirector(new_director);
+            company_list->at(input_company_name)->setDirector(new_director);
         }
         else if (position == "Vice Director")
         {
             // ADD NEW VICE DIRECTOR
             ViceDirector *new_vice_director = new ViceDirector(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
-            company_list[input_company_name]->addViceDirector(new_vice_director);
+            company_list->at(input_company_name)->addViceDirector(new_vice_director);
         }
     }
     else if (work_place == "Department")
@@ -265,8 +265,8 @@ void addAndUpdateHuman(Corporation *corporation)
 
         // DISPLAY ALL THE AVAILABLE COMPANY
         std::cout << "Available Company in " + corporation->getName() + ": ";
-        std::map<std::string, Company *> company_list = corporation->getCompanyList();
-        for (auto current = company_list.begin(); current != company_list.end(); ++current)
+        std::map<std::string, Company *>* company_list = corporation->getCompanyList();
+        for (auto current = company_list->begin(); current != company_list->end(); ++current)
         {
             std::cout << current->first << " | ";
         }
@@ -281,7 +281,7 @@ void addAndUpdateHuman(Corporation *corporation)
         // std::cin.ignore();
 
         // IF DON'T EXIST -> LOOP
-        while (!company_list.count(input_company_name))
+        while (!company_list->count(input_company_name))
         {
             std::cout << "Enter the Company Name again: ";
             std::getline(std::cin, input_company_name);
@@ -289,11 +289,11 @@ void addAndUpdateHuman(Corporation *corporation)
             // std::cin.ignore();
         }
 
-        Company *company_to_add = company_list[input_company_name];
-        std::map<std::string, Department *> department_list = company_to_add->getDepartmentList();
+        Company *company_to_add = company_list->at(input_company_name);
+        std::map<std::string, Department *>* department_list = company_to_add->getDepartmentList();
         // DISPLAY ALL AVAILABLE DEPARTMENT NAME
         std::cout << "Available Departments in " + company_to_add->getName() + ": ";
-        for (auto current = department_list.begin(); current != department_list.end(); ++current)
+        for (auto current = department_list->begin(); current != department_list->end(); ++current)
         {
             std::cout << current->first << " | ";
         }
@@ -304,7 +304,7 @@ void addAndUpdateHuman(Corporation *corporation)
         std::getline(std::cin, input_department_name);
 
         // LOOP UNTIL GET THE RIGHT INPUT
-        while (!department_list.count(input_department_name))
+        while (!department_list->count(input_department_name))
         {
             std::cout << "Enter the Department Name again: ";
             std::getline(std::cin, input_department_name);
@@ -313,17 +313,17 @@ void addAndUpdateHuman(Corporation *corporation)
         if (position == "Manager")
         {
             Manager *new_manager = new Manager(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
-            department_list[input_department_name]->setManager(new_manager);
+            department_list->at(input_department_name)->setManager(new_manager);
         }
         else if (position == "Deputy Manager")
         {
             DeputyManager *new_deputy_manager = new DeputyManager(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
-            department_list[input_department_name]->addDeputyManager(new_deputy_manager);
+            department_list->at(input_department_name)->addDeputyManager(new_deputy_manager);
         }
         else if (position == "Employee")
         {
             Employee *new_employee = new Employee(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
-            department_list[input_department_name]->addEmployee(new_employee);
+            department_list->at( input_department_name)->addEmployee(new_employee);
         }
     }
     // IGNORE THE NEW LINE CHARACTER

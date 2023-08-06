@@ -10,14 +10,31 @@ private:
     // Director: Human
     Director *director = nullptr;
     // ViceDirector: Human
-    Queue<ViceDirector *> vice_director = Queue<ViceDirector *>();
-    std::map<std::string, Department *> department_list = std::map<std::string, Department *>();
+    Queue<ViceDirector *> *vice_director = new Queue<ViceDirector *>();
+    std::map<std::string, Department *> *department_list = new std::map<std::string, Department *>();
 
 public:
     Company(){};
     Company(std::string name)
     {
         this->name = name;
+    }
+    Company(std::string name, Director* director, Queue<ViceDirector *> *vice_director, std::map<std::string, Department *> *department_list)
+    {
+        this->name = name;
+        
+        delete this->director;   //! PREVENT MEMORY LEAK
+        this->director = director;
+
+        //! PREVENT MEMORY LEAK
+        this->vice_director->Clear();
+        delete this->vice_director;
+
+        this->vice_director = vice_director;
+
+        //! PREVENT MEMORY LEAK
+        delete this->department_list;
+        this->department_list = department_list;
     }
     ~Company(){};
 
@@ -26,21 +43,28 @@ public:
     {
         return this->director;
     };
-    Queue<ViceDirector *> &getViceDirectorList() { return this->vice_director; };
-    std::map<std::string, Department *> getDepartmentList()
+    Queue<ViceDirector *> *getViceDirectorList() 
+    { 
+        return this->vice_director; 
+    };
+    std::map<std::string, Department *> *getDepartmentList()
     {
         return this->department_list;
     };
     std::map<std::string, Department *> *getPointerOfDepartmentList()
     {
-        return &(this->department_list);
+        return this->department_list;
     };
     Queue<ViceDirector *> *getPointerOfViceDirector()
     {
-        return &(this->vice_director);
+        return this->vice_director;
     };
-    void setViceDirectorList(Queue<ViceDirector *> vice_director_list)
+    void setViceDirectorList(Queue<ViceDirector *> *vice_director_list)
     {
+        //! TO PREVENT MEMORY LEAK
+        this->vice_director->Clear();
+        delete this->vice_director;
+
         this->vice_director = vice_director_list;
     };
     void setName(std::string name)
@@ -49,20 +73,21 @@ public:
     };
     void setDirector(Director *director)
     {
+        delete this->vice_director; //! PREVENT MEMORY LEAK
         this->director = director;
     };
-    void setDepartmentList(std::map<std::string, Department *> department_list)
+    void setDepartmentList(std::map<std::string, Department *> *department_list)
     {
+        delete this->department_list;   //! PREVENT MEMORY LEAK
         this->department_list = department_list;
     };
     void addDepartment(Department *department)
     {
-        this->department_list[department->getName()] = department;
-        // this->department_list.assign(department.getName(),department);
+        this->department_list->insert({department->getName(),department}); 
     };
     void addViceDirector(ViceDirector *vice_director)
     {
-        this->vice_director.Enqueue(vice_director);
+        this->vice_director->Enqueue(vice_director);
     }
     // OPERATOR
     friend std::ostream &operator<<(std::ostream &os, const Company &company)
@@ -71,7 +96,7 @@ public:
         os << "Company: " + company.name << std::endl;
         os << "Director: " + company.director->getFirstName() + " " + company.director->getLastMidName() << endl;
         os << "Vice Directors: ";
-        for (auto current = company.vice_director.begin(); current != company.vice_director.end(); ++current)
+        for (auto current = company.vice_director->begin(); current != company.vice_director->end(); ++current)
         {
             ViceDirector *vice_director = (*current).getValue();
             os << *vice_director << ", ";
@@ -79,7 +104,7 @@ public:
         os << std::endl;
 
         os << "Departments: ";
-        for (auto current = company.department_list.begin(); current != company.department_list.end(); ++current)
+        for (auto current = company.department_list->begin(); current != company.department_list->end(); ++current)
         {
             os << current->first << ": " << *(current->second) << ", ";
         }
@@ -99,7 +124,7 @@ public:
             os << "Director: ";
 
         os << "Vice Directors: ";
-        for (auto current = company->vice_director.begin(); current != company->vice_director.end(); ++current)
+        for (auto current = company->vice_director->begin(); current != company->vice_director->end(); ++current)
         {
             ViceDirector *vice_director = (*current).getValue();
             if (vice_director != nullptr)
@@ -110,7 +135,7 @@ public:
         os << std::endl;
 
         os << "Departments: ";
-        for (auto current = company->department_list.begin(); current != company->department_list.end(); ++current)
+        for (auto current = company->department_list->begin(); current != company->department_list->end(); ++current)
         {
             if (current->second != nullptr)
             {
