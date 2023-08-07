@@ -85,6 +85,7 @@ int main(int argc, char *argv[])
     // FILE PATH
     string isFile = "";
     string filename = "";
+    string checkcontinue = "";
 
     // ATTRIBUTES
     Corporation *corporation = nullptr;
@@ -103,7 +104,7 @@ int main(int argc, char *argv[])
         cout << "Enter again(y/n): ";
         getline(cin, isFile);
     }
-    
+    //Do File Path
     if (isFile == "y")
     {
         //ASK PEOPLE FILE PATH
@@ -117,6 +118,7 @@ int main(int argc, char *argv[])
         // Load data from file
         corporation = makeCorporation(filename);
     }
+    //Do Terminal
     else if (isFile == "n")
     {
         corporation = makeCorporation();
@@ -126,19 +128,19 @@ int main(int argc, char *argv[])
     do{
         menu(corporation, human, search_string);
         cout << "Run again(y/n): " ;
-        getline(cin, isFile);
-        if (isFile == "n")
+        getline(cin, checkcontinue);
+        if (checkcontinue == "n")
             {
                 cout << "Thanks for using!";
                 return 0;
             }
-        else if (!(isFile == "y" || isFile == "n"))
+        else if (!(checkcontinue == "y" || checkcontinue == "n"))
             {
                 cout << "Invalid Format!!!" << endl;
                 cout << "Enter again(y/n): ";
-                getline(cin, isFile);
+                getline(cin, checkcontinue);
             }
-    }while(isFile == "y");
+    }while(checkcontinue == "y");
 
     return 0;
 }
