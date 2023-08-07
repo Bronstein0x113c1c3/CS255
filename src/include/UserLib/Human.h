@@ -138,7 +138,7 @@ public:
     std::string getBirthPlace() const { return this->birth_place; };
     std::string getEmail() const { return this->email; };
     std::string getPhoneNum() const { return this->phone_num; };
-    Date getFirstDayAtWork() const { return *(this->first_day_at_work); };
+    Date* getFirstDayAtWork()  { return this->first_day_at_work; };
     Queue<Record *> *getPointerDaysWork() { return this->days_work; };
 
     void setID(const unsigned short ID) { this->ID = ID; };

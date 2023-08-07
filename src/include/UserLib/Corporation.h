@@ -51,6 +51,34 @@ public:
         if (corporation->president != nullptr)
         {
             os << "President: " + corporation->president->getFirstName() + " " + corporation->president->getLastMidName() << std::endl;
+            os << "ID" + corporation->president->getID() << std::endl;
+            if (corporation->president->getDateOfBirth() != nullptr)
+            {
+                os << "Date of birth: " << corporation->president->getDateOfBirth() << "\n";
+            }
+            else
+                os << "Date of birth: " << std::endl;
+            
+            os << "Birth place: " << corporation->president->getBirthPlace() << "\n";
+            os << "Email: " << corporation->president->getEmail() << "\n";
+            os << "Phone number: " << corporation->president->getPhoneNum() << "\n";
+
+            if (corporation->president->getFirstDayAtWork() != nullptr)
+            {
+                os << "First day at work: " << corporation->president->getFirstDayAtWork() << "\n";
+            }
+            else
+                os << "First day at work: " << std::endl;
+            
+            os << "Days Worked: " << std::endl;
+            for (auto current = corporation->president->getDaysWork()->begin(); current != corporation->president->getDaysWork()->end(); ++current)
+            {
+                Record *record = (*current).getValue();
+                if (record != nullptr)
+                {
+                    os << record << std::endl;
+                }
+            }
         }
         else
             os << "President: " << std::endl;

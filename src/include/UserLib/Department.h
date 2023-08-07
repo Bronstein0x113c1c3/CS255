@@ -88,6 +88,34 @@ public:
         if (department->manager != nullptr)
         {
             os << "Manager: " + department->manager->getFirstName() + " " + department->manager->getLastMidName() << std::endl;
+            os << "ID" + department->manager->getID() << std::endl;
+            if (department->manager->getDateOfBirth() != nullptr)
+            {
+                os << "Date of birth: " << department->manager->getDateOfBirth() << "\n";
+            }
+            else
+                os << "Date of birth: " << std::endl;
+            
+            os << "Birth place: " << department->manager->getBirthPlace() << "\n";
+            os << "Email: " << department->manager->getEmail() << "\n";
+            os << "Phone number: " << department->manager->getPhoneNum() << "\n";
+
+            if (department->manager->getFirstDayAtWork() != nullptr)
+            {
+                os << "First day at work: " << department->manager->getFirstDayAtWork() << "\n";
+            }
+            else
+                os << "First day at work: " << std::endl;
+            
+            os << "Days Worked: " << std::endl;
+            for (auto current = department->manager->getDaysWork()->begin(); current != department->manager->getDaysWork()->end(); ++current)
+            {
+                Record *record = (*current).getValue();
+                if (record != nullptr)
+                {
+                    os << record << std::endl;
+                }
+            }
         }
         else
             os << "Manager: ";

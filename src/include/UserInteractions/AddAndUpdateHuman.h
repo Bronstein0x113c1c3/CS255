@@ -70,17 +70,20 @@ void addAndUpdateHuman(Corporation *corporation)
 
     //!! VALIDATE ID ??
     Human *human_same_ID = searchByID(corporation, ID);
-    if (human_same_ID->getID() == ID)
+    if (human_same_ID != nullptr)
     {
-        // THEY BOTH HAVE THE SAME ID ->
-        // CASE 1: Stop Add
-        // Case 2: UPDATE TO THE NEW ONE
-        std::string userInput = "";
-        userInput = askUpdateOrStop(userInput);
-
-        if (userInput == "STOP")
+        if (human_same_ID->getID() == ID)
         {
-            return; // STOP THE PROGRAM
+            // THEY BOTH HAVE THE SAME ID ->
+            // CASE 1: Stop Add
+            // Case 2: UPDATE TO THE NEW ONE
+            std::string userInput = "";
+            userInput = askUpdateOrStop(userInput);
+
+            if (userInput == "STOP")
+            {
+                return; // STOP THE PROGRAM
+            }
         }
     }
     delete human_same_ID;
@@ -265,7 +268,7 @@ void addAndUpdateHuman(Corporation *corporation)
 
         // DISPLAY ALL THE AVAILABLE COMPANY
         std::cout << "Available Company in " + corporation->getName() + ": ";
-        std::map<std::string, Company *>* company_list = corporation->getCompanyList();
+        std::map<std::string, Company *> *company_list = corporation->getCompanyList();
         for (auto current = company_list->begin(); current != company_list->end(); ++current)
         {
             std::cout << current->first << " | ";
@@ -290,7 +293,7 @@ void addAndUpdateHuman(Corporation *corporation)
         }
 
         Company *company_to_add = company_list->at(input_company_name);
-        std::map<std::string, Department *>* department_list = company_to_add->getDepartmentList();
+        std::map<std::string, Department *> *department_list = company_to_add->getDepartmentList();
         // DISPLAY ALL AVAILABLE DEPARTMENT NAME
         std::cout << "Available Departments in " + company_to_add->getName() + ": ";
         for (auto current = department_list->begin(); current != department_list->end(); ++current)
@@ -323,7 +326,7 @@ void addAndUpdateHuman(Corporation *corporation)
         else if (position == "Employee")
         {
             Employee *new_employee = new Employee(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
-            department_list->at( input_department_name)->addEmployee(new_employee);
+            department_list->at(input_department_name)->addEmployee(new_employee);
         }
     }
     // IGNORE THE NEW LINE CHARACTER

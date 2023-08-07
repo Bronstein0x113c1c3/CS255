@@ -17,7 +17,7 @@ public:
     Time(const unsigned short hours = 0, const unsigned short minutes = 0);
     Time(const std::chrono::hours hours, const std::chrono::minutes minutes); //! CURRENTLY THIS LINE
     Time(const std::string time_str);                                         // If the User type "20:10"
-    Time(const Time* anotherTime);                                            // Copy CONSTRUCTOR
+    Time(const Time *anotherTime);                                            // Copy CONSTRUCTOR
 
     // Properties
     unsigned short getHours() const;
@@ -29,8 +29,8 @@ public:
         os << time.hours.count() << ':' << time.minutes.count();
         return os;
     }
-    
-    friend std::ostream &operator<<(std::ostream &os, const Time* time)
+
+    friend std::ostream &operator<<(std::ostream &os, const Time *time)
     {
         os << time->hours.count() << ':' << time->minutes.count();
         return os;
@@ -43,7 +43,7 @@ public:
     bool operator!=(const Time &otherTime);
 };
 // COPY CONSTRUCTOR
-Time::Time(const Time* anotherTime)
+Time::Time(const Time *anotherTime)
 {
     if (this != anotherTime)
     {
@@ -106,8 +106,8 @@ Time::Time(const unsigned short hours, const unsigned short minutes)
 Time::Time(const std::chrono::hours hours, const std::chrono::minutes minutes)
 {
     // Translate hours to int
-    int hours_int = hours.count();
-    int minutes_int = minutes.count();
+    unsigned short hours_int = hours.count();
+    unsigned short minutes_int = minutes.count();
 
     //* To Prevent Exceeding Limit Hour
     if (hours_int < 0)
@@ -126,8 +126,8 @@ Time::Time(const std::chrono::hours hours, const std::chrono::minutes minutes)
     //* To Prevent Exceeding Limit Minute
     if (minutes_int >= 60)
     {
-        int hoursToAdd = 0;
-        int spareMinute = minutes_int;
+        unsigned short hoursToAdd = 0;
+        unsigned short spareMinute = minutes_int;
         while (spareMinute >= 60)
         {
             spareMinute -= 60;

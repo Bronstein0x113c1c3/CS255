@@ -13,6 +13,8 @@
 #include "AddAndUpdateHuman.h"
 #include "SearchByName.h"
 #include "AddDaysWorked.h"
+#include "WriteToTheFile.h"
+// #include "writeToTheTxt.h"
 
 // ALL THE REQUIREMENTS FUNCTION
 
@@ -21,7 +23,7 @@ Corporation *makeCorporation(std::string file_path = "");
 
 // DISPLAY FUNCTIONS
 void displayCorporationInfo(Corporation *corporation);
-void displayHumanInfo(Corporation *corporation_to_find, const int ID); //! USE searchByID()
+void displayHumanInfo(Human *human); //! USE searchByID()
 void displayUnitInfo(Company *company);
 void displayUnitInfo(Department *department);
 
@@ -34,7 +36,7 @@ void addAndUpdateHuman(Corporation *corporation); //! USE searchByID() -> IF Yes
 void addDaysWorked(Human *human);
 
 // WRITE TO FILE
-void writeToFileTxt(const Corporation *corporation, std::string file_path);
+void writeToTheFile(Corporation *corp, std::string file_path);
 
 // EXIT FUNCTION
 void exitProgram();
@@ -44,7 +46,7 @@ void exitProgram();
 // DISPLAY PURPOSE ONLY
 // Result: images\Output.png
 void displayCorporationInfo(Corporation *corporation);
-void displayHumanInfo(Human* human);
+void displayHumanInfo(Human *human);
 void displayUnitInfo(const Company *company);
 void displayUnitInfo(const Department *department);
 
@@ -55,7 +57,7 @@ Corporation *makeCorporation(std::string file_path)
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
     Corporation *corporation;
-    if (file_path != "" && validateFileTxt(file_path))
+    if (validateFileTxt(file_path))
     {
         corporation = makeCorporationFromFile(file_path);
     }
@@ -81,7 +83,7 @@ void displayCorporationInfo(Corporation *corporation)
     cout << std::endl;
 }
 
-void displayHumanInfo(Human* human) //! USE searchByID()
+void displayHumanInfo(Human *human) //! USE searchByID()
 {
     if (human != nullptr)
     {
