@@ -32,6 +32,7 @@ public:
     ~Human();
     friend std::ostream &operator<<(std::ostream &os, const Human &human)
     {
+        os << std::endl;
         os << "----------------------------------------------------------" << std::endl;
         os << "ID: " << human.ID << "\n";
         os << "Last-mid name: " << human.last_mid_name << "\n";

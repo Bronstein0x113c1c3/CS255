@@ -51,7 +51,7 @@ public:
         if (corporation->president != nullptr)
         {
             os << "President: " + corporation->president->getFirstName() + " " + corporation->president->getLastMidName() << std::endl;
-            os << "ID" + corporation->president->getID() << std::endl;
+            os << "ID: " + corporation->president->getID() << std::endl;
             if (corporation->president->getDateOfBirth() != nullptr)
             {
                 os << "Date of birth: " << corporation->president->getDateOfBirth() << "\n";
