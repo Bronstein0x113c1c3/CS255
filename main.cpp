@@ -6,7 +6,7 @@ string get_string(const string &prompt)
 {
     string input;
     cout << prompt;
-    cin >> input;
+    getline(cin, input);
     return input;
 };
 
@@ -45,7 +45,6 @@ void menu(Corporation *corporation, Human *human, string search_string)
         int ID_to_find = 0;
         string string_ID_to_find = "";
         std::getline(cin, string_ID_to_find);
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         // VALIDATE ID
         string_ID_to_find = getValueAfterValidate(string_ID_to_find, validateNum);
@@ -77,15 +76,20 @@ void menu(Corporation *corporation, Human *human, string search_string)
     }
 }
 
+void checkWrongFormat(string &value_to_check){
+    cout << "Wrong Format!!!" << endl;
+    cout << "Enter again(y/n): ";
+    getline(cin, value_to_check);
+}
+
 int main(int argc, char *argv[])
 {
     // SDL_Init(SDL_INIT_EVERYTHING);
     // SDL_Quit();
 
     // FILE PATH
-    string isFile = "";
     string filename = "";
-    string checkcontinue = "";
+    string value_to_check = "";
 
     // ATTRIBUTES
     Corporation *corporation = nullptr;
@@ -96,30 +100,49 @@ int main(int argc, char *argv[])
 
     // ASK INPUT 
     cout << "Do you want to load data from a file? (y/n): ";
-    std::getline(std::cin, isFile);
-
-    while (!(isFile == "y" || isFile == "n"))
+    std::getline(std::cin, value_to_check);
+    while (!(value_to_check == "y" ||value_to_check == "n"))
     {
-        cout << "Wrong Format!!" << endl;
-        cout << "Enter again(y/n): ";
-        getline(cin, isFile);
+        checkWrongFormat(value_to_check);
     }
     //Do File Path
-    if (isFile == "y")
+    if (value_to_check == "y")
     {
         //ASK PEOPLE FILE PATH
         cout << "File Path: ";
-        cin >> filename;
-        std::getline(std::cin, isFile);
+        std::getline(std::cin, filename);
 
         //! VAILIDATE FILE PATH
         filename = getValueAfterValidate(filename, validateFileTxt);
          
         // Load data from file
         corporation = makeCorporation(filename);
+
+        //Update to file
+        cout << "Do you want to Update Human?(y/n) " << endl;
+        getline(cin, value_to_check);
+        do
+        {
+            if (value_to_check == "y")
+        {
+        addAndUpdateHuman(corporation);
+        addDaysWorked(human);
+        break;
+        }
+        else if (value_to_check == "n")
+        {
+            break;   // SKIP TO NEXT STAGE
+        }
+        else 
+        {
+            checkWrongFormat(value_to_check);
+        }
+        } while (!(value_to_check == "y" || value_to_check == "n"));
+        
+        
     }
     //Do Terminal
-    else if (isFile == "n")
+    else if (value_to_check == "n")
     {
         corporation = makeCorporation();
         addAndUpdateHuman(corporation);
@@ -128,19 +151,16 @@ int main(int argc, char *argv[])
     do{
         menu(corporation, human, search_string);
         cout << "Run again(y/n): " ;
-        getline(cin, checkcontinue);
-        if (checkcontinue == "n")
+        getline(cin, value_to_check);
+        if (value_to_check == "n")
             {
                 cout << "Thanks for using!";
-                return 0;
             }
-        else if (!(checkcontinue == "y" || checkcontinue == "n"))
+        else if (!(value_to_check == "y" || value_to_check == "n"))
             {
-                cout << "Invalid Format!!!" << endl;
-                cout << "Enter again(y/n): ";
-                getline(cin, checkcontinue);
+                checkWrongFormat(value_to_check);
             }
-    }while(checkcontinue == "y");
+    }while(value_to_check == "y");
 
     return 0;
 }
