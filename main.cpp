@@ -11,7 +11,8 @@ string get_string(const string &prompt)
 
 void menu(Corporation *corporation, Human *human, string search_string)
 {
-    int option;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    char option;
     cout << "--------------------MENU--------------------" << endl;
     cout << "1. Display Corporation Info" << endl;
     cout << "2. Search Human by Name" << endl;
@@ -25,18 +26,18 @@ void menu(Corporation *corporation, Human *human, string search_string)
 
     switch (option)
     {
-    case 1:
+    case '1':
         // displayCorporationInfo(corporation);
         std::cout << corporation << std::endl;
         break;
-    case 2:
+    case '2':
     {
         search_string = get_string("Enter the name of the human to search for: ");
         Stack<Human *> *stack_human = searchByName(corporation, search_string);
         std::cout << *stack_human << std::endl;
         break;
     }
-    case 3:
+    case '3':
     {
         cout << "Enter the ID of the human to search for: ";
 
@@ -53,17 +54,17 @@ void menu(Corporation *corporation, Human *human, string search_string)
         cout << human << endl;
         break;
     }
-    case 4:
+    case '4':
     {
         addAndUpdateHuman(corporation);
         break;
     }
-    case 5:
+    case '5':
     {
         addDaysWorked(human);
         break;
     }
-    case 6:
+    case '6':
     {
         cout << "Thanks for using!";
         exitProgram();
@@ -75,10 +76,10 @@ void menu(Corporation *corporation, Human *human, string search_string)
     }
 }
 
-void checkWrongFormat(string &value_to_check){
+void WrongFormat(string &option){
     cout << "Wrong Format!!!" << endl;
     cout << "Enter again(y/n): ";
-    getline(cin, value_to_check);
+    getline(cin, option);
 }
 
 int main(int argc, char *argv[])
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
 
     // FILE PATH
     string filename = "";
-    string value_to_check = "";
+    string option;
 
     // ATTRIBUTES
     Corporation *corporation = nullptr;
@@ -98,68 +99,33 @@ int main(int argc, char *argv[])
     string search_string = "";
 
     // ASK INPUT 
-    cout << "Do you want to load data from a file? (y/n): ";
-    std::getline(std::cin, value_to_check);
-    while (!(value_to_check == "y" ||value_to_check == "n"))
+    cout << "Load corporation from file(1) or create new corporation from terminal(2)? ";
+    std::getline(std::cin, option);
+    while (!(option == "1" ||option == "2"))
     {
-        checkWrongFormat(value_to_check);
+        WrongFormat(option);
     }
     //Do File Path
-    if (value_to_check == "y")
+    if (option == "1")
     {
         //ASK PEOPLE FILE PATH
-        cout << "File Path: ";
+        cout << "Enter file Path: ";
         std::getline(std::cin, filename);
 
         //! VAILIDATE FILE PATH
         filename = getValueAfterValidate(filename, validateFileTxt);
          
         // Load data from file
-        corporation = makeCorporation(filename);
-
-        //Update to file
-        cout << "Do you want to Update Human?(y/n) " << endl;
-        getline(cin, value_to_check);
-        do
-        {
-            if (value_to_check == "y")
-        {
-        addAndUpdateHuman(corporation);
-        addDaysWorked(human);
-        break;
-        }
-        else if (value_to_check == "n")
-        {
-            break;   // SKIP TO NEXT STAGE
-        }
-        else 
-        {
-            checkWrongFormat(value_to_check);
-        }
-        } while (!(value_to_check == "y" || value_to_check == "n"));
-        
-        
+        corporation = makeCorporation(filename);       
     }
     //Do Terminal
-    else if (value_to_check == "n")
+    else if (option == "2")
     {
         corporation = makeCorporation();
-        addAndUpdateHuman(corporation);
-        addDaysWorked(human);
     }
     do{
         menu(corporation, human, search_string);
-        cout << "Run again(y/n): " ;
-        getline(cin, value_to_check);
-        if (value_to_check == "n")
-            {
-                cout << "Thanks for using!";
-            }
-        else if (!(value_to_check == "y" || value_to_check == "n"))
-            {
-                checkWrongFormat(value_to_check);
-            }
-    }while(value_to_check == "y");
+    }while(1);
 
     return 0;
 }
