@@ -11,7 +11,6 @@ string get_string(const string &prompt)
 
 void menu(Corporation *corporation, Human *human, string search_string)
 {
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     char option;
     cout << "--------------------MENU--------------------" << endl;
     cout << "1. Display Corporation Info" << endl;
