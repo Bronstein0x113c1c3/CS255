@@ -65,7 +65,9 @@ void menu(Corporation *corporation, Human *human, string search_string)
     }
     case '6':
     {
-        cout << "Thanks for using!";
+        writeToTheFile(corporation, "output.txt");
+        cout << "Information Updated!!!" << endl;
+        cout << "Thanks for using!" << endl;;
         exitProgram();
         break;
     }
