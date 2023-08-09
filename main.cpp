@@ -9,7 +9,7 @@ string get_string(const string &prompt)
     return input;
 };
 
-void menu(Corporation *corporation, Human *human, string search_string)
+void menu(Corporation *corporation)
 {
     char option;
     cout << "--------------------MENU--------------------" << endl;
@@ -31,7 +31,7 @@ void menu(Corporation *corporation, Human *human, string search_string)
         break;
     case '2':
     {
-        search_string = get_string("Enter the name of the human to search for: ");
+        string search_string = get_string("Enter the name of the human to search for: ");
         Stack<Human *> *stack_human = searchByName(corporation, search_string);
         std::cout << *stack_human << std::endl;
         break;
@@ -60,7 +60,14 @@ void menu(Corporation *corporation, Human *human, string search_string)
     }
     case '5':
     {
-        addDaysWorked(human);
+        string ID;
+        int id;
+        cout << "Enter employees ID: ";
+        cin >> ID;
+        id = std::stoi(getValueAfterValidate(ID, validateNum));
+        Human *human = searchByID(corporation, id);
+        if (human != nullptr) {addDaysWorked(human);}
+        else {cout << "ID not exist!";};
         break;
     }
     case '6':
@@ -79,7 +86,7 @@ void menu(Corporation *corporation, Human *human, string search_string)
 
 void WrongFormat(string &option){
     cout << "Wrong Format!!!" << endl;
-    cout << "Enter again(y/n): ";
+    cout << "Enter again: ";
     getline(cin, option);
 }
 
@@ -125,7 +132,7 @@ int main(int argc, char *argv[])
         corporation = makeCorporation();
     }
     do{
-        menu(corporation, human, search_string);
+        menu(corporation);
     }while(1);
 
     return 0;
