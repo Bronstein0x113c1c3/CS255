@@ -39,13 +39,18 @@ void writeToTheFile(Corporation *corp, std::string file_path)
     // write the employees.
     President *p = corp->getPresident();
     std::string name_of_corp = corp->getName();
-    fs << p->getID() << "\t" << p->getLastMidName() + " " + p->getFirstName() << "\t" << name_of_corp << "\t" << p->getPosition() << "\t" << p->getDateOfBirth()->getYear() << "-" << filling(p->getDateOfBirth()->getMonth()) << "-" << filling(p->getDateOfBirth()->getDay()) << "\t" << p->getBirthPlace() << "\t" << p->getEmail() << "\t" << p->getPhoneNum() << "\t" << p->getFirstDayAtWork()->getYear() << "-" << filling(p->getFirstDayAtWork()->getMonth()) << "-" << filling(p->getFirstDayAtWork()->getDay()) << "\t" << endl;
-    Queue<VicePresident *> *vp_list_pointer = corp->getPointerofVicePresidentList();
-    
+    if (p != nullptr)
+    {
+        fs << p->getID() << "\t" << p->getLastMidName() + " " + p->getFirstName() << "\t" << name_of_corp << "\t" << p->getPosition() << "\t" << p->getDateOfBirth()->getYear() << "-" << filling(p->getDateOfBirth()->getMonth()) << "-" << filling(p->getDateOfBirth()->getDay()) << "\t" << p->getBirthPlace() << "\t" << p->getEmail() << "\t" << p->getPhoneNum() << "\t" << p->getFirstDayAtWork()->getYear() << "-" << filling(p->getFirstDayAtWork()->getMonth()) << "-" << filling(p->getFirstDayAtWork()->getDay()) << "\t" << endl;
+    }
+    std::map<unsigned short, VicePresident *> *vp_list_pointer = corp->getPointerofVicePresidentList();
+
     for (auto cur = vp_list_pointer->begin(); cur != vp_list_pointer->end(); ++cur)
     {
-        VicePresident *vp = (*cur).getValue();
-        fs << vp->getID() << "\t" << vp->getLastMidName() + " " + vp->getFirstName() << "\t" << name_of_corp << "\t" << vp->getPosition() << "\t" << vp->getDateOfBirth()->getYear() << "-" << filling(vp->getDateOfBirth()->getMonth()) << "-" << filling(vp->getDateOfBirth()->getDay()) << "\t" << vp->getBirthPlace() << "\t" << vp->getEmail() << "\t" << vp->getPhoneNum() << "\t" << vp->getFirstDayAtWork()->getYear() << "-" << filling(vp->getFirstDayAtWork()->getMonth()) << "-" << filling(vp->getFirstDayAtWork()->getDay()) << "\t" << endl;
+        if (cur->second != nullptr)
+        {
+            fs << cur->second->getID() << "\t" << cur->second->getLastMidName() + " " + cur->second->getFirstName() << "\t" << name_of_corp << "\t" << cur->second->getPosition() << "\t" << cur->second->getDateOfBirth()->getYear() << "-" << filling(cur->second->getDateOfBirth()->getMonth()) << "-" << filling(cur->second->getDateOfBirth()->getDay()) << "\t" << cur->second->getBirthPlace() << "\t" << cur->second->getEmail() << "\t" << cur->second->getPhoneNum() << "\t" << cur->second->getFirstDayAtWork()->getYear() << "-" << filling(cur->second->getFirstDayAtWork()->getMonth()) << "-" << filling(cur->second->getFirstDayAtWork()->getDay()) << "\t" << endl;
+        }
     }
     std::map<std::string, Company *> *pointer_of_company_list = corp->getPointerofCompanyList();
 
@@ -54,13 +59,18 @@ void writeToTheFile(Corporation *corp, std::string file_path)
         std::string company_name = cur_company->first;
         Company *cp = cur_company->second;
         Director *d = cp->getDirector();
-        fs << d->getID() << "\t" << d->getLastMidName() + " " + d->getFirstName() << "\t" << name_of_corp + "->" + company_name << "\t" << d->getPosition() << "\t" << d->getDateOfBirth()->getYear() << "-" << filling(d->getDateOfBirth()->getMonth()) << "-" << filling(d->getDateOfBirth()->getDay()) << "\t" << d->getBirthPlace() << "\t" << d->getEmail() << "\t" << d->getPhoneNum() << "\t" << d->getFirstDayAtWork()->getYear() << "-" << filling(d->getFirstDayAtWork()->getMonth()) << "-" << filling(d->getFirstDayAtWork()->getDay()) << "\t" << endl;
-        Queue<ViceDirector *> *vice_director_list_pointer = cp->getPointerOfViceDirector();
+        if (d != nullptr)
+        {
+            fs << d->getID() << "\t" << d->getLastMidName() + " " + d->getFirstName() << "\t" << name_of_corp + "->" + company_name << "\t" << d->getPosition() << "\t" << d->getDateOfBirth()->getYear() << "-" << filling(d->getDateOfBirth()->getMonth()) << "-" << filling(d->getDateOfBirth()->getDay()) << "\t" << d->getBirthPlace() << "\t" << d->getEmail() << "\t" << d->getPhoneNum() << "\t" << d->getFirstDayAtWork()->getYear() << "-" << filling(d->getFirstDayAtWork()->getMonth()) << "-" << filling(d->getFirstDayAtWork()->getDay()) << "\t" << endl;
+        }
+        std::map<unsigned short, ViceDirector *> *vice_director_list_pointer = cp->getPointerOfViceDirector();
 
         for (auto cur_vice_director = vice_director_list_pointer->begin(); cur_vice_director != vice_director_list_pointer->end(); ++cur_vice_director)
         {
-            ViceDirector *vd = (*cur_vice_director).getValue();
-            fs << vd->getID() << "\t" << vd->getLastMidName() + " " + vd->getFirstName() << "\t" << name_of_corp + "->" + company_name << "\t" << vd->getPosition() << "\t" << vd->getDateOfBirth()->getYear() << "-" << filling(vd->getDateOfBirth()->getMonth()) << "-" << filling(vd->getDateOfBirth()->getDay()) << "\t" << vd->getBirthPlace() << "\t" << vd->getEmail() << "\t" << vd->getPhoneNum() << "\t" << vd->getFirstDayAtWork()->getYear() << "-" << filling(vd->getFirstDayAtWork()->getMonth()) << "-" << filling(vd->getFirstDayAtWork()->getDay()) << "\t" << endl;
+            if (cur_vice_director->second != nullptr)
+            {
+                fs << cur_vice_director->second->getID() << "\t" << cur_vice_director->second->getLastMidName() + " " + cur_vice_director->second->getFirstName() << "\t" << name_of_corp + "->" + company_name << "\t" << cur_vice_director->second->getPosition() << "\t" << cur_vice_director->second->getDateOfBirth()->getYear() << "-" << filling(cur_vice_director->second->getDateOfBirth()->getMonth()) << "-" << filling(cur_vice_director->second->getDateOfBirth()->getDay()) << "\t" << cur_vice_director->second->getBirthPlace() << "\t" << cur_vice_director->second->getEmail() << "\t" << cur_vice_director->second->getPhoneNum() << "\t" << cur_vice_director->second->getFirstDayAtWork()->getYear() << "-" << filling(cur_vice_director->second->getFirstDayAtWork()->getMonth()) << "-" << filling(cur_vice_director->second->getFirstDayAtWork()->getDay()) << "\t" << endl;
+            }
         }
         std::map<std::string, Department *> *pointer_of_department_list = cp->getPointerOfDepartmentList();
 
@@ -69,18 +79,25 @@ void writeToTheFile(Corporation *corp, std::string file_path)
             std::string department_name = cur_department->first;
             Department *dept = cur_department->second;
             Manager *manager = dept->getManager();
-            fs << manager->getID() << "\t" << manager->getLastMidName() + " " + manager->getFirstName() << "\t" << name_of_corp + "->" + company_name + "->" + department_name << "\t" << manager->getPosition() << "\t" << manager->getDateOfBirth()->getYear() << "-" << filling(manager->getDateOfBirth()->getMonth()) << "-" << filling(manager->getDateOfBirth()->getDay()) << "\t" << manager->getBirthPlace() << "\t" << manager->getEmail() << "\t" << manager->getPhoneNum() << "\t" << manager->getFirstDayAtWork()->getYear() << "-" << filling(manager->getFirstDayAtWork()->getMonth()) << "-" << filling(manager->getFirstDayAtWork()->getDay()) << "\t" << endl;
-            Queue<DeputyManager *> *pointer_of_deputy_manager_list = dept->getDeputyManagerList();
+            if (manager != nullptr)
+            {
+                fs << manager->getID() << "\t" << manager->getLastMidName() + " " + manager->getFirstName() << "\t" << name_of_corp + "->" + company_name + "->" + department_name << "\t" << manager->getPosition() << "\t" << manager->getDateOfBirth()->getYear() << "-" << filling(manager->getDateOfBirth()->getMonth()) << "-" << filling(manager->getDateOfBirth()->getDay()) << "\t" << manager->getBirthPlace() << "\t" << manager->getEmail() << "\t" << manager->getPhoneNum() << "\t" << manager->getFirstDayAtWork()->getYear() << "-" << filling(manager->getFirstDayAtWork()->getMonth()) << "-" << filling(manager->getFirstDayAtWork()->getDay()) << "\t" << endl;
+            }
+            std::map<unsigned short, DeputyManager *> *pointer_of_deputy_manager_list = dept->getDeputyManagerList();
             for (auto cur_deputy_manager = pointer_of_deputy_manager_list->begin(); cur_deputy_manager != pointer_of_deputy_manager_list->end(); ++cur_deputy_manager)
             {
-                DeputyManager *dm = (*cur_deputy_manager).getValue();
-                fs << dm->getID() << "\t" << dm->getLastMidName() + " " + dm->getFirstName() << "\t" << name_of_corp + "->" + company_name + "->" + department_name << "\t" << dm->getPosition() << "\t" << dm->getDateOfBirth()->getYear() << "-" << filling(dm->getDateOfBirth()->getMonth()) << "-" << filling(dm->getDateOfBirth()->getDay()) << "\t" << dm->getBirthPlace() << "\t" << dm->getEmail() << "\t" << dm->getPhoneNum() << "\t" << dm->getFirstDayAtWork()->getYear() << "-" << filling(dm->getFirstDayAtWork()->getMonth()) << "-" << filling(dm->getFirstDayAtWork()->getDay()) << "\t" << endl;
+                if (cur_deputy_manager->second != nullptr)
+                {
+                    fs << cur_deputy_manager->second->getID() << "\t" << cur_deputy_manager->second->getLastMidName() + " " + cur_deputy_manager->second->getFirstName() << "\t" << name_of_corp + "->" + company_name + "->" + department_name << "\t" << cur_deputy_manager->second->getPosition() << "\t" << cur_deputy_manager->second->getDateOfBirth()->getYear() << "-" << filling(cur_deputy_manager->second->getDateOfBirth()->getMonth()) << "-" << filling(cur_deputy_manager->second->getDateOfBirth()->getDay()) << "\t" << cur_deputy_manager->second->getBirthPlace() << "\t" << cur_deputy_manager->second->getEmail() << "\t" << cur_deputy_manager->second->getPhoneNum() << "\t" << cur_deputy_manager->second->getFirstDayAtWork()->getYear() << "-" << filling(cur_deputy_manager->second->getFirstDayAtWork()->getMonth()) << "-" << filling(cur_deputy_manager->second->getFirstDayAtWork()->getDay()) << "\t" << endl;
+                }
             }
             std::map<unsigned short, Employee *> *pointer_of_employee_list = dept->getEmployeeList();
             for (auto cur_employee = pointer_of_employee_list->begin(); cur_employee != pointer_of_employee_list->end(); ++cur_employee)
             {
-                Employee *e = cur_employee->second;
-                fs << e->getID() << "\t" << e->getLastMidName() + " " + e->getFirstName() << "\t" << name_of_corp + "->" + company_name + "->" + department_name << "\t" << e->getPosition() << "\t" << e->getDateOfBirth()->getYear() << "-" << filling(e->getDateOfBirth()->getMonth()) << "-" << filling(e->getDateOfBirth()->getDay()) << "\t" << e->getBirthPlace() << "\t" << e->getEmail() << "\t" << e->getPhoneNum() << "\t" << e->getFirstDayAtWork()->getYear() << "-" << filling(e->getFirstDayAtWork()->getMonth()) << "-" << filling(e->getFirstDayAtWork()->getDay()) << "\t" << endl;
+                if (cur_employee->second != nullptr)
+                {
+                    fs << cur_employee->second->getID() << "\t" << cur_employee->second->getLastMidName() + " " + cur_employee->second->getFirstName() << "\t" << name_of_corp + "->" + company_name + "->" + department_name << "\t" << cur_employee->second->getPosition() << "\t" << cur_employee->second->getDateOfBirth()->getYear() << "-" << filling(cur_employee->second->getDateOfBirth()->getMonth()) << "-" << filling(cur_employee->second->getDateOfBirth()->getDay()) << "\t" << cur_employee->second->getBirthPlace() << "\t" << cur_employee->second->getEmail() << "\t" << cur_employee->second->getPhoneNum() << "\t" << cur_employee->second->getFirstDayAtWork()->getYear() << "-" << filling(cur_employee->second->getFirstDayAtWork()->getMonth()) << "-" << filling(cur_employee->second->getFirstDayAtWork()->getDay()) << "\t" << endl;
+                }
             }
         }
     }

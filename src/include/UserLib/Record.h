@@ -66,6 +66,13 @@ public:
         }
     }
 
+    ~Record()
+    {
+        delete this->day_worked;
+        delete this->time_start_work;
+        delete this->time_go_home;
+    }
+
     // OPERATORS
     friend std::ostream &operator<<(std::ostream &os, const Record &record)
     {
@@ -94,7 +101,7 @@ public:
         {
             os << "| Time Shortage: " << record->getTimeShortage();
         }
-        
+
         return os;
     }
     Record operator=(const Record *otherRecord)
@@ -109,7 +116,7 @@ public:
     }
 
     // METHODS
-    Time* getTimeShortage()
+    Time *getTimeShortage()
     {
         // Calculating the number of hours short of employees
         // arrive late or leave early. Round up to 1 hour

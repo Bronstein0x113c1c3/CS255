@@ -14,7 +14,7 @@
 #include "SearchByName.h"
 #include "AddDaysWorked.h"
 #include "WriteToTheFile.h"
-// #include "writeToTheTxt.h"
+#include "DeleteHuman.h"
 
 // ALL THE REQUIREMENTS FUNCTION
 
@@ -34,6 +34,7 @@ Human *searchByID(Corporation *corporation, const int ID);
 // ADJUST FUNCTIONS USING TERMINAL
 void addAndUpdateHuman(Corporation *corporation); //! USE searchByID() -> IF Yes -> Update to new One ? || IF No -> Add new One
 void addDaysWorked(Human *human);
+void deleteHuman(Corporation* corporation, Human* human);
 
 // WRITE TO FILE
 void writeToTheFile(Corporation *corp, std::string file_path);
@@ -56,7 +57,7 @@ Corporation *makeCorporation(std::string file_path)
 {
     // IF THE FILE PATH IS EMPTY
     // -> DO THE TERMINAL PART
-    Corporation *corporation;
+    Corporation *corporation = nullptr;
     if (validateFileTxt(file_path))
     {
         corporation = makeCorporationFromFile(file_path);
@@ -77,8 +78,7 @@ void displayCorporationInfo(Corporation *corporation)
     cout << "Vice Presidents: ";
     for (auto current = corporation->getVicePresidentList()->begin(); current != corporation->getVicePresidentList()->end(); ++current)
     {
-        VicePresident *vice_president = (*current).getValue();
-        cout << (*vice_president).getFullName() << ", ";
+        cout << current->second << ", ";
     }
     cout << std::endl;
 }
@@ -99,8 +99,7 @@ void displayUnitInfo(Company *company)
     cout << "Vice Directors: ";
     for (auto current = company->getViceDirectorList()->begin(); current != company->getViceDirectorList()->end(); ++current)
     {
-        ViceDirector *vice_director = (*current).getValue();
-        cout << (*vice_director).getFullName() << ", ";
+        cout << current->second << ", ";
     }
     cout << std::endl;
 }
@@ -112,8 +111,7 @@ void displayUnitInfo(Department *department)
     cout << "Depute Managers: ";
     for (auto current = department->getDeputyManagerList()->begin(); current != department->getDeputyManagerList()->end(); ++current)
     {
-        DeputyManager *deputy_manager = (*current).getValue();
-        cout << (*deputy_manager).getFullName() << ", ";
+        cout << current->second << ", ";
     }
     cout << std::endl;
 }

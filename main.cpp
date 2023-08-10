@@ -1,42 +1,39 @@
-#include <UserInteractions/UserInteractions.h>
+#include "src/include/UserInteractions/UserInteractions.h"
 
 using namespace std;
-string get_string(const string &prompt)
-{
-    string input;
-    cout << prompt;
-    getline(cin, input);
-    return input;
-};
 
 void menu(Corporation *corporation)
 {
-    char option;
+    int option;
     cout << "--------------------MENU--------------------" << endl;
     cout << "1. Display Corporation Info" << endl;
     cout << "2. Search Human by Name" << endl;
     cout << "3. Search Human by ID" << endl;
-    cout << "4. Add and Upate Human" << endl;
-    cout << "5. Add Days Work" << endl;
-    cout << "6. Exit" << endl;
+    cout << "4. Add and Upate Human by ID" << endl;
+    cout << "5. Add Days Work by ID" << endl;
+    cout << "6. Delete Human by ID" << endl;
+    cout << "7. Exit" << endl;
     cout << "Enter your Option: ";
     cin >> option;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     switch (option)
     {
-    case '1':
-        // displayCorporationInfo(corporation);
+    case 1:
         std::cout << corporation << std::endl;
         break;
-    case '2':
+    case 2:
     {
-        string search_string = get_string("Enter the name of the human to search for: ");
+        std::string search_string = "";
+        // ASK USER INPUT
+        std::cout << "Enter the name of the human to search for: ";
+        std::getline(std::cin, search_string);
+
         Stack<Human *> *stack_human = searchByName(corporation, search_string);
         std::cout << *stack_human << std::endl;
         break;
     }
-    case '3':
+    case 3:
     {
         cout << "Enter the ID of the human to search for: ";
 
@@ -53,28 +50,62 @@ void menu(Corporation *corporation)
         cout << human << endl;
         break;
     }
-    case '4':
+    case 4:
     {
         addAndUpdateHuman(corporation);
         break;
     }
-    case '5':
+    case 5:
     {
         string ID;
         int id;
         cout << "Enter employees ID: ";
         cin >> ID;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
         id = std::stoi(getValueAfterValidate(ID, validateNum));
         Human *human = searchByID(corporation, id);
-        if (human != nullptr) {addDaysWorked(human);}
-        else {cout << "ID not exist!";};
+        if (human != nullptr)
+        {
+            addDaysWorked(human);
+        }
+        else
+        {
+            cout << "ID not exist!";
+        };
         break;
     }
-    case '6':
+    case 6:
+    {
+        string string_ID = "";
+        int ID = 0;
+        cout << "Enter employees ID: ";
+        cin >> string_ID;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        //! VALIDATE VALUE
+        string_ID = getValueAfterValidate(string_ID, validateNum);
+        ID = std::stoi(string_ID);
+
+        Human *human = searchByID(corporation, ID);
+        if (human != nullptr)
+        {
+            deleteHuman(corporation, human);
+        }
+        else
+        {
+            cout << "ID not exist!";
+        };
+        break;
+    }
+    case 7:
     {
         writeToTheFile(corporation, "output.txt");
         cout << "Information Updated!!!" << endl;
-        cout << "Thanks for using!" << endl;;
+        cout << "Thanks for using!" << endl;
+
+        // TO CLEAN UP MEMORY
+        delete corporation;
         exitProgram();
         break;
     }
@@ -83,13 +114,19 @@ void menu(Corporation *corporation)
         break;
     }
 }
-
-void WrongFormat(string &option){
-    cout << "Wrong Format!!!" << endl;
-    cout << "Enter again: ";
-    getline(cin, option);
+bool validate_file_name(std::string name)
+{
+    ifstream fs;
+    fs.open(name);
+    if (fs)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
-
 int main(int argc, char *argv[])
 {
     // SDL_Init(SDL_INIT_EVERYTHING);
@@ -97,43 +134,50 @@ int main(int argc, char *argv[])
 
     // FILE PATH
     string filename = "";
-    string option;
+    int option;
 
     // ATTRIBUTES
     Corporation *corporation = nullptr;
-    Company *company = nullptr;
-    Department *department = nullptr;
-    Human *human = nullptr;
-    string search_string = "";
 
-    // ASK INPUT 
+    // ASK INPUT
     cout << "Load corporation from file(1) or create new corporation from terminal(2)? ";
-    std::getline(std::cin, option);
-    while (!(option == "1" ||option == "2"))
+    std::cin >> option;
+    while (!(option == 1 || option == 2))
     {
-        WrongFormat(option);
+        std::cout << "Enter the option again!!!!!!" << endl;
+        std::cin >> option;
+        // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
-    //Do File Path
-    if (option == "1")
+    // Do File Path
+    if (option == 1)
     {
-        //ASK PEOPLE FILE PATH
+        // ASK PEOPLE FILE PATH
         cout << "Enter file Path: ";
-        std::getline(std::cin, filename);
+        std::cin >> filename;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+        while (!validate_file_name(filename))
+        {
+            cout << "Enter file Path Again: ";
+            std::getline(std::cin, filename);
+        }
         //! VAILIDATE FILE PATH
         filename = getValueAfterValidate(filename, validateFileTxt);
-         
+
+        delete corporation; //! PREVENT MEMORY LEAK
         // Load data from file
-        corporation = makeCorporation(filename);       
+        corporation = makeCorporation(filename);
     }
-    //Do Terminal
-    else if (option == "2")
+    // Do Terminal
+    else if (option == 2)
     {
+        delete corporation; //! PREVENT MEMORY LEAK
         corporation = makeCorporation();
     }
-    do{
+    do
+    {
         menu(corporation);
-    }while(1);
+    } while (true);
 
     return 0;
 }

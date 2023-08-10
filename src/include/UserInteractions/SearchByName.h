@@ -26,15 +26,14 @@ void searchNameInDepartment(Department *department_to_search, Stack<Human *> *se
     }
 
     // CHECK DEPUTY MANAGER
-    Queue<DeputyManager *>* deputy_manager_list = department_to_search->getDeputyManagerList();
+    std::map<unsigned short, DeputyManager *>* deputy_manager_list = department_to_search->getDeputyManagerList();
     for (auto iter = deputy_manager_list->begin(); iter != deputy_manager_list->end(); ++iter)
     {
-        DeputyManager *deputy_manager = (*iter).getValue();
-        if (deputy_manager != nullptr)
+        if (iter->second != nullptr)
         {
-            if (isNameMatch(deputy_manager->getFullName(), search_string))
+            if (isNameMatch(iter->second->getFullName(), search_string))
             {
-                search_basket->Push(deputy_manager);
+                search_basket->Push(iter->second);
             }
         }
     }
@@ -70,15 +69,14 @@ void searchNameInCompany(Company *company_to_search, Stack<Human *> *search_bask
     }
 
     //? CHECK VICE DIRECTOR
-    Queue<ViceDirector *>* vice_director_list = company_to_search->getViceDirectorList();
+    std::map<unsigned short, ViceDirector *>* vice_director_list = company_to_search->getViceDirectorList();
     for (auto iter = vice_director_list->begin(); iter != vice_director_list->end(); ++iter)
     {
-        ViceDirector *vice_director = (*iter).getValue();
-        if (vice_director != nullptr)
+        if (iter->second != nullptr)
         {
-            if (isNameMatch(vice_director->getFullName(), search_string))
+            if (isNameMatch(iter->second->getFullName(), search_string))
             {
-                search_basket->Push(vice_director);
+                search_basket->Push(iter->second);
             }
         }
     }
@@ -120,15 +118,14 @@ Stack<Human *> *searchByName(Corporation *corporation, const std::string search_
     }
 
     //? CHECK VICE PRESIDENT
-    Queue<VicePresident *>* vice_president_list = corporation->getVicePresidentList();
+    std::map<unsigned short, VicePresident *>* vice_president_list = corporation->getVicePresidentList();
     for (auto current = vice_president_list->begin(); current != vice_president_list->end(); ++current)
     {
-        VicePresident *vice_president = (*current).getValue();
-        if (vice_president != nullptr)
+        if (current->second != nullptr)
         {
-            if (isNameMatch(vice_president->getFullName(), search_string))
+            if (isNameMatch(current->second->getFullName(), search_string))
             {
-                search_basket->Push(vice_president);
+                search_basket->Push(current->second);
             }
         }
     }

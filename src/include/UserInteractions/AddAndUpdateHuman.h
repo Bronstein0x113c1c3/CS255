@@ -7,6 +7,7 @@
 #include "../UserLib/ValidateRegex.h"
 #include "SearchByID.h"
 #include "ValidateNumAndName.h"
+#include "DeleteHuman.h"
 
 std::string askUpdateOrStop(std::string userInput)
 {
@@ -84,9 +85,13 @@ void addAndUpdateHuman(Corporation *corporation)
             {
                 return; // STOP THE PROGRAM
             }
+            else if (userInput == "UPDATE")
+            {
+                deleteHuman(corporation, human_same_ID);
+            }
         }
     }
-    delete human_same_ID;
+
     //! UPDATE TO NEW ONE
 
     //? Name
@@ -254,7 +259,6 @@ void addAndUpdateHuman(Corporation *corporation)
         }
         else if (position == "Vice Director")
         {
-            // ADD NEW VICE DIRECTOR
             ViceDirector *new_vice_director = new ViceDirector(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             company_list->at(input_company_name)->addViceDirector(new_vice_director);
         }
@@ -332,5 +336,4 @@ void addAndUpdateHuman(Corporation *corporation)
     // IGNORE THE NEW LINE CHARACTER
     std::fflush(stdin);
 }
-
 #endif
