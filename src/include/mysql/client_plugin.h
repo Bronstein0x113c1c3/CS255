@@ -1,5 +1,5 @@
 #ifndef MYSQL_CLIENT_PLUGIN_INCLUDED
-/* Copyright (c) 2010, 2023, Oracle and/or its affiliates.
+/* Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License, version 2.0,
@@ -45,28 +45,24 @@
   for functions.
 */
 
+#undef MYSQL_PLUGIN_EXPORT
+
 #if defined(_MSC_VER)
-#if defined(MYSQL_DYNAMIC_CLIENT_PLUGIN)
+#if defined(MYSQL_DYNAMIC_PLUGIN)
 #ifdef __cplusplus
-#define MYSQL_CLIENT_PLUGIN_EXPORT extern "C" __declspec(dllexport)
+#define MYSQL_PLUGIN_EXPORT extern "C" __declspec(dllexport)
 #else
-#define MYSQL_CLIENT_PLUGIN_EXPORT __declspec(dllexport)
+#define MYSQL_PLUGIN_EXPORT __declspec(dllexport)
 #endif
-#else /* MYSQL_DYNAMIC_CLIENT_PLUGIN */
+#else /* MYSQL_DYNAMIC_PLUGIN */
 #ifdef __cplusplus
-#define MYSQL_CLIENT_PLUGIN_EXPORT extern "C"
+#define MYSQL_PLUGIN_EXPORT extern "C"
 #else
-#define MYSQL_CLIENT_PLUGIN_EXPORT
+#define MYSQL_PLUGIN_EXPORT
 #endif
-#endif /*MYSQL_DYNAMIC_CLIENT_PLUGIN */
+#endif /*MYSQL_DYNAMIC_PLUGIN */
 #else  /*_MSC_VER */
-
-#if defined(MYSQL_DYNAMIC_CLIENT_PLUGIN)
-#define MYSQL_CLIENT_PLUGIN_EXPORT MY_ATTRIBUTE((visibility("default")))
-#else
-#define MYSQL_CLIENT_PLUGIN_EXPORT
-#endif
-
+#define MYSQL_PLUGIN_EXPORT
 #endif
 
 #ifdef __cplusplus
@@ -79,34 +75,31 @@ extern "C" {
 #define MYSQL_CLIENT_AUTHENTICATION_PLUGIN 2
 #define MYSQL_CLIENT_TRACE_PLUGIN 3
 
-#define MYSQL_CLIENT_AUTHENTICATION_PLUGIN_INTERFACE_VERSION 0x0200
-#define MYSQL_CLIENT_TRACE_PLUGIN_INTERFACE_VERSION 0x0200
+#define MYSQL_CLIENT_AUTHENTICATION_PLUGIN_INTERFACE_VERSION 0x0101
+#define MYSQL_CLIENT_TRACE_PLUGIN_INTERFACE_VERSION 0x0100
 
 #define MYSQL_CLIENT_MAX_PLUGINS 4
 
-#define MYSQL_CLIENT_PLUGIN_AUTHOR_ORACLE "Oracle Corporation"
-
-#define mysql_declare_client_plugin(X)                  \
-  MYSQL_CLIENT_PLUGIN_EXPORT st_mysql_client_plugin_##X \
-      _mysql_client_plugin_declaration_ = {             \
-          MYSQL_CLIENT_##X##_PLUGIN,                    \
+#define mysql_declare_client_plugin(X)           \
+  MYSQL_PLUGIN_EXPORT st_mysql_client_plugin_##X \
+      _mysql_client_plugin_declaration_ = {      \
+          MYSQL_CLIENT_##X##_PLUGIN,             \
           MYSQL_CLIENT_##X##_PLUGIN_INTERFACE_VERSION,
 #define mysql_end_client_plugin }
 
 /* generic plugin header structure */
-#define MYSQL_CLIENT_PLUGIN_HEADER                  \
-  int type;                                         \
-  unsigned int interface_version;                   \
-  const char *name;                                 \
-  const char *author;                               \
-  const char *desc;                                 \
-  unsigned int version[3];                          \
-  const char *license;                              \
-  void *mysql_api;                                  \
-  int (*init)(char *, size_t, int, va_list);        \
-  int (*deinit)(void);                              \
-  int (*options)(const char *option, const void *); \
-  int (*get_options)(const char *option, void *);
+#define MYSQL_CLIENT_PLUGIN_HEADER           \
+  int type;                                  \
+  unsigned int interface_version;            \
+  const char *name;                          \
+  const char *author;                        \
+  const char *desc;                          \
+  unsigned int version[3];                   \
+  const char *license;                       \
+  void *mysql_api;                           \
+  int (*init)(char *, size_t, int, va_list); \
+  int (*deinit)(void);                       \
+  int (*options)(const char *option, const void *);
 
 struct st_mysql_client_plugin {
   MYSQL_CLIENT_PLUGIN_HEADER
@@ -212,21 +205,6 @@ struct st_mysql_client_plugin *mysql_client_register_plugin(
 **/
 int mysql_plugin_options(struct st_mysql_client_plugin *plugin,
                          const char *option, const void *value);
-
-/**
-  get plugin options
-
-  Can be used to get options from a plugin.
-  This function may be called multiple times to get several options
-
-  @param plugin an st_mysql_client_plugin structure
-  @param option a string which specifies the option to get
-  @param[out] value  value for the option.
-
-  @retval 0 on success, 1 in case of failure
-**/
-int mysql_plugin_get_option(struct st_mysql_client_plugin *plugin,
-                            const char *option, void *value);
 
 #ifdef __cplusplus
 }

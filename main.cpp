@@ -1,35 +1,39 @@
-#include <SDL2/SDL.h> // FOR GUI
-#include <mysql.h>    // FOR DATABASE
-#include <mysqld_error.h>
-#include<bits/stdc++.h>
-#include <string>
+#include <mysql.h>
 #include <iostream>
-// #include <UserInteractions/UserInteractions.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-//? DATABASE ATTRIBUTE
-const char HOST[] = "localhost";
+const char HOST[] = "127.0.0.1";
 const char USER[] = "root";
 const char PASS[] = "Son09074113456";
-const int PORT = 3306;
+const unsigned short PORT = 3306;
 
-int main(int argc, char *argv[])
+int main()
 {
-    //! TO INIT CONNECTION
-    MYSQL *conn = NULL;
+    MYSQL *conn = mysql_init(nullptr);
 
-    //-------------------------------------
-    //? CONNECTION
-    conn = mysql_init(0);
     if (conn == NULL)
     {
-        std::cout << "FAIL" << std::endl;
+        fprintf(stderr, "%s\n", mysql_error(conn));
+        exit(1);
+    }
+
+    if (mysql_real_connect(conn, HOST, USER, PASS, "corporation", 3306, NULL, 0) == NULL)
+    {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+        mysql_close(conn);
+        exit(1);
     }
     else
     {
-        if (mysql_real_connect(conn, HOST, USER, PASS, "corporation", PORT, NULL, 0))
-        {
-            std::cout << "Logged in!" << std::endl;
-        }
+        std::cout << "Connect Success!" << std::endl;
+    }
+
+    if (mysql_query(conn, "CREATE DATABASE testdb"))
+    {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+        mysql_close(conn);
+        exit(1);
     }
 
     return 0;

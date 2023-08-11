@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2.0,
@@ -58,7 +58,7 @@
   {"ER_X_BAD_TABLE", ER_X_BAD_TABLE, "", NULL, NULL, 0 },
   {"ER_X_BAD_PROJECTION", ER_X_BAD_PROJECTION, "", NULL, NULL, 0 },
   {"ER_X_DOC_ID_MISSING", ER_X_DOC_ID_MISSING, "", NULL, NULL, 0 },
-  {"ER_X_DUPLICATE_ENTRY", ER_X_DUPLICATE_ENTRY, "", NULL, NULL, 0 },
+  {"ER_X_DOC_ID_DUPLICATE", ER_X_DOC_ID_DUPLICATE, "", NULL, NULL, 0 },
   {"ER_X_DOC_REQUIRED_FIELD_MISSING", ER_X_DOC_REQUIRED_FIELD_MISSING, "", NULL, NULL, 0 },
   {"ER_X_PROJ_BAD_KEY_NAME", ER_X_PROJ_BAD_KEY_NAME, "", NULL, NULL, 0 },
   {"ER_X_BAD_DOC_PATH", ER_X_BAD_DOC_PATH, "", NULL, NULL, 0 },
