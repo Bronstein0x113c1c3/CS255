@@ -48,6 +48,10 @@ void menu(Corporation *corporation)
 
         Human *human = searchByID(corporation, ID_to_find);
         cout << human << endl;
+
+        //! TO RESET SEARCHING
+        isContinueSearching = true;
+        human_to_find = nullptr;
         break;
     }
     case 4:
@@ -68,6 +72,10 @@ void menu(Corporation *corporation)
         if (human != nullptr)
         {
             addDaysWorked(human);
+
+            //! TO RESET SEARCHING
+            isContinueSearching = true;
+            human_to_find = nullptr;
         }
         else
         {
@@ -91,6 +99,13 @@ void menu(Corporation *corporation)
         if (human != nullptr)
         {
             deleteHuman(corporation, human);
+
+            //! TO RESET SEARCHING
+            isContinueSearching = true;
+            human_to_find = nullptr;
+
+            //! TO RESET DELETING
+            isContinueDeleting = true;
         }
         else
         {
