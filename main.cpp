@@ -1,3 +1,4 @@
+#include <SDL2/SDL.h>
 #include <mysql.h>
 #include <iostream>
 #include <stdlib.h>
@@ -8,7 +9,7 @@ const char USER[] = "root";
 const char PASS[] = "Son09074113456";
 const unsigned short PORT = 3306;
 
-int main()
+int main(int argc, char *args[])
 {
     MYSQL *conn = mysql_init(nullptr);
 
