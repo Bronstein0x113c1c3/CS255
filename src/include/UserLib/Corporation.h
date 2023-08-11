@@ -6,19 +6,38 @@
 #include "../DSA/Queue.h"
 #include "../DSA/HashMap.h"
 #include "Company.h"
+#include "../UserLib/Record.h"
 class Corporation
 {
 private:
     std::string name;
     President *president = nullptr;
-    Queue<VicePresident *>* vice_president = new Queue<VicePresident *>();
-    std::map<std::string, Company *>* company_list = new std::map<std::string, Company *>();
+    std::map<unsigned short, VicePresident *> vice_president;
+    std::map<std::string, Company *> company_list;
 
 public:
     // CONSTRUCTORS
-    Corporation(){};
-    Corporation(std::string name, President *president, Queue<VicePresident *>* vice_president, std::map<std::string, Company *>* company);
-    ~Corporation();
+    Corporation()
+    {
+        this->vice_president = std::map<unsigned short, VicePresident *>();
+        this->company_list = std::map<std::string, Company *>();
+    };
+    Corporation(std::string name, President *president, std::map<unsigned short, VicePresident *> vice_president, std::map<std::string, Company *> company);
+    ~Corporation()
+    {
+        delete this->president;
+        cout << "deleted president" << endl;
+        for (auto iter = this->vice_president.begin(); iter != this->vice_president.end(); ++iter)
+        {
+            delete iter->second;
+        }
+        cout << "deleted vice president" << endl;
+        for (auto iter = this->company_list.begin(); iter != this->company_list.end(); ++iter)
+        {
+            delete iter->second;
+        }
+        cout << "delete company list" << endl;
+    };
 
     // OPERATORS
     friend ostream &operator<<(ostream &os, const Corporation &corporation)
@@ -27,15 +46,15 @@ public:
         os << "Corporation: " + corporation.name << std::endl;
         os << "President: " + corporation.president->getFirstName() + " " + corporation.president->getLastMidName() << std::endl;
         os << "Vice Presidents: ";
-        for (auto current = corporation.vice_president->begin(); current != corporation.vice_president->end(); ++current)
+        for (auto current = corporation.vice_president.begin(); current != corporation.vice_president.end(); ++current)
         {
-            VicePresident *vice_president = (*current).getValue();
+            VicePresident *vice_president = (*current).second;
             os << *vice_president << ", ";
         }
         os << std::endl;
 
         os << "Companies: ";
-        for (auto current = corporation.company_list->begin(); current != corporation.company_list->end(); ++current)
+        for (auto current = corporation.company_list.begin(); current != corporation.company_list.end(); ++current)
         {
             os << *(current->second) << ", ";
         }
@@ -58,7 +77,7 @@ public:
             }
             else
                 os << "Date of birth: " << std::endl;
-            
+
             os << "Birth place: " << corporation->president->getBirthPlace() << "\n";
             os << "Email: " << corporation->president->getEmail() << "\n";
             os << "Phone number: " << corporation->president->getPhoneNum() << "\n";
@@ -69,7 +88,7 @@ public:
             }
             else
                 os << "First day at work: " << std::endl;
-            
+
             os << "Days Worked: " << std::endl;
             for (auto current = corporation->president->getDaysWork()->begin(); current != corporation->president->getDaysWork()->end(); ++current)
             {
@@ -84,18 +103,17 @@ public:
             os << "President: " << std::endl;
 
         os << "Vice Presidents: ";
-        for (auto current = corporation->vice_president->begin(); current != corporation->vice_president->end(); ++current)
+        for (auto current = corporation->vice_president.begin(); current != corporation->vice_president.end(); ++current)
         {
-            VicePresident *vice_president = (*current).getValue();
-            if (vice_president != nullptr)
+            if (current->second != nullptr)
             {
-                os << *vice_president << ", ";
+                os << current->second << ", ";
             }
         }
         os << std::endl;
 
         os << "Companies: ";
-        for (auto current = corporation->company_list->begin(); current != corporation->company_list->end(); ++current)
+        for (auto current = corporation->company_list.begin(); current != corporation->company_list.end(); ++current)
         {
             if (current->second != nullptr)
             {
@@ -121,66 +139,55 @@ public:
     {
         return this->president;
     };
-    Queue<VicePresident *>* getVicePresidentList() { return this->vice_president; };
-    std::map<std::string, Company *>* getCompanyList()
+    std::map<unsigned short, VicePresident *> *getVicePresidentList() { return &(this->vice_president); };
+    std::map<std::string, Company *> *getCompanyList()
     {
-        return this->company_list;
+        return &(this->company_list);
     };
-    Queue<VicePresident *> *getPointerofVicePresidentList()
+    std::map<unsigned short, VicePresident *> *getPointerofVicePresidentList()
     {
-        return this->vice_president;
+        return &(this->vice_president);
     };
     std::map<std::string, Company *> *getPointerofCompanyList()
     {
-        return this->company_list;
+        return &(this->company_list);
     };
     void setName(std::string name) { this->name = name; };
-    void setPresident(President *president) 
-    { 
-        delete this->president;     //! PREVENT MEMORY LEAK
-        this->president = president; 
-    };
-    void setVicePresidentList(Queue<VicePresident *>* vice_president_list) 
-    { 
-        //! PREVENT MEMORY LEAK
-        this->vice_president->Clear();
-        delete this->vice_president;
-
-        this->vice_president = vice_president_list; 
-    };
-    void setCompanyList(std::map<std::string, Company *>* company_list)
+    void setPresident(President *president)
     {
-        delete this->company_list;  //! PREVENT MEMORY LEAK
+        this->president = president;
+    };
+    void setVicePresidentList(std::map<unsigned short, VicePresident *> vice_president_list)
+    {
+        this->vice_president = vice_president_list;
+    };
+    void setCompanyList(std::map<std::string, Company *> company_list)
+    {
         this->company_list = company_list;
     };
 
     // METHODS
-    void addVicePresident(VicePresident *vice_president) { this->vice_president->Enqueue(vice_president); };
+    void addVicePresident(VicePresident *vice_president) { this->vice_president.insert({vice_president->getID(), vice_president}); };
     void addCompany(Company *company)
     {
-        this->company_list->insert({company->getName(), company});
+        this->company_list.insert({company->getName(), company});
     };
 };
 
-Corporation::Corporation(std::string name, President *president, Queue<VicePresident *>* vice_president, std::map<std::string, Company *>* company)
+Corporation::Corporation(std::string name, President *president, std::map<unsigned short, VicePresident *> vice_president, std::map<std::string, Company *> company)
 {
     this->name = name;
 
-    delete this->president;     //! PREVENT MEMORY LEAK
+    // delete this->president; //! PREVENT MEMORY LEAK
     this->president = president;
 
     //! PREVENT MEMORY LEAK
-    this->vice_president->Clear();
-    delete this->vice_president;
+    // delete this->vice_president;
     this->vice_president = vice_president;
 
     //! PREVENT MEMORY LEAK
-    delete this->company_list;
+    // delete this->company_list;
     this->company_list = company_list;
-}
-
-Corporation::~Corporation()
-{
 }
 
 #endif

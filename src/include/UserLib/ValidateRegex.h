@@ -185,4 +185,9 @@ bool validateFileTxt(std::string filename)
     return std::regex_match(filename, filename_pattern);
 }
 
+//? VALIDATE ID 
+bool isIDMatch(const unsigned short human_ID, const unsigned short ID_to_find)
+{
+    return human_ID == ID_to_find;
+}
 #endif

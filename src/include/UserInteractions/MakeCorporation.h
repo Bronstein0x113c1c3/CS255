@@ -13,7 +13,7 @@ Corporation *buildCorporationFromFile(std::string file_path)
     // Instantiate the corporation, new corporation
     Corporation *corp = new Corporation();
     std::ifstream fs(file_path);
-    std::string line;
+    std::string line = "";
 
     /*
     The real shit comes here!
@@ -60,7 +60,7 @@ Corporation *buildCorporationFromFile(std::string file_path)
                 std::tie(corporation_name, company_name) = result;
                 corp->setName(corporation_name);
 
-                map<std::string, Company *> *pointer_of_company_list = corp->getPointerofCompanyList();
+                std::map<std::string, Company *> *pointer_of_company_list = corp->getPointerofCompanyList();
                 if (pointer_of_company_list->count(company_name) == 0)
                 {
                     Company *cp = new Company();
@@ -95,7 +95,7 @@ Corporation *buildCorporationFromFile(std::string file_path)
                 //     }
                 // }
                 // cout << "Name after creating company " << (corp->getCompanyList())[company_name]->getName() << endl;
-                map<std::string, Company *> *pointer_of_company_list = corp->getPointerofCompanyList();
+                std::map<std::string, Company *> *pointer_of_company_list = corp->getPointerofCompanyList();
                 if (pointer_of_company_list->count(company_name) == 0)
                 {
                     Company *cp = new Company();
@@ -109,7 +109,6 @@ Corporation *buildCorporationFromFile(std::string file_path)
                     dept->setName(department_name);
                     pointer_of_department_list->insert({department_name, dept});
                 }
-             
             }
         }
     }
@@ -169,8 +168,7 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[7],
                         list_of_field[8],
                         list_of_field[9]);
-                    Queue<VicePresident *> *ptr_vp_list = corp->getPointerofVicePresidentList();
-                    ptr_vp_list->Enqueue(vp);
+                    corp->addVicePresident(vp);
                 }
             }
             else if (validateCompanyNameFromFile(list_of_field[3]))
@@ -179,7 +177,7 @@ Corporation *makeCorporationFromFile(std::string file_path)
                 std::tuple<std::string, std::string> result = extractCompanyFromFile(list_of_field[3]);
                 std::tie(corporation_name, company_name) = result;
                 // get the company: corp-> company
-                map<std::string, Company *> *pointer_of_company_list = corp->getPointerofCompanyList();
+                std::map<std::string, Company *> *pointer_of_company_list = corp->getPointerofCompanyList();
                 Company *considering_company = pointer_of_company_list->at(company_name);
                 if (list_of_field[4] == "Director")
                 {
@@ -272,7 +270,7 @@ Corporation *makeCorporationFromFile(std::string file_path)
                 }
             }
         }
-        }
+    }
     return corp;
 }
 Corporation *makeCorporationFromTerminal()

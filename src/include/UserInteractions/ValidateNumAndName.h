@@ -5,6 +5,7 @@
 #include <iostream>
 #include <tuple>
 #include "../UserLib/ValidateRegex.h"
+#include "../UserLib/Time.h"
 
 // DO SOME INT VALIDATION FUNCTION
 std::string getNumAfterValidate(std::string num)

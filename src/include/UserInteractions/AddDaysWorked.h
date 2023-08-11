@@ -2,7 +2,6 @@
 #define ADDDAYSWORKED_H
 
 #include "../UserLib/Human.h"
-#include "../UserLib/Record.h"
 #include "../UserLib/ValidateRegex.h"
 #include "ValidateNumAndName.h"
 
