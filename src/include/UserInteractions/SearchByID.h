@@ -3,6 +3,9 @@
 
 #include <atomic>
 #include <thread>
+#include "../SQL_Utilities/Connection.h"
+#include "../SQL_Utilities/Command.h"
+#include "../SQL_Utilities/DatabaseInfo.h"
 #include "../UserLib/Human.h"
 #include "../UserLib/Corporation.h"
 #include "../UserLib/ValidateRegex.h"
@@ -14,7 +17,13 @@ std::atomic<bool> isContinueSearching = true;
 Human *human_to_find = nullptr;
 
 void searchIDInDepartment(Department *department_to_search, const int ID_to_find)
-{
+{   
+    // END THE SEARCHING METHOD IF NEEDED
+    if (isContinueSearching == false)
+    {
+        return;     
+    }   
+    
     //? CHECK MANAGER
     Manager *manager = department_to_search->getManager();
     if (manager != nullptr)
@@ -27,6 +36,12 @@ void searchIDInDepartment(Department *department_to_search, const int ID_to_find
         }
     }
 
+    // END THE SEARCHING METHOD IF NEEDED
+    if (isContinueSearching == false)
+    {
+        return;     
+    }
+
     //? CHECK DEPUTY MANAGER
     std::map<unsigned short, DeputyManager *> *deputy_manager_list = department_to_search->getDeputyManagerList();
     if (deputy_manager_list->count(ID_to_find) == 1 && isContinueSearching) // IF EXIST
@@ -34,6 +49,12 @@ void searchIDInDepartment(Department *department_to_search, const int ID_to_find
         isContinueSearching = false;
         human_to_find = deputy_manager_list->at(ID_to_find);
         return;
+    }
+
+    // END THE SEARCHING METHOD IF NEEDED
+    if (isContinueSearching == false)
+    {
+        return;     
     }
 
     //? CHECK EMPLOYEE
@@ -49,6 +70,12 @@ void searchIDInDepartment(Department *department_to_search, const int ID_to_find
 
 void searchIDInCompany(Company *company_to_search, const unsigned short ID_to_find)
 {
+    // END THE SEARCHING METHOD IF NEEDED
+    if (isContinueSearching == false)
+    {
+        return;     
+    }
+
     //? CHECK DIRECTOR
     Director *director = company_to_search->getDirector();
     if (director != nullptr)
@@ -59,6 +86,12 @@ void searchIDInCompany(Company *company_to_search, const unsigned short ID_to_fi
             human_to_find = director;
             return;
         }
+    }
+
+    // END THE SEARCHING METHOD IF NEEDED
+    if (isContinueSearching == false)
+    {
+        return;     
     }
 
     //? CHECK VICE DIRECTOR

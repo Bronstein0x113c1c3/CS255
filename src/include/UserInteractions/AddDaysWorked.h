@@ -1,6 +1,9 @@
 #ifndef ADDDAYSWORKED_H
 #define ADDDAYSWORKED_H
 
+#include "../SQL_Utilities/Connection.h"
+#include "../SQL_Utilities/Command.h"
+#include "../SQL_Utilities/DatabaseInfo.h"
 #include "../UserLib/Human.h"
 #include "../UserLib/ValidateRegex.h"
 #include "ValidateNumAndName.h"
@@ -12,6 +15,10 @@ void addDaysWorked(Human *human)
     std::string day_work = "";
     std::string time_start_work = "";
     std::string time_go_home = "";
+
+    // READY TO PUT DATA INTO DATABASE
+    MYSQL *conn = init();
+    MYSQL *initialized_conn = connectToDB(conn, HOST, USER, PASS, DATABASE, PORT);
 
     //? ASK HOW MANY DAY YOU HAVE WORK
     unsigned short int_days_have_work = 0;
@@ -104,7 +111,15 @@ void addDaysWorked(Human *human)
 
         //! ASSIGN TO THAT HUMAN'S RECORD
         human->addRecord(record_to_add);
+
+        //! PUT DATA INTO DATABASE
+        addRecordToMySQL(initialized_conn, recordTable, human->getID(), record_to_add);
     }
+
+    // CLOSE CONNECTION
+    mysql_close(initialized_conn);
 }
+
+
 
 #endif

@@ -1,6 +1,9 @@
 #ifndef MAKECORPORATION_H
 #define MAKECORPORATION_H
 
+#include "../SQL_Utilities/Connection.h"
+#include "../SQL_Utilities/Command.h"
+#include "../SQL_Utilities/DatabaseInfo.h"
 #include "../UserLib/Corporation.h"
 #include "../UserLib/Human.h"
 #include "ValidateNumAndName.h"
@@ -122,6 +125,11 @@ Corporation *makeCorporationFromFile(std::string file_path)
 
     std::ifstream fs(file_path);
     std::string line;
+
+    // READY TO PUT DATA INTO DATABASE
+    MYSQL *conn = init();
+    MYSQL *initialized_conn = connectToDB(conn, HOST, USER, PASS, DATABASE, PORT);
+
     /*
     The real shit comes here!
     */
@@ -154,6 +162,9 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[8],
                         list_of_field[9]);
                     corp->setPresident(p);
+
+                    //! PUT DATA INTO DATABASE
+                    addHumanToMySQL(initialized_conn, employeeTable, p);
                 }
                 if (list_of_field[4] == "Vice President")
                 {
@@ -169,6 +180,9 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[8],
                         list_of_field[9]);
                     corp->addVicePresident(vp);
+
+                    //! PUT DATA INTO DATABASE
+                    addHumanToMySQL(initialized_conn, employeeTable, vp);
                 }
             }
             else if (validateCompanyNameFromFile(list_of_field[3]))
@@ -193,6 +207,9 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[8],
                         list_of_field[9]);
                     considering_company->setDirector(d);
+
+                    //! PUT DATA INTO DATABASE
+                    addHumanToMySQL(initialized_conn, employeeTable, d);
                 }
 
                 if (list_of_field[4] == "Vice Director")
@@ -209,6 +226,9 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[8],
                         list_of_field[9]);
                     considering_company->addViceDirector(vd);
+
+                    //! PUT DATA INTO DATABASE
+                    addHumanToMySQL(initialized_conn, employeeTable, vd);
                 }
 
                 // let add something....
@@ -237,6 +257,9 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[8],
                         list_of_field[9]);
                     considering_department->setManager(m);
+
+                    //! PUT DATA INTO DATABASE
+                    addHumanToMySQL(initialized_conn, employeeTable, m);
                 }
                 if (list_of_field[4] == "Deputy Manager")
                 {
@@ -252,6 +275,9 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[8],
                         list_of_field[9]);
                     considering_department->addDeputyManager(dm);
+
+                    //! PUT DATA INTO DATABASE
+                    addHumanToMySQL(initialized_conn, employeeTable, dm);
                 }
                 if (list_of_field[4] == "Employee")
                 {
@@ -267,10 +293,16 @@ Corporation *makeCorporationFromFile(std::string file_path)
                         list_of_field[8],
                         list_of_field[9]);
                     considering_department->addEmployee(e);
+
+                    //! PUT DATA INTO DATABASE
+                    addHumanToMySQL(initialized_conn, employeeTable, e);
                 }
             }
         }
     }
+    //! CLOSE CONNECTION
+    mysql_close(initialized_conn);
+
     return corp;
 }
 Corporation *makeCorporationFromTerminal()

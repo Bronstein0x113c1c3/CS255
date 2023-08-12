@@ -4,16 +4,14 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src/include",
-                "${workspaceFolder}/src/include/UserLib",
-                "${workspaceFolder}/src/include/UserLib"
+                "${workspaceFolder}/src/include"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "D:/immortalsoftware/msys2/mingw64/bin/g++.exe",
+            "compilerPath": "C:\\msys64\\mingw64\\bin\\gcc.exe",
             "cStandard": "c17",
             "cppStandard": "gnu++17",
             "intelliSenseMode": "windows-gcc-x64",

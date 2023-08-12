@@ -2,6 +2,9 @@
 #define ADDANDHUMAN_H
 
 #include <string>
+#include "../SQL_Utilities/Connection.h"
+#include "../SQL_Utilities/Command.h"
+#include "../SQL_Utilities/DatabaseInfo.h"
 #include "../UserLib/Corporation.h"
 #include "../UserLib/Human.h"
 #include "../UserLib/ValidateRegex.h"
@@ -53,6 +56,10 @@ void addAndUpdateHuman(Corporation *corporation)
     std::string phone_num = "";
     std::string first_day_at_work = "";
 
+    // READY TO PUT DATA INTO DATABASE
+    MYSQL *conn = init();
+    MYSQL *initialized_conn = connectToDB(conn, HOST, USER, PASS, DATABASE, PORT);
+
     // WELCOME
     std::cout << "-----------------------TIME TO MAKE SOME EMPLOYEE-----------------------" << std::endl;
 
@@ -87,6 +94,10 @@ void addAndUpdateHuman(Corporation *corporation)
             }
             else if (userInput == "UPDATE")
             {
+                //! DELETE IN DATABASE
+                deleteHumanFromMySQL(initialized_conn, employeeTable, recordTable, human_same_ID->getID());
+
+                //! DELETE IN PROGRAM
                 deleteHuman(corporation, human_same_ID);
             }
         }
@@ -211,11 +222,17 @@ void addAndUpdateHuman(Corporation *corporation)
         {
             President *new_president = new President(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             corporation->setPresident(new_president);
+
+            // UPDATE DATABASE INFO
+            addHumanToMySQL(initialized_conn, employeeTable, new_president);
         }
         else if (position == "Vice President")
         {
             VicePresident *new_vice_president = new VicePresident(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             corporation->addVicePresident(new_vice_president);
+
+            // UPDATE DATABASE INFO
+            addHumanToMySQL(initialized_conn, employeeTable, new_vice_president);
         }
     }
     else if (work_place == "Company")
@@ -256,11 +273,17 @@ void addAndUpdateHuman(Corporation *corporation)
             // ADD NEW DIRECTOR
             Director *new_director = new Director(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             company_list->at(input_company_name)->setDirector(new_director);
+
+            // UPDATE DATABASE INFO
+            addHumanToMySQL(initialized_conn, employeeTable, new_director);
         }
         else if (position == "Vice Director")
         {
             ViceDirector *new_vice_director = new ViceDirector(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             company_list->at(input_company_name)->addViceDirector(new_vice_director);
+
+            // UPDATE DATABASE INFO
+            addHumanToMySQL(initialized_conn, employeeTable, new_vice_director);
         }
     }
     else if (work_place == "Department")
@@ -321,19 +344,31 @@ void addAndUpdateHuman(Corporation *corporation)
         {
             Manager *new_manager = new Manager(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             department_list->at(input_department_name)->setManager(new_manager);
+
+            // UPDATE DATABASE INFO
+            addHumanToMySQL(initialized_conn, employeeTable, new_manager);
         }
         else if (position == "Deputy Manager")
         {
             DeputyManager *new_deputy_manager = new DeputyManager(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             department_list->at(input_department_name)->addDeputyManager(new_deputy_manager);
+
+            // UPDATE DATABASE INFO
+            addHumanToMySQL(initialized_conn, employeeTable, new_deputy_manager);
         }
         else if (position == "Employee")
         {
             Employee *new_employee = new Employee(ID, last_mid_name, first_name, work_place, position, date_of_birth, birth_place, email, phone_num, first_day_at_work);
             department_list->at(input_department_name)->addEmployee(new_employee);
+
+            // UPDATE DATABASE INFO
+            addHumanToMySQL(initialized_conn, employeeTable, new_employee);
         }
     }
     // IGNORE THE NEW LINE CHARACTER
     std::fflush(stdin);
+
+    // CLOSE CONNECTION
+    mysql_close(initialized_conn);
 }
 #endif

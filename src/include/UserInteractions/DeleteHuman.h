@@ -1,6 +1,9 @@
 #ifndef DELETEHUMAN_H
 #define DELETEHUMAN_H
 
+#include "../SQL_Utilities/Connection.h"
+#include "../SQL_Utilities/Command.h"
+#include "../SQL_Utilities/DatabaseInfo.h"
 #include "../UserLib/Corporation.h"
 #include "../UserLib/ValidateRegex.h"
 
@@ -9,14 +12,33 @@ std::atomic<bool> isContinueDeleting = true;
 
 void deleteHumanInDepartment(Department *department_to_search, Human *human_to_delete)
 {
+    // READY TO PUT DATA INTO DATABASE
+    MYSQL *conn = init();
+    MYSQL *initialized_conn = connectToDB(conn, HOST, USER, PASS, DATABASE, PORT);
+
+    //! END THE DELETING IF NEEDED
+    if (isContinueDeleting == false)
+    {
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
+        return;
+    }
+
     //? CHECK MANAGER
     Manager *manager = department_to_search->getManager();
     if (manager != nullptr)
     {
-        if (isIDMatch(manager->getID(), human_to_delete->getID()))
+        if (isIDMatch(manager->getID(), human_to_delete->getID()) && isContinueDeleting)
         {
             isContinueDeleting = false;
-            
+
+            //! DELETE IN DATABASE
+            deleteHumanFromMySQL(initialized_conn, employeeTable, recordTable, manager->getID());
+
+            //! CLOSE CONNECTION
+            mysql_close(initialized_conn);
+
             //! PREVENT MEMORY LEAK
             delete manager;
             department_to_search->setManager(nullptr);
@@ -24,35 +46,90 @@ void deleteHumanInDepartment(Department *department_to_search, Human *human_to_d
         }
     }
 
+    //! END THE DELETING IF NEEDED
+    if (isContinueDeleting == false)
+    {
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
+        return;
+    }
+
     //? CHECK DEPUTY MANAGER
     std::map<unsigned short, DeputyManager *> *deputy_manager_list = department_to_search->getDeputyManagerList();
-    if (deputy_manager_list->count(human_to_delete->getID()))
+    if (deputy_manager_list->count(human_to_delete->getID()) == 1 && isContinueDeleting)
     {
         isContinueDeleting = false;
+
+        //! DELETE IN DATABASE
+        deleteHumanFromMySQL(initialized_conn, employeeTable, recordTable, human_to_delete->getID());
+
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
         //! PREVENT MEMORY LEAK
         deputy_manager_list->erase(human_to_delete->getID());
         delete human_to_delete;
-        
+
+        return;
+    }
+
+    //! END THE DELETING IF NEEDED
+    if (isContinueDeleting == false)
+    {
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
         return;
     }
 
     //? CHECK EMPLOYEE
     std::map<unsigned short, Employee *> *employees_list = department_to_search->getEmployeeList();
-    employees_list->erase(human_to_delete->getID());
-    delete human_to_delete;
-    return;
+    if (employees_list->count(human_to_delete->getID()) == 1 && isContinueDeleting)
+    {
+        isContinueDeleting = false;
+
+        //! DELETE IN DATABASE
+        deleteHumanFromMySQL(initialized_conn, employeeTable, recordTable, human_to_delete->getID());
+
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
+        employees_list->erase(human_to_delete->getID());
+        delete human_to_delete;
+        return;
+    }
 }
 
 void deleteHumanInCompany(Company *company_to_search, Human *human_to_delete)
 {
+    // READY TO PUT DATA INTO DATABASE
+    MYSQL *conn = init();
+    MYSQL *initialized_conn = connectToDB(conn, HOST, USER, PASS, DATABASE, PORT);
+
+    //! END THE DELETING IF NEEDED
+    if (isContinueDeleting == false)
+    {
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
+        return;
+    }
+
     //? CHECK DIRECTOR
     Director *director = company_to_search->getDirector();
     if (director != nullptr)
     {
-        if (isIDMatch(director->getID(), human_to_delete->getID()))
+        if (isIDMatch(director->getID(), human_to_delete->getID()) && isContinueDeleting)
         {
             isContinueDeleting = false;
-            
+
+            //! DELETE HUMAN IN DATABASE
+            deleteHumanFromMySQL(initialized_conn, employeeTable, recordTable, director->getID());
+
+            //! CLOSE CONNECTION
+            mysql_close(initialized_conn);
+
             //! PREVENT MEMORY LEAK
             delete director;
             company_to_search->setDirector(nullptr);
@@ -60,11 +137,28 @@ void deleteHumanInCompany(Company *company_to_search, Human *human_to_delete)
         }
     }
 
+    //! END THE DELETING IF NEEDED
+    if (isContinueDeleting == false)
+    {
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
+        return;
+    }
+
     //? CHECK VICE DIRECTOR
     std::map<unsigned short, ViceDirector *> *vice_director_list = company_to_search->getViceDirectorList();
-    if (vice_director_list->count(human_to_delete->getID()))
+    if (vice_director_list->count(human_to_delete->getID()) == 1 && isContinueDeleting)
     {
         isContinueDeleting = false;
+
+        //! DELETE HUMAN IN DATABASE
+        deleteHumanFromMySQL(initialized_conn, employeeTable, recordTable, human_to_delete->getID());
+
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
+        //! DELETE IN PROGRAM
         vice_director_list->erase(human_to_delete->getID());
 
         //! PREVENT MEMORY LEAK
@@ -97,14 +191,24 @@ void deleteHumanInCompany(Company *company_to_search, Human *human_to_delete)
 
 void deleteHuman(Corporation *corporation, Human *human_to_delete)
 {
+    // READY TO PUT DATA INTO DATABASE
+    MYSQL *conn = init();
+    MYSQL *initialized_conn = connectToDB(conn, HOST, USER, PASS, DATABASE, PORT);
+
     //? CHECK PRESIDENT
     President *president = corporation->getPresident();
     if (president != nullptr)
     {
         // IF ID MATCH
-        if (isIDMatch(president->getID(), human_to_delete->getID()))
+        if (isIDMatch(president->getID(), human_to_delete->getID()) && isContinueDeleting)
         {
             isContinueDeleting = false;
+
+            //! DELETE IN DATABASE
+            deleteHumanFromMySQL(initialized_conn, employeeTable, recordTable, president->getID());
+
+            //! CLOSE CONNECTION
+            mysql_close(initialized_conn);
 
             //! PREVENT MEMORY LEAK
             delete president;
@@ -115,17 +219,22 @@ void deleteHuman(Corporation *corporation, Human *human_to_delete)
 
     //? CHECK VICE PRESIDENT
     std::map<unsigned short, VicePresident *> *vice_president_list = corporation->getPointerofVicePresidentList();
-    if (vice_president_list->count(human_to_delete->getID()))
+    if (vice_president_list->count(human_to_delete->getID()) == 1 && isContinueDeleting)
     {
         isContinueDeleting = false;
+
+        //! DELETE IN DATABASE
+        deleteHumanFromMySQL(initialized_conn, employeeTable, recordTable, human_to_delete->getID());
+
+        //! CLOSE CONNECTION
+        mysql_close(initialized_conn);
+
         vice_president_list->erase(human_to_delete->getID());
 
         //! PREVENT MEMORY LEAK
         delete human_to_delete;
         return;
     }
-
-    delete human_to_delete;
 
     //! DIVIDE THREAD BASED ON THE LENGTH OF THE MAP<COMPANY>
     std::queue<std::thread> all_company_thread;
