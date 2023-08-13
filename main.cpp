@@ -1,12 +1,11 @@
-#include <SDL2/SDL.h>
+#include <GUI/InitScreen.h>
+#include <GUI/LastPage.h>
 #include <mysql.h>
 #include <UserInteractions/UserInteractions.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <SQL_Utilities/Connection.h>
 #include <SQL_Utilities/Command.h>
-
-
 
 using namespace std;
 
@@ -124,8 +123,11 @@ void menu(Corporation *corporation)
     case 7:
     {
         writeToTheFile(corporation, "output.txt");
-        cout << "Information Updated!!!" << endl;
-        cout << "Thanks for using!" << endl;
+        // cout << "Information Updated!!!" << endl;
+        // cout << "Thanks for using!" << endl;
+        
+        // LAST SDL SCREEN
+        outputLastPage("Asset/FinalScreen/Lastpage.png", "Asset/FinalScreen/ExitButton.png", "Asset/CS.bmp");
 
         // TO CLEAN UP MEMORY
         delete corporation;
@@ -153,8 +155,13 @@ bool validate_file_name(std::string name)
 
 int main(int argc, char *argv[])
 {
-    // SDL_Init(SDL_INIT_EVERYTHING);
-    // SDL_Quit();
+    if (initSDL() == true)
+    {
+        SDL_Window *window = createWindow("CS255 Project");
+        SDL_Renderer *renderer = createRenderer(window);
+        outputInitScreenToScreen(window, renderer, "Asset/InitScreen/Welcome.png", "Asset/InitScreen/StartButton.png", "Asset/CS.bmp");
+        cleanUpSDL(window, renderer);
+    }
 
     //! STEP 1: CONNECT TO MYSQL using C
     //* STEP 2: LOAD txt OR LOAD DATABASE
@@ -182,22 +189,54 @@ int main(int argc, char *argv[])
     //--------------------------------------------------------------------
     // FILE PATH
     string filename = "";
-    int option;
+    // int option;
 
     // ATTRIBUTES
     Corporation *corporation = nullptr;
 
     // ASK INPUT
-    cout << "Load corporation from file(1) or create new corporation from terminal(2)? ";
-    std::cin >> option;
-    while (!(option == 1 || option == 2))
+    // cout << "Load corporation from file(1) or create new corporation from terminal(2)? ";
+    // std::cin >> option;
+    // while (!(option == 1 || option == 2))
+    // {
+    //     std::cout << "Enter the option again!!!!!!" << endl;
+    //     std::cin >> option;
+    //     // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    // }
+    // // Do File Path
+    // if (option == 1)
+    // {
+    //     // ASK PEOPLE FILE PATH
+    //     cout << "Enter file Path: ";
+    //     std::cin >> filename;
+    //     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    //     while (!validate_file_name(filename))
+    //     {
+    //         cout << "Enter file Path Again: ";
+    //         std::getline(std::cin, filename);
+    //     }
+    //     //! VAILIDATE FILE PATH
+    //     filename = getValueAfterValidate(filename, validateFileTxt);
+
+    //     delete corporation; //! PREVENT MEMORY LEAK
+    //     // Load data from file
+    //     corporation = makeCorporation(filename);
+    // }
+    // // Do Terminal
+    // else if (option == 2)
+    // {
+    //     delete corporation; //! PREVENT MEMORY LEAK
+    //     corporation = makeCorporation();
+    // }
+
+    // GUI PART
+    if (isTerminal)
     {
-        std::cout << "Enter the option again!!!!!!" << endl;
-        std::cin >> option;
-        // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        delete corporation; //! PREVENT MEMORY LEAK
+        corporation = makeCorporation();
     }
-    // Do File Path
-    if (option == 1)
+    else if (isFilePath)
     {
         // ASK PEOPLE FILE PATH
         cout << "Enter file Path: ";
@@ -215,12 +254,6 @@ int main(int argc, char *argv[])
         delete corporation; //! PREVENT MEMORY LEAK
         // Load data from file
         corporation = makeCorporation(filename);
-    }
-    // Do Terminal
-    else if (option == 2)
-    {
-        delete corporation; //! PREVENT MEMORY LEAK
-        corporation = makeCorporation();
     }
     do
     {
