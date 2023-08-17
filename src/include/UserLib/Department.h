@@ -72,18 +72,23 @@ public:
     {
         os << "-----------------------------------------------------------" << std::endl;
         os << "Department: " + department.name << std::endl;
-        os << "Manager: " + department.manager->getFirstName() + " " + department.manager->getLastMidName() << std::endl;
+        if (department.manager != nullptr) {
+            os << "Manager: " << department.manager->getFullName() << std::endl;
+        }
         os << "Deputy Managers: ";
         for (auto current = department.deputy_manager_list.begin(); current != department.deputy_manager_list.end(); ++current)
         {
-            os << current->second << ", ";
+            os << current->second->getFullName() << ", ";
         }
         os << std::endl;
 
-        os << "Employees: ";
+        os << "Employees: " << department.employee_list.size() << std::endl;
         for (auto current = department.employee_list.begin(); current != department.employee_list.end(); ++current)
         {
-            os << current->first << ": " << *(current->second) << ", ";
+            if (current->second != nullptr)
+            {
+                os << current->second->getFullName() << std::endl;
+            }
         }
         os << std::endl;
         os << "-----------------------------------------------------------" << std::endl;
@@ -97,60 +102,19 @@ public:
         os << "Department: " + department->name << std::endl;
         if (department->manager != nullptr)
         {
-            os << "Manager: " + department->manager->getFirstName() + " " + department->manager->getLastMidName() << std::endl;
-            os << "ID" + department->manager->getID() << std::endl;
-            if (department->manager->getDateOfBirth() != nullptr)
-            {
-                os << "Date of birth: " << department->manager->getDateOfBirth() << "\n";
-            }
-            else
-                os << "Date of birth: " << std::endl;
-
-            os << "Birth place: " << department->manager->getBirthPlace() << "\n";
-            os << "Email: " << department->manager->getEmail() << "\n";
-            os << "Phone number: " << department->manager->getPhoneNum() << "\n";
-
-            if (department->manager->getFirstDayAtWork() != nullptr)
-            {
-                os << "First day at work: " << department->manager->getFirstDayAtWork() << "\n";
-            }
-            else
-                os << "First day at work: " << std::endl;
-
-            os << "Days Worked: " << std::endl;
-            for (auto current = department->manager->getDaysWork()->begin(); current != department->manager->getDaysWork()->end(); ++current)
-            {
-                Record *record = (*current).getValue();
-                if (record != nullptr)
-                {
-                    os << record << std::endl;
-                }
-            }
+            os << "Manager: " + department->manager->getFullName() << std::endl;
         }
         else
-            os << "Manager: ";
+            os << "Manager: 0" << std::endl;
 
-        os << "Deputy Managers: ";
+        os << "Deputy Managers: " <<  department->deputy_manager_list.size() << std::endl;
         for (auto current = department->deputy_manager_list.begin(); current != department->deputy_manager_list.end(); ++current)
         {
             if (current->second != nullptr)
             {
-                os << current->second << ", ";
+                os << current->second->getFullName() << std::endl;
             }
-        }
-        os << std::endl;
-
-        os << "Employees: ";
-        for (auto current = department->employee_list.begin(); current != department->employee_list.end(); ++current)
-        {
-            if (current->second != nullptr)
-            {
-                os << current->first << ": " << current->second << ", ";
-            }
-        }
-        os << std::endl;
-        os << "-----------------------------------------------------------" << std::endl;
-
+        }       
         return os;
     };
 

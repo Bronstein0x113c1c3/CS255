@@ -98,87 +98,43 @@ public:
         this->vice_director.insert({vice_director->getID(), vice_director});
     }
     // OPERATOR
-    friend std::ostream &operator<<(std::ostream &os, const Company &company)
-    {
-        os << "-----------------------------------------------------------" << std::endl;
-        os << "Company: " + company.name << std::endl;
-        os << "Director: " + company.director->getFirstName() + " " + company.director->getLastMidName() << endl;
-        os << "Vice Directors: ";
-        for (auto current = company.vice_director.begin(); current != company.vice_director.end(); ++current)
-        {
-            os << current->second << ", ";
-        }
-        os << std::endl;
-
-        os << "Departments: ";
+    friend std::ostream &operator<<(std::ostream &os, const Company &company) {
         for (auto current = company.department_list.begin(); current != company.department_list.end(); ++current)
         {
-            os << current->first << ": " << *(current->second) << ", ";
+            if (current->second != nullptr)
+            {
+                os << *current->second;
+            }
         }
-        os << std::endl;
-        os << "-----------------------------------------------------------" << std::endl;
         return os;
     }
+
     friend std::ostream &operator<<(std::ostream &os, const Company *company)
     {
-        os << "-----------------------------------------------------------" << std::endl;
+        os << std::endl << "-----------------------------------------------------------" << std::endl;
         os << "Company: " + company->name << std::endl;
         if (company->director != nullptr)
         {
-            os << "Director: " + company->director->getFirstName() + " " + company->director->getLastMidName() << endl;
-            os << "ID" + company->director->getID() << std::endl;
-            if (company->director->getDateOfBirth() != nullptr)
-            {
-                os << "Date of birth: " << company->director->getDateOfBirth() << "\n";
-            }
-            else
-                os << "Date of birth: " << std::endl;
-
-            os << "Birth place: " << company->director->getBirthPlace() << "\n";
-            os << "Email: " << company->director->getEmail() << "\n";
-            os << "Phone number: " << company->director->getPhoneNum() << "\n";
-
-            if (company->director->getFirstDayAtWork() != nullptr)
-            {
-                os << "First day at work: " << company->director->getFirstDayAtWork() << "\n";
-            }
-            else
-                os << "First day at work: " << std::endl;
-
-            os << "Days Worked: " << std::endl;
-            for (auto current = company->director->getDaysWork()->begin(); current != company->director->getDaysWork()->end(); ++current)
-            {
-                Record *record = (*current).getValue();
-                if (record != nullptr)
-                {
-                    os << record << std::endl;
-                }
-            }
+            os << "Director: " + company->director->getFullName() << endl;
         }
         else
-            os << "Director: ";
+            os << "Director: 0";
 
-        os << "Vice Directors: ";
-        std::cout << company->vice_director.size();
+        os << "Vice Directors: " << company->vice_director.size() << std::endl;
         for (auto current = company->vice_director.begin(); current != company->vice_director.end(); ++current)
         {
             if (current->second != nullptr)
             {
-                os << current->second << ", ";
+                os << current->second->getFullName() << endl;;
             }
         }
-        os << std::endl;
-
-        os << "Departments: ";
         for (auto current = company->department_list.begin(); current != company->department_list.end(); ++current)
         {
             if (current->second != nullptr)
             {
-                os << current->first << ": " << current->second << ", ";
+                os << current->second;
             }
         }
-        os << std::endl;
-        os << "-----------------------------------------------------------" << std::endl;
         return os;
     }
     bool operator==(const Company &otherCompany)

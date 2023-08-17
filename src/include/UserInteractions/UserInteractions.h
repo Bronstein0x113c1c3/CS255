@@ -104,18 +104,6 @@ void displayUnitInfo(Company *company)
     cout << std::endl;
 }
 
-void displayUnitInfo(Department *department)
-{
-    cout << "Department: " << department->getName() << endl;
-    cout << "Manager: " << department->getManager()->getFullName() << endl;
-    cout << "Depute Managers: ";
-    for (auto current = department->getDeputyManagerList()->begin(); current != department->getDeputyManagerList()->end(); ++current)
-    {
-        cout << current->second << ", ";
-    }
-    cout << std::endl;
-}
-
 // EXIT FUNCTION
 void exitProgram()
 {

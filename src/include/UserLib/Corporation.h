@@ -40,29 +40,6 @@ public:
     };
 
     // OPERATORS
-    friend ostream &operator<<(ostream &os, const Corporation &corporation)
-    {
-        os << "-----------------------------------------------------------" << std::endl;
-        os << "Corporation: " + corporation.name << std::endl;
-        os << "President: " + corporation.president->getFirstName() + " " + corporation.president->getLastMidName() << std::endl;
-        os << "Vice Presidents: ";
-        for (auto current = corporation.vice_president.begin(); current != corporation.vice_president.end(); ++current)
-        {
-            VicePresident *vice_president = (*current).second;
-            os << *vice_president << ", ";
-        }
-        os << std::endl;
-
-        os << "Companies: ";
-        for (auto current = corporation.company_list.begin(); current != corporation.company_list.end(); ++current)
-        {
-            os << *(current->second) << ", ";
-        }
-        os << std::endl;
-        os << "-----------------------------------------------------------" << std::endl;
-
-        return os;
-    }
     friend ostream &operator<<(ostream &os, const Corporation *corporation)
     {
         os << "-----------------------------------------------------------" << std::endl;
@@ -70,57 +47,25 @@ public:
         if (corporation->president != nullptr)
         {
             os << "President: " + corporation->president->getFirstName() + " " + corporation->president->getLastMidName() << std::endl;
-            os << "ID: " + corporation->president->getID() << std::endl;
-            if (corporation->president->getDateOfBirth() != nullptr)
-            {
-                os << "Date of birth: " << corporation->president->getDateOfBirth() << "\n";
-            }
-            else
-                os << "Date of birth: " << std::endl;
-
-            os << "Birth place: " << corporation->president->getBirthPlace() << "\n";
-            os << "Email: " << corporation->president->getEmail() << "\n";
-            os << "Phone number: " << corporation->president->getPhoneNum() << "\n";
-
-            if (corporation->president->getFirstDayAtWork() != nullptr)
-            {
-                os << "First day at work: " << corporation->president->getFirstDayAtWork() << "\n";
-            }
-            else
-                os << "First day at work: " << std::endl;
-
-            os << "Days Worked: " << std::endl;
-            for (auto current = corporation->president->getDaysWork()->begin(); current != corporation->president->getDaysWork()->end(); ++current)
-            {
-                Record *record = (*current).getValue();
-                if (record != nullptr)
-                {
-                    os << record << std::endl;
-                }
-            }
         }
         else
-            os << "President: " << std::endl;
-
-        os << "Vice Presidents: ";
+            os << "President: 0" << std::endl;
+        os << "Vice Presidents: " << corporation->vice_president.size() << std::endl;
         for (auto current = corporation->vice_president.begin(); current != corporation->vice_president.end(); ++current)
         {
             if (current->second != nullptr)
             {
-                os << current->second << ", ";
+                os << current->second->getFullName() << std::endl;
             }
         }
-        os << std::endl;
-
-        os << "Companies: ";
+        os << "----------------------------------------------------------- \n" << "Companies: ";
         for (auto current = corporation->company_list.begin(); current != corporation->company_list.end(); ++current)
         {
             if (current->second != nullptr)
             {
-                os << current->second << ", ";
+                os << current->second << std::endl;
             }
         }
-        os << std::endl;
         os << "-----------------------------------------------------------" << std::endl;
 
         return os;
@@ -133,6 +78,22 @@ public:
     {
         return this->name != otherCorporation.name;
     }
+
+    void displayUnit(Corporation *corporation)
+    {
+        string company;
+        cout << "Enter company name:";
+        cin >> company;
+        for (auto current = corporation->company_list.begin(); current != corporation->company_list.end(); ++current)
+        {
+            if (current->second != nullptr) {
+                if (company == current->second->getName()) {
+                   cout << *current->second;
+                }
+            }
+        }
+    }
+
     // PROPERTIES
     std::string getName() const { return this->name; };
     President *getPresident()

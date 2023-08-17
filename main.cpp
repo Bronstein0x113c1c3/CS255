@@ -12,7 +12,8 @@ void menu(Corporation *corporation)
     cout << "4. Add and Upate Human by ID" << endl;
     cout << "5. Add Days Work by ID" << endl;
     cout << "6. Delete Human by ID" << endl;
-    cout << "7. Exit" << endl;
+    cout << "7. Display unit employees" << endl;
+    cout << "8. Exit" << endl;
     cout << "Enter your Option: ";
     cin >> option;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -114,6 +115,11 @@ void menu(Corporation *corporation)
         break;
     }
     case 7:
+    {
+        corporation->displayUnit(corporation);
+        break;
+    }
+    case 8:
     {
         writeToTheFile(corporation, "output.txt");
         cout << "Information Updated!!!" << endl;
